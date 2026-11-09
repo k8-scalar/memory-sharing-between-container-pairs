@@ -1,0 +1,141 @@
+Review #16A
+===========================================================================
+
+Overall merit
+-------------
+4. Accept
+
+Reviewer expertise
+------------------
+3. Knowledgeable
+
+Paper summary
+-------------
+This paper investigates a deceptively simple question with direct implications for serverless placement and capacity planning: **how much physical memory do two particular co-located containers actually share?**
+
+The paper argues that commonly used metrics such as PSS and `/proc/<pid>/smaps` cannot answer this pairwise question because they identify whether pages are shared somewhere on a host, but not *with which process*. The authors therefore develop a measurement technique based on `/proc/<pid>/pagemap` that intersects the physical page-frame-number (PFN) sets of two named containers.
+
+They apply this technique to a Kubernetes deployment of Keycloak and complement the runtime experiments with static analysis of roughly 100 releases each of Keycloak and Elasticsearch. The principal result is striking: even two instances of the **same** Keycloak image share only about 25.8 MiB of mapped memory, roughly 5% of an instance's RSS. For two nearly identical consecutive builds, this falls to only 2.38 MiB.
+
+The paper traces this collapse to the construction of container image layers. Because snapshot identity depends on the chain of preceding layers, a small change early in an image can cause byte-identical files in subsequent layers to acquire different inodes and therefore different physical page-cache pages. The authors conclude that schedulers and capacity models should generally not assume a memory-sharing discount for co-located container versions.
+
+Comments for authors
+--------------------
+## Strengths
+
+I liked this paper. It asks a focused systems question, identifies a genuine measurement problem, develops an appropriate technique to answer it, and produces a somewhat surprising result.
+
+**The measurement contribution is useful.** The distinction between "this memory is shared with something" and "this memory is shared with this particular neighboring container" is important for placement algorithms. The PFN-intersection approach gives the latter directly rather than trying to infer it from PSS. The exposition of this distinction is particularly clear.
+
+**The paper does an unusually good job of explaining *why* the observed behavior occurs.** It does not stop at reporting that cross-version sharing is small. The investigation of the layer chain, inodes, and the seven changed files in L2 provides a convincing causal account. Particularly nice is the observation that L3 contains byte-identical application files, yet these nevertheless obtain distinct inodes because an earlier layer changed.
+
+**The static analysis substantially strengthens the runtime experiment.** The Keycloak experiment alone could easily be dismissed as application-specific. Examining 96 Keycloak and 121 Elasticsearch tags shows that loss of snapshot sharing across releases is common: for example, 38 of 64 Keycloak patch transitions and 49 of 97 Elasticsearch patch transitions have zero snapshot overlap. This makes the argument considerably more compelling.
+
+**The paper is commendably careful about what it measures.** In particular, it explicitly acknowledges that PFN intersection captures mapped sharing but not all page-cache sharing. For Keycloak, approximately 122 MiB of JAR data is cached and shared for identical images despite not appearing in the PFN intersection. That qualification prevents the headline result from being misleading.
+
+Finally, the paper is well written. The argument proceeds logically from measurement problem, to mechanism, to experiment, to implications.
+
+## Weaknesses and Concerns
+
+My main concern is **generality**.
+
+The detailed runtime evaluation essentially concerns one application, Keycloak, and one particular runtime ecosystem, the JVM. The authors are quite explicit about this limitation. The static image analysis of Elasticsearch helps, but it validates the layer-overlap argument rather than the runtime memory-sharing result.
+
+This distinction matters because the paper itself demonstrates that Keycloak is unusual in an important respect: much of its application content is read rather than `mmap`ed. A C/C++ service, Python application, Node application, or model-serving workload could have a substantially different mapped-memory profile. I strongly encourage the authors to add even one substantially different runtime/application if possible.
+
+A second concern is that **the conclusion occasionally becomes stronger than the evidence**. "Memory should be sized without a sharing discount" is defensible as conservative operational advice, but the experiments do not establish that sharing is negligible for containers in general. More precisely, they show that *assuming* substantial pairwise sharing based simply on image-layer similarity is unsafe, particularly across independently built versions. I would frame the conclusion around that narrower and better-supported claim.
+
+Third, I think the distinction between **mapped memory sharing and page-cache sharing** deserves even more prominence. The authors handle this issue correctly, but a reader could easily walk away remembering "Keycloak instances share only 25.8 MiB" when the experiments actually find another roughly 122 MiB of shared cached JAR content in the same-image case. The scheduling implications differ because page-cache memory is reclaimable and does not directly translate into additional container admissions. That is an important nuance rather than a secondary qualification.
+
+Fourth, `/proc/<pid>/pagemap` requires elevated privileges. That is perfectly reasonable for an experimental measurement tool, but it limits direct deployment as an online scheduling mechanism. I don't view this as a major weakness because the paper primarily uses the technique to test assumptions in cost models, but its intended role could be stated more explicitly.
+
+## Relevance to WoAIS2
+
+The serverless relevance is clear: several prior serverless scheduling approaches assume or exploit container-layer memory sharing, and this paper directly tests that assumption.
+
+The **AI connection is less developed**. The discussion near the end about model-serving workloads is intriguing: model weights can be hundreds of megabytes to tens of gigabytes, and formats such as safetensors and GGUF can be memory-mapped, potentially making the same inode/sharing issue substantially more consequential. If a small image-layer difference can prevent sharing of a large `libjvm.so`, the analogous phenomenon involving multi-GB model weights could be extremely consequential. But the paper does not actually measure this. Given the workshop venue, even a small experiment involving two inference containers sharing model weights would substantially strengthen the submission.
+
+## Questions for the Authors
+
+1. Have the authors tried a non-JVM workload, particularly one that `mmap`s a large fraction of its application data?
+
+2. Could they perform the obvious AI experiment suggested in the paper: two inference containers using the same model weights, followed by slightly different container builds? This seems particularly well aligned with WoAIS2.
+
+3. How much of the problem disappears with composefs or another content-addressed representation? If the answer is "most of it," is the principal conclusion really that schedulers should ignore sharing, or that current overlay-based image storage is the wrong substrate for sharing-aware scheduling?
+
+4. Is PFN intersection intended primarily as an experimental ground-truth tool, or do the authors envision using it dynamically in a scheduler? If the latter, what is its cost at scale?
+
+## Overall Assessment
+
+This is a solid workshop paper. The technical contribution is relatively narrow, but it addresses a concrete assumption that has appeared in previous serverless scheduling work, provides a better measurement technique, and—most importantly—uses that technique to uncover an unintuitive result and explain its underlying mechanism.
+
+I particularly appreciate the progression from observation to mechanism:
+
+**PSS cannot attribute sharing → directly intersect PFNs → observe unexpectedly little sharing → identify ChainID/inode behavior as the cause → confirm the phenomenon across release histories.**
+
+That makes the paper more than simply a measurement note.
+
+The evaluation would be stronger with additional runtime/application families, and the AI aspect is currently more prospective than demonstrated. Nevertheless, these limitations seem entirely reasonable for a workshop paper. I expect the work would stimulate useful discussion about the assumptions underlying memory-aware placement, particularly as serverless systems increasingly host AI inference and agent workloads.
+
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+Review #16B
+===========================================================================
+
+Overall merit
+-------------
+3. Weak accept
+
+Reviewer expertise
+------------------
+2. Some familiarity
+
+Paper summary
+-------------
+This paper measures physical memory shared by specific pairs of co-located containers by intersecting resident physical frame numbers obtained through Linux pagemap. Experiments with Keycloak find approximately 25.8 MiB of mapped sharing between same-image instances (about 5% of one instance’s RSS), falling to 2.38 MiB (under 0.5%) for one pair of consecutive builds. A separate measurement identifies approximately 122 MiB of shared, unmapped JAR-file cache in the same-image case. Static analysis of 96 Keycloak and 121 Elasticsearch image tags finds little common-snapshot overlap across releases. The authors trace the runtime reduction to layer-chain divergence, which causes byte-identical files to occupy different underlying inodes in the evaluated snapshot architecture. They use these findings to question assumed sharing discounts in container memory budgeting and discuss content-addressed storage as a possible remedy.
+
+Comments for authors
+--------------------
+The pairwise measurement and tracing of sharing losses to snapshot identity provide a useful contribution. The distinction between pairwise sharing and host-wide proportional accounting is valuable. However, several conclusions extend beyond the evidence. For examnple, please separate conservative per-container limits from host-level memory savings and performance benefits. 
+Also please align paper better with goals of workshop i.e. serverless systems.
+
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+Review #16C
+===========================================================================
+
+Overall merit
+-------------
+1. Reject
+
+Reviewer expertise
+------------------
+3. Knowledgeable
+
+Paper summary
+-------------
+The core idea of the paper is the following: In case containers are built from overlapping image layers and run on the same node, memory can be saved by virtual shared pages. It is claimed that the memory overlap could not be measured and accounted by standard metrics so far.
+
+Comments for authors
+--------------------
+The idea of quantifying the memory overlap for optimised placement decisions is interesting, but is not new (e.g. compare to the EuroSys22 paper on Medes (1) below). 
+
+The related work sections also leaves the impression that a quantification of shared memory between pairs of instances is not new, and already implemented.
+
+The measurement approach of counting the pair-wise shared pages appear to be straightforward. 
+The measurement methodology directly starts with the selected application and workload and not on a method level.
+It remains unclear, why Keycloak is chosen as example, while later in the paper it is said that the potential of shared memory pages is higher for other types of co-located containers, e.g. in serverless inference.
+The pair-wise comparison is limited to a small set of illustrating examples and remains intransparent. Details on how these results are obtained or could be reproduced are omitted. No measurement data is shared. 
+
+The content of table 2 with 100% overlap between identical builds appears trivial. 
+
+The conclusion that credits to tenants for memory sharing on a shared host can not fairly be assigned by measuring pair-wise intersections is not surprising. 
+
+In general, the paper appears not ready for presentation as the content is hard to follow due to a text-heavy, confusing style of writing.
+
+(1) Divyanshu Saxena, Tao Ji, Arjun Singhvi, Junaid Khalid, and Aditya Akella. 2022. Memory deduplication for serverless computing with Medes. In Proceedings of the Seventeenth European Conference on Computer Systems (EuroSys '22). Association for Computing Machinery, New York, NY, USA, 714–729. https://doi.org/10.1145/3492321.3524272
+

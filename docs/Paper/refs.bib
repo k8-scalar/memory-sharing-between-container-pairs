@@ -1,0 +1,181 @@
+%% References reused from docs/thesis/bibliography/references.bib
+%% Only the entries this paper actually cites are copied here.
+
+@mastersthesis{hoebreckx20,
+  author = {Hoebreckx Arnout},
+  title  = {Het balanceren van Servicecontinu\"iteit en Surgekost tijdens Continuous Deployment van Multi-tenant Applicaties},
+  school = {KU Leuven},
+  year   = 2020
+}
+
+@inproceedings{truyen2020flexible,
+  title={Flexible migration in blue-green deployments within a fixed cost},
+  author={Truyen, Eddy and Lagaisse, Bert and Joosen, Wouter and Hoebreckx, Arnout and Dycker, C{\'e}dric De},
+  booktitle={Proceedings of the 2020 6th International Workshop on Container Technologies and Container Clouds},
+  pages={13--18},
+  year={2020}
+}
+
+@inproceedings{beni_coldstarts,
+author = {Beni, Emad Heydari and Truyen, Eddy and Lagaisse, Bert and Joosen, Wouter and Dieltjens, Jordy},
+title = {Reducing cold starts during elastic scaling of containers in kubernetes},
+year = {2021},
+isbn = {9781450381048},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3412841.3441887},
+doi = {10.1145/3412841.3441887},
+abstract = {Automatic scaling of containers is an important feature to handle fluctuating workloads. However, the delay caused by the time to bootstrap a container has an impact on applications with deadline-based Service-Level Objectives (SLOs). This delay is called the cold start problem. Many techniques have already been proposed to tackle this problem but not all techniques have been integrated and evaluated in Kubernetes, the de-facto standard in container orchestration. This paper combines and evaluates three techniques in the context of Kubernetes: (i) pre-creation of network containers, (ii) using container images that enable sharing of linked libraries in memory and (iii) extending the declarative configuration management approach of Kubernetes with imperative configuration for creating multiple application containers in parallel. A prototype of the approach is implemented and tested on a Java-based Spring Boot application where the cold start problem occurs due to various library dependencies. Our findings illustrate that the use of containers that allow for library sharing already has a large, positive impact when starting up a single container. The pre-creation of network containers in combination with imperative configuration enables the application to meet deadline-driven SLOs without a non-deterministic delay that appears in Kubernetes when multiple containers are created in parallel. We conclude that the use of container images that allow for library sharing is a must for all applications that require fast container start-ups in Kubernetes. Pre-creation of network containers when combined with imperative configuration also has a positive impact on SLO compliance during elastic scaling of containers.},
+booktitle = {Proceedings of the 36th Annual ACM Symposium on Applied Computing},
+pages = {60–68},
+numpages = {9},
+keywords = {auto-scaling, cold start, container frameworks, serverless},
+location = {Virtual Event, Republic of Korea},
+series = {SAC '21}
+}
+
+@mastersthesis{deboevere25,
+  author = {De Boevere Ben},
+  title  = {Enhancing flexible migration in blue-green deployments with in-place vertical scaling in {Kubernetes}},
+  school = {KU Leuven},
+  year   = 2025
+}
+
+@inproceedings{bravo2017more,
+  title={More sharing, more benefits? A study of library sharing in container-based infrastructures},
+  author={Bravo Ferreira, Jos{\'e} and Cello, Marco and Iglesias, Jes{\'u}s Omana},
+  booktitle={European Conference on Parallel Processing},
+  pages={358--371},
+  year={2017},
+  organization={Springer}
+}
+
+@misc{keycloak,
+  author       = {{Red Hat}},
+  title        = {{Keycloak} {GitHub} repository},
+  howpublished = {\url{https://github.com/keycloak/keycloak}},
+  note         = {Accessed: 2026-05-01}
+}
+
+@misc{elasticsearch,
+  author       = {{Elastic}},
+  title        = {{Elasticsearch} {GitHub} repository},
+  howpublished = {\url{https://github.com/elastic/elasticsearch}},
+  note         = {Accessed: 2026-05-29}
+}
+
+@misc{k6,
+  author       = {{Grafana Labs}},
+  title        = {{K6} Official {GitHub} repository},
+  howpublished = {\url{https://github.com/grafana/k6}},
+  note         = {Accessed: 2026-05-01}
+}
+
+@misc{k8sqos,
+  author       = {{The Kubernetes Authors}},
+  title        = {{Kubernetes} Quality of Service classes},
+  year         = 2026,
+  month        = may,
+  howpublished = {\url{https://kubernetes.io/docs/concepts/workloads/pods/pod-qos/}},
+  note         = {Accessed: 2026-05-29}
+}
+
+@misc{kernelcg,
+  author       = {{The Linux Kernel Authors}},
+  title        = {Control Group v2},
+  howpublished = {\url{https://docs.kernel.org/admin-guide/cgroup-v2.html}},
+  note         = {Accessed: 2026-05-29}
+}
+
+@article{cheng2024slo,
+  author  = {Cheng, Dazhao and Yan, Kai and Cai, Xinquan and Gong, Yili and Hu, Chuang},
+  title   = {{SLO}-Aware Function Placement for Serverless Workflows With Layer-Wise Memory Sharing},
+  journal = {IEEE Transactions on Parallel and Distributed Systems},
+  volume  = {35},
+  number  = {6},
+  pages   = {1074--1091},
+  year    = {2024},
+  doi     = {10.1109/TPDS.2024.3391858}
+}
+
+@misc{composefs,
+  author       = {Larsson, Alexander},
+  title        = {Composefs and Containers},
+  year         = 2024,
+  howpublished = {Talk at {FOSDEM} 2024},
+  doi          = {10.5446/71831},
+  note         = {Accessed: 2026-10-01}
+}
+
+@misc{kerneloverlay,
+  author       = {{The Linux Kernel Authors}},
+  title        = {Overlay Filesystem},
+  howpublished = {\url{https://docs.kernel.org/filesystems/overlayfs.html}},
+  note         = {Accessed: 2026-05-30}
+}
+
+@misc{corbet2007pss,
+  author       = {Corbet, Jonathan},
+  title        = {{ELC}: How Much Memory Are Applications Really Using?},
+  year         = 2007,
+  howpublished = {\url{https://lwn.net/Articles/230975/}},
+  note         = {LWN.net; accessed: 2026-09-30}
+}
+
+@misc{linuxmm,
+  author       = {{The Linux Kernel Authors}},
+  title        = {Memory Management Documentation},
+  howpublished = {\url{https://docs.kernel.org/mm/index.html}},
+  note         = {Accessed: 2026-05-01}
+}
+
+@misc{inode,
+  author       = {Kerrisk, Michael},
+  title        = {inode(7) --- {Linux} manual page},
+  organization = {The Linux man-pages project},
+  howpublished = {\url{https://man7.org/linux/man-pages/man7/inode.7.html}},
+  note         = {Accessed: 2026-05-01}
+}
+
+@misc{ociimagespec,
+  author       = {{Open Container Initiative}},
+  title        = {{OCI} Image Format Specification},
+  year         = 2025,
+  howpublished = {\url{https://github.com/opencontainers/image-spec}},
+  note         = {Accessed: 2026-05-30}
+}
+
+@book{mauerer2008linux,
+  author    = {Mauerer, Wolfgang},
+  title     = {Professional Linux Kernel Architecture},
+  publisher = {Wiley Publishing, Inc.},
+  year      = {2008},
+  address   = {Indianapolis, IN},
+  isbn      = {978-0-470-34343-2}
+}
+
+@misc{jvmstartup,
+  author       = {Billy Korando},
+  title        = {A Deep Dive into JVM Start-up},
+  howpublished = {\url{https://inside.java/2025/01/28/jvm-start-up/}},
+  note         = {Accessed: 2026-05-30}
+}
+
+@misc{jvmgc,
+  author       = {{Oracle}},
+  title        = {Java Platform, Standard Edition HotSpot Virtual Machine Garbage Collection Tuning Guide: 3 Generations},
+  howpublished = {\url{https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/generations.html}},
+  note         = {Accessed: 2026-05-30}
+}
+
+@inproceedings{saxena2022medes,
+  author    = {Saxena, Divyanshu and Ji, Tao and Singhvi, Arjun and Khalid, Junaid and Akella, Aditya},
+  title     = {Memory Deduplication for Serverless Computing with Medes},
+  booktitle = {Proceedings of the Seventeenth European Conference on Computer Systems},
+  series    = {EuroSys '22},
+  pages     = {714--729},
+  year      = {2022},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/3492321.3524272}
+}

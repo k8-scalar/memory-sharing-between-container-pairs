@@ -1,0 +1,695 @@
+%% CAMERA-READY -- WoAIS2 @ Middleware 2026.
+%% CFP: ACM SIGPLAN style, 10pt; accepted paper, now limited to 6 pages
+%% total (technical content + references) per organizer confirmation.
+\documentclass[sigplan,10pt,natbib=false]{acmart}
+
+\AtBeginDocument{%
+  \providecommand\BibTeX{{Bib\TeX}}}
+
+%% Rights management -- confirmed values from the ACM rights form.
+\copyrightyear{2026}
+\acmYear{2026}
+\setcopyright{cc}
+\setcctype{by}
+\acmConference[WoAIS '26]{Workshop on AI and Serverless }{December 14--18, 2026}{Tarragona, Spain}
+\acmBooktitle{Workshop on AI and Serverless (WoAIS '26), December 14--18, 2026, Tarragona, Spain}
+\acmDOI{10.1145/3861043.3861046}
+\acmISBN{979-8-4007-3108-2/2026/12}
+
+\RequirePackage[
+  datamodel=acmdatamodel,
+  style=acmnumeric,
+  ]{biblatex}
+\addbibresource{refs.bib}
+
+%% /proc paths are long and \texttt{} content is never hyphenated, which
+%% overfills the narrow sigplan columns. \procpath permits a line break
+%% after each slash; no hyphen is inserted, as is conventional for paths
+%% and URLs (a trailing hyphen would read as part of the path).
+\newcommand{\procpath}[1]{\texttt{/proc/\allowbreak<pid>/\allowbreak#1}}
+
+\begin{document}
+
+%% ---------------------------------------------------------------------
+%% TITLE -- placeholder, revisit once the paper's scope is fully locked.
+%% ---------------------------------------------------------------------
+\title{How Much Do Co-Located Containers Really Share? A Pairwise
+  Measurement Study}
+\renewcommand{\shorttitle}{How Much Do Co-Located Containers Really Share?}
+
+%% ---------------------------------------------------------------------
+%% AUTHORS -- adjust affiliation details / ORCID as needed.
+%% ---------------------------------------------------------------------
+\author{Hanlin Wu}
+\affiliation{%
+  \institution{KU Leuven}
+  \city{Leuven}
+  \country{Belgium}}
+\email{hanlin.wu@student.kuleuven.be}
+
+\author{Eddy Truyen}
+\affiliation{%
+  \institution{KU Leuven, DistriNet}
+  \city{Leuven}
+  \country{Belgium}}
+\email{eddy.truyen@kuleuven.be}
+
+\author{Wouter Joosen}
+\affiliation{%
+  \institution{KU Leuven, DistriNet}
+  \city{Leuven}
+  \country{Belgium}}
+\email{wouter.joosen@kuleuven.be} %% TODO: verify -- guessed from the standard KU Leuven address pattern.
+
+\renewcommand{\shortauthors}{Wu, Truyen, and Joosen}
+
+%% ---------------------------------------------------------------------
+%% ABSTRACT
+%% ---------------------------------------------------------------------
+\begin{abstract}
+This paper investigates for contemporary container platforms how much
+memory saving can be attained by co-locating instances of one image on
+the same node -- as a FaaS platform does to keep a warm pool ready, or
+as a blue-green deployment does across consecutive versions, pinning
+different tenants to the version they were validated against. The
+expectation is that images
+built from overlapping layers let the kernel back them with a single
+physical copy.  That expectation has never been verified for a specific pair of
+instances, and standard metrics cannot verify it: Proportional Set
+Size (PSS) divides a page's cost by its mapcount, and so reports
+sharing with \emph{any} process on the host rather than with the
+neighbour a scheduler is reasoning about.
+We measure it directly, intersecting the resident page frames of two named containers through
+the kernel's \texttt{pagemap} interface. Between two consecutive
+builds of a multi-tenant Java-based application, whose application layers are
+byte-identical, the instances share 2.4\,MiB of mapped memory -- under
+half a percent of either one's resident footprint. A static analysis
+of roughly 100 releases each of two widely-used Java applications finds
+that most consecutive release pairs share no image
+snapshot whatsoever. The cause is structural rather than semantic. A
+container runtime names each unpacked layer by the hash chain of every
+layer beneath it, so a metadata-only difference early in the stack
+gives byte-identical files above it fresh inodes, and the kernel
+cannot deduplicate them. On current mainstream container platforms, a
+sharing discount should not be assumed from image-layer similarity
+alone, particularly once co-located versions are built independently.
+Existing proposals that key image storage on content rather than
+layer position deserve consideration as a way out.
+\end{abstract}
+
+%% ---------------------------------------------------------------------
+%% CCS CONCEPTS -- regenerate the numeric IDs via
+%% https://dl.acm.org/ccs.cfm before submission; the concept_desc text
+%% below is a best-effort placeholder.
+%% ---------------------------------------------------------------------
+\begin{CCSXML}
+<ccs2012>
+ <concept>
+  <concept_id>00000000.0000000.0000000</concept_id>
+  <concept_desc>Computer systems organization~Cloud computing</concept_desc>
+  <concept_significance>500</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>00000000.00000000.00000000</concept_id>
+  <concept_desc>Software and its engineering~Software deployment</concept_desc>
+  <concept_significance>400</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>00000000.00000000.00000000</concept_id>
+  <concept_desc>Software and its engineering~Virtual machines</concept_desc>
+  <concept_significance>300</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>00000000.00000000.00000000</concept_id>
+  <concept_desc>Computer systems organization~Cloud computing</concept_desc>
+  <concept_significance>200</concept_significance>
+ </concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Computer systems organization~Cloud computing}
+\ccsdesc[400]{Software and its engineering~Software deployment}
+\ccsdesc[300]{Software and its engineering~Virtual machines}
+
+\keywords{container images, memory sharing, page cache, cgroups,
+  multi-tenancy, serverless cost-effectiveness, Kubernetes, JVM}
+
+\maketitle
+
+%% =======================================================================
+\section{Introduction}
+\label{sec:intro}
+
+Container-based platforms pack many containers onto one host to
+improve resource utilization. FaaS platforms keep pools of warm
+containers ready to absorb invocations without a cold-start penalty,
+and co-locating instances of the same image reduces cold starts
+further \cite{beni_coldstarts}. Blue-green deployments similarly keep
+several versions of one service live, pinning each tenant to the
+version they were validated against rather than forcing everyone onto
+whatever is current; a placement policy can co-locate different
+versions of one image on a node specifically to maximize this resource
+sharing \cite{truyen2020flexible}.
+
+A recurring proposal for increasing memory utilization is to credit
+the memory co-located instances are expected to share: if two
+containers are built from overlapping image layers, the kernel's page
+cache can map the same physical pages into both address spaces rather
+than duplicating them, so an added instance's marginal cost should be
+lower than its declared footprint. Bravo Ferreira et al.\ state this
+explicitly for FaaS workloads and propose a scheduler that maximizes
+this assumed overlap \cite{bravo2017more}; Truyen et al.\ likewise
+build it into a cost model for co-located versions, treating it as
+substantial \cite{truyen2020flexible}.
+
+Both rely, however, on the \procpath{smaps} interface or PSS, which
+marks a page \emph{Shared} whenever more than one process on the host
+maps it. This is real, kernel-verified information, but not
+\emph{attributable}: it says a page is shared with some other process,
+not which one. On a host running only the pair of interest this does
+not matter; it does on a real cluster also hosting a database,
+sidecars, and unrelated workloads.
+
+Attribution is only half the problem: crediting shared layers also
+assumes they resolve to common physical memory, which requires both
+containers to map the same inode. Container runtimes name each
+unpacked layer by the hash chain beneath it, so a difference anywhere
+earlier in the chain -- even metadata only -- gives every later layer
+a fresh inode, faulting identical files in twice. How often this
+happens across a real application's releases, and how much sharing it
+removes, has not been measured.
+
+In this paper, we introduce a simple measurement technique that
+intersects the resident physical page frames of two \emph{named}
+containers directly, via \procpath{pagemap}, giving a pairwise,
+ground-truth answer to how much two specific instances share right
+now, independent of anything else running on the host. We apply it to
+a real, evolving JVM-based service to measure how much two instances of
+the identical image share while running, and how much of that survives
+once the images differ -- as between two tenant-pinned versions of one
+service -- complemented by a static characterization of image-layer
+overlap across many consecutive versions of two applications.
+
+%% =======================================================================
+\section{Problem Statement}
+\label{sec:background}
+
+When a platform keeps several versions of one container image resident
+on a node -- during a blue-green migration, or to hold tenants on the
+version they were validated against -- the question that decides
+capacity is whether the second instance costs a full memory footprint
+or a discounted one. Existing cost and placement models answer with a
+per-pair term: the fraction $f$ of libraries two arbitrary containers
+are assumed to share \cite{bravo2017more}, or the \emph{Shared}
+quantity by which two co-located versions of one service are
+discounted \cite{truyen2020flexible}. Both are properties of a
+\emph{specific pair of instances}, and both are consumed as model
+input rather than measured. Establishing what that term is actually
+worth is the problem this paper addresses.
+
+The quantity has a precise definition. Linux shares identical content
+between processes through its virtual-memory subsystem: each address
+space is a set of virtual memory areas (VMAs) mapping anonymous
+regions or file contents, and the frames backing a file-backed VMA
+come from the kernel's file cache, indexed by the file's inode
+\cite{mauerer2008linux}. Two processes share a \emph{file-backed}
+page's frame only when both map content resolving to the same inode
+\cite{inode}; bytes read from a separate copy, at a
+different path and hence a different inode, are faulted in twice.
+Residency in both processes is necessary but not sufficient. A shared
+library is mapped \texttt{MAP\_PRIVATE}, so a write by either side
+quietly replaces that side's copy of the page and leaves the other
+mapping the original -- the page stays resident in both, but is no
+longer one frame. What two instances share is therefore the set of
+physical frames they \emph{both} hold resident, and that is what we
+measure. Content a process reads without mapping falls outside the
+definition, since the page cache deduplicates it when the inode
+matches but it never enters a page table; our figures accordingly
+bound mapped sharing rather than all sharing
+(\S\ref{sec:implications}).
+
+No existing interface reports it. RSS counts every page a process
+maps, whatever else maps it. PSS divides each page's cost by its
+mapcount \cite{corbet2007pss}, and \texttt{smaps} splits resident
+memory into \emph{Shared} (mapcount $>1$ anywhere on the host) and
+\emph{Private} bytes. All three capture the \emph{degree} of sharing;
+none captures its \emph{identity}, because mapcount records how many
+processes map a page and never which ones. On a machine running
+nothing but the pair of interest the distinction collapses, which is
+why it has gone unremarked. On a production node also running a
+database, sidecars and unrelated tenants, an instance's Shared bytes
+include pages shared with none of the peers under consideration, so
+they overstate what moving a peer away would reclaim. Nor does
+measuring whole hosts recover it: one configuration's realized saving
+does not decompose into the per-pair quantities a cost model needs,
+and configurations are exponential in instance count. What is needed
+is the intersection itself -- the physical page-frame numbers (PFNs)
+both instances hold resident -- which \S\ref{sec:tool} computes
+directly.
+
+A cheaper proxy might seem possible, since \procpath{maps} prints a
+device and inode per mapping. But those columns are unreliable even
+for that test -- on an overlay mount we observed three containers
+report three different device numbers for one file -- and inode
+equality is necessary, not sufficient: it says nothing about how many
+pages were faulted in, nor does a shared inode survive one side
+writing to the page. Only resident page frames settle how much two
+instances actually share.
+
+%% =======================================================================
+\section{Related Work}
+\label{sec:related-work}
+
+Bravo Ferreira et al.\ \cite{bravo2017more} first demonstrated that
+shared image layers can produce genuine physical sharing, showing via
+\texttt{pmap} a kernel-tracked \emph{Shared} byte count for two
+containers union-mounted over a common library layer, none when the
+same content sits in a private file system. They build a bin-packing
+model around a free parameter $f$, the fraction of libraries two
+containers are assumed to share, and show even a small $f$ yields most
+of the achievable packing-density gain, motivated explicitly by FaaS
+platforms -- but $f$ is never measured for a real application. Truyen
+et al.\ \cite{truyen2020flexible} apply the same mechanism to two
+\emph{consecutive versions} of one application resident on a node
+during a migration step, reproducing that \texttt{smaps}-based
+measurement to support a cost model where demand is proportional to
+co-located instances, discounted by assumed sharing.
+
+Cheng et al.\ \cite{cheng2024slo} take layer-wise sharing as the basis
+for a placement algorithm rather than a cost model. Measuring host
+buffer/cache footprint as containers are spawned together or spread
+across machines, they find it stays flat rather than growing with
+instance count, and build heuristics that co-locate workflow functions
+to exploit that effect. Their quantity, measured at the host level,
+includes content a process reads without mapping, complementary to
+ours (\S\ref{sec:implications}). The workflows they place share a
+common runtime layer at the bottom of each image, exactly where
+\S\ref{sec:static-overlap} shows the shared-layer condition holds. Our
+results say what happens when that prefix is not intact, as when
+images are built independently, suggesting the benefit such an
+algorithm assumes is more fragile than a single shared base image
+makes it look.
+
+Medes \cite{saxena2022medes} also attributes redundancy to a specific
+pair of sandboxes, but differently: it fingerprints memory chunks by
+content hash and merges matches regardless of whether the kernel's
+inode-based cache would ever share them, without relying on or
+explaining that mechanism. Across this line of work, sharing is
+confirmed possible, engineered, or built into a cost model -- but the
+sharing a scheduler gets \emph{for free} from the container runtime
+alone is never measured for a real, evolving application, nor tied to
+the mechanism that grants or withholds it. This paper measures that
+quantity: the fraction Bravo Ferreira et al.'s model calls $f$, and
+Truyen et al.'s \emph{Shared}, directly and attributably, for both
+co-location patterns a scheduler must reason about.
+
+%% =======================================================================
+\section{Measurement Methodology}
+\label{sec:methodology}
+
+\subsection{Pairwise PFN-Intersection Tool}
+\label{sec:tool}
+
+To measure realized sharing between any two specific, named
+containers, we built a tool that, for each container, walks
+\procpath{maps} to enumerate its virtual memory areas and reads
+\procpath{pagemap} \cite{corbet2007pss} to resolve every resident
+virtual page to the PFN backing it. Given two containers, the tool
+computes the intersection of their resident PFN sets: any PFN present
+in both sets is a physical frame genuinely mapped by both containers
+at the moment of measurement, independent of whether the kernel's own
+\texttt{smaps} bookkeeping happens to also attribute that page to some
+other, unrelated mapper elsewhere on the host. It reports the
+intersection broken down by mapped file, so sharing can be attributed
+to the specific library or archive responsible, and separately
+intersects each container's \emph{anonymous} memory, non-zero only if
+same-page merging (KSM) is active -- ruling KSM in or out as a
+confound rather than assuming it away. Reading \texttt{pagemap}'s
+physical frame numbers requires elevated privileges, so the tool runs
+on the node, not inside either measured container; we use it as an
+offline, ground-truth instrument for testing cost-model assumptions,
+not as a mechanism intended to run inside a live scheduler. Applying
+it is independent of application or runtime -- only
+\S\ref{sec:app-workload} below is Keycloak-specific. The tool, the
+release-tag overlap script, and the raw measurements behind our
+figures are available at
+\url{https://github.com/k8-scalar/memory-sharing-between-container-pairs}.
+
+\subsection{Application and Workload}
+\label{sec:app-workload}
+
+We study Keycloak, an open-source identity and access management (IAM)
+application, for three reasons: it is JVM-based, so the shared
+artifacts central to \S\ref{sec:background} are present and
+measurable; it is natively multi-tenant, its \emph{Realm} construct
+isolating each tenant in one instance, exactly what a blue-green
+migration must reason about; and it has an actively maintained history
+spanning dozens of versions, which \S\ref{sec:static-overlap} needs to
+test the mechanism across real, independently built releases. Keycloak
+is not the highest-stakes case -- \S\ref{sec:implications} argues that
+is serverless model-serving, where mapped weights dwarf a JVM's
+artifacts -- which makes it a conservative choice: if the mechanism
+collapses sharing here, it is unlikely to spare an application with
+more at stake. We drive it with a fixed
+per-tenant workload: a login request, several backend introspection
+requests, a token refresh, more introspection requests, and a logout,
+repeated by each simulated user for the duration of a run, with
+randomized think-time between requests. Fixing this behavior keeps
+memory measurements comparable across runs and versions. We report
+results from a Kubernetes-hosted deployment of this workload, not from
+a commercial FaaS platform's own execution environment (cfr. threats to validity in \S\ref{sec:threats}).
+
+\subsection{Deployment Topology}
+\label{sec:topology}
+
+Experiments ran on a three-node Kubernetes cluster (one control-plane,
+two worker nodes), with all Keycloak instances and their PostgreSQL
+database on one worker node and load-generation and monitoring on the
+other. Workload was generated with K6 \cite{k6}, one pod per simulated
+tenant running the request sequence described above. Pod-level CPU and
+memory metrics were collected every 15\,s from each node's
+\texttt{/proc} and \texttt{/sys} hierarchies.
+
+%% =======================================================================
+\section{Quantifying Memory Sharing}
+\label{sec:results}
+
+\subsection{Static Layer Overlap}
+\label{sec:static-overlap}
+
+Whether two instances can share a mapped file at all is settled before
+either runs, by how their images were built. Images are stacked as
+layers, and when a container starts the runtime decompresses each
+layer once into its own \emph{snapshot} directory and stitches the
+relevant snapshots together through a union (overlay) file system
+\cite{ociimagespec,kerneloverlay}. Overlay mounts route a
+mapped file through to the underlying lower-layer file, so the inode
+backing a mapped library is the one inside that snapshot directory.
+Crucially, matching content is not enough to put two images in the
+same snapshot: the runtime names each snapshot by its \emph{ChainID},
+the cumulative hash of the uncompressed digests (diffIDs, from the
+image configuration rather than the manifest) of every layer at or
+below that position \cite{ociimagespec}. A shared snapshot at position
+$k$ therefore requires layers $0,\dots,k$ to be identical. If any
+earlier layer differs at all, every later layer is unpacked into a
+fresh, separately-inoded snapshot regardless of its own content, so
+two images can share every byte of an application's binaries and still
+map them through different inodes. A copy-up reaches the same outcome
+more simply: a container that writes to a file, or merely changes its
+mode at entrypoint, gets a private copy with its own inode even when
+the ChainIDs match. Both are properties of per-layer snapshotters such
+as overlayfs under containerd and Docker's \texttt{overlay2};
+content-addressed designs keying storage on file content instead,
+such as composefs \cite{composefs}, can share identical files across
+different layer chains.
+
+This gives a static bound we can compute without running anything.
+Comparing the ChainIDs of two images from position 0 finds the first
+position at which they diverge, and every layer before it would share
+a snapshot were the two ever unpacked on one node. We define
+\emph{snapshot overlap} between two images as the fraction of total
+image bytes, weighted by the manifest's per-layer sizes, falling
+inside that shared prefix: an upper bound, in advance of any runtime
+measurement, on how much two images could possibly share.
+
+To see how snapshot overlap depends on the size of an upgrade step, we
+bucket consecutive-release pairs by the level of the semantic-version
+identifier that changed between them. A \emph{build} step re-packages
+the same (major, minor, patch) triple with a new build number (e.g.\
+\texttt{26.1.2-1} $\to$ \texttt{26.1.2-2}); a \emph{patch} step changes
+the last version component (\texttt{26.1.2} $\to$ \texttt{26.1.3}); a
+\emph{minor} step changes the middle component (\texttt{26.1}
+$\to$ \texttt{26.2}); and a \emph{major} step changes the first
+(\texttt{25} $\to$ \texttt{26}). Within each granularity we take one
+representative tag per version unit -- the newest build of each patch,
+the newest patch of each minor, and so on -- and compute snapshot
+overlap over every consecutive forward pair of those representatives.
+We collected roughly 100 recent release tags each of two widely-used
+JVM applications, Keycloak (\texttt{v20.x.x-x} through
+\texttt{v26.x.x-x}, 96 tags) and Elasticsearch (\texttt{v8.x.x}
+through \texttt{v9.x.x}, 121 tags); the build granularity applies only
+to Keycloak, whose official image tags carry an explicit build suffix.
+Table~\ref{tab:static-overlap} reports the result.
+
+\begin{table}[t]
+  \centering
+  \caption{Static snapshot overlap by version-step granularity: mean
+    and max snapshot overlap as a percentage of image bytes, and the
+    number of consecutive-release pairs $n$ each figure is computed
+    over, and \emph{zero}, the number of those pairs sharing no
+    snapshot at all. The build granularity applies only to Keycloak.}
+  \label{tab:static-overlap}
+  \begin{tabular}{lcccc}
+    \toprule
+     & Build & Patch & Minor & Major \\
+    \midrule
+    \multicolumn{5}{l}{\textbf{Keycloak} (v20--v26, 96 tags)} \\
+    mean & 1.15\% & 1.34\% & 0.00\% & 0.00\% \\
+    max  & 13.1\% & 13.1\% & 0.0\%  & 0.0\%  \\
+    $n$  & 19     & 64     & 6      & 6      \\
+    zero & 15     & 38     & 6      & 6      \\
+    \midrule
+    \multicolumn{5}{l}{\textbf{Elasticsearch} (v8--v9, 121 tags)} \\
+    mean & \textemdash & 2.20\% & 0.87\% & 0.00\% \\
+    max  & \textemdash & 5.7\%  & 5.6\%  & 0.0\%  \\
+    $n$  & \textemdash & 97     & 22     & 1      \\
+    zero & \textemdash & 49    & 18     & 1      \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The result is striking, and the means understate it: most consecutive
+release pairs share no snapshot whatsoever (15 of 19 Keycloak build
+pairs, 38 of 64 patch pairs, 49 of 97 Elasticsearch patch pairs, and
+every Keycloak minor and major pair). The non-zero means come from a
+minority retaining a small base-OS prefix, not sharing spread evenly
+across the history. This bounds, ahead of any runtime measurement, how
+much two consecutive releases could possibly share -- including the
+multi-version tenancy case, where co-located versions are typically at
+least a patch apart: runtime sharing below can therefore never exceed
+a few percent once images are more than one patch apart, however
+favorable the runtime conditions.
+
+\subsection{Runtime Sharing: Same-Image Case}
+\label{sec:same-image}
+
+We co-located two instances of the identical Keycloak image on one
+node across ten recent patch versions (v26.0.0 to v26.2.2), let each
+pair settle for 30\,s, and measured PFN intersection between them.
+Realized sharing is small and stable across versions: mean 25.8\,MiB
+(s.d.\ 0.21\,MiB), around 3\% of the two-instance RSS union (RSS and
+PSS both near 900\,MiB) and around 5\% of one instance's own RSS. We
+report against RSS because RSS, not PSS, is what a cgroup memory limit
+enforces (\S\ref{sec:implications}); PSS's discount is a host-wide
+average over however many processes map a page, not an amount
+attributable to one co-located instance -- exactly the ambiguity our
+pairwise technique replaces. Here the choice barely matters: sharing is
+small enough that the RSS-sum and PSS-sum land within a percent of each
+other.
+
+Broken down by mapped file, shared bytes concentrate in a handful of
+JVM-internal artifacts rather than application code, which matters for
+how far the result generalizes: \texttt{libjvm.so} contributes roughly
+16\,MiB (92\% of its own 17.4\,MiB footprint, by far the largest
+share), \texttt{classes.jsa} \textasciitilde2.7\,MiB of 13.6\,MiB, and
+the runtime module image \textasciitilde3.2\,MiB of 148\,MiB.
+Keycloak's own \textasciitilde144\,MiB of application JARs contribute
+\emph{nothing} to this figure -- not because they fail to share, but
+because the class loader \texttt{pread}s rather than maps them, so
+they never acquire a VMA to intersect. They are shared nonetheless:
+\texttt{fincore} over the containers' snapshot directories shows the
+316 JARs under \texttt{lib/main} resident in the page cache and held
+once for both instances, some 122\,MiB invisible to a page-frame
+intersection. The 25.8\,MiB of mapped sharing is thus a lower bound.
+Anonymous-page PFN intersection -- non-zero only if same-page merging
+(KSM) were active -- was negligible on our nodes, ruling out KSM: the
+sharing we observe is entirely file-cache sharing of mapped files, not
+kernel deduplication of Keycloak's own heap.
+
+\subsection{Runtime Sharing: Multi-Version Tenancy Case}
+\label{sec:cross-version}
+
+If realized sharing survives the smallest possible image change, it is
+worth modeling in blue-green deployments. To find out, we compared two consecutive
+\emph{builds} of the same Keycloak patch version, \texttt{v26.1.2-1}
+and \texttt{v26.1.2-2}, which bundle the same OpenJDK build and are
+about as close to identical as two independently tagged, independently
+built releases ever get. We measured three pairs under a synchronized
+400-VU load ramp: two same-build baselines, as a sanity-check control
+against \S\ref{sec:same-image} rather than a result in their own right
+(both instances at \texttt{-1}: 25.84\,MiB shared; both at
+\texttt{-2}: 25.86\,MiB), and the cross-build pair, at 3\% static
+overlap (Table~\ref{tab:static-overlap}'s build column): 2.38\,MiB
+shared. The controls reproduce the same-image finding of
+\S\ref{sec:same-image} almost exactly -- two independent measurements
+of the identical configuration agree to within 0.02\,MiB. The
+cross-build pair is the informative one. Both images bundle the same
+OpenJDK build, so the two processes'
+\procpath{maps} list the same 41 file paths -- there is no
+sense in which the cross-build pair maps \emph{less} of the same
+content than the same-build pairs do. Yet realized sharing drops by an
+order of magnitude, from around 26\,MiB to 2.4\,MiB, and the 2.4\,MiB
+that remains comes entirely from base-OS files
+(\texttt{libc.so.6}, \texttt{libm.so.6}, \texttt{ld-linux}, locale
+data) in the layer prefix the two images do still share.
+
+To see exactly what changed, we unpacked all five image layers of both
+builds and diffed every tar member. The two base layers (L0, L1) are
+identical. Only seven files, 14\,MiB in total, differ in
+\emph{content}, and all seven sit in L2, the distribution rootfs,
+alongside 936 members differing only in \texttt{mtime}. Above it, L3 --
+the layer that installs Keycloak itself, including every file whose
+sharing we measured -- has all 444 of its regular files bit-for-bit
+identical between the builds, and records just six \texttt{mtime}
+differences, all on directories; L4 records three. Since those
+timestamps sit inside the archives, the uncompressed digests differ
+wherever the archives do, and the ChainID diverges from L2 upward.
+
+These few timestamp bytes are enough to break sharing across the whole
+image: once L2's contents differ, L3 and L4 are unpacked into fresh,
+separately-inoded snapshots \emph{regardless of their own content}. We
+confirmed this directly rather than inferring it: resolving each
+container's overlay lowerdir chain and calling \texttt{stat} on the
+resulting snapshot paths puts the two builds' copies of
+\texttt{libjvm.so} at distinct inodes, versus one shared inode for two
+instances of the same build, the files being byte-identical at
+27{,}258{,}184 bytes either way. The unmapped content divides the same
+way: the two builds' JAR sets resolve to different inodes, turning the
+122\,MiB cached once for a same-image pair into two copies (122 and
+131\,MiB). A manifest still showing large declared overlap -- L0's
+22\,MiB base layer untouched, L3's 156\,MiB Keycloak-install layer
+byte-identical -- thus yields almost none of the physical sharing it
+suggests, purely because of where in the stack the six-byte difference
+sits.
+
+%% =======================================================================
+\section{Implications for Cost-effective Scheduling Policies}
+\label{sec:implications}
+
+These results argue against crediting assumed sharing in placement or
+capacity decisions. Even the most favorable case maps only a few
+percent of either instance's resident memory in common, and that
+ceiling collapses by an order of magnitude once co-located versions
+diverge -- which they routinely do once a platform serves tenants from
+independently released versions. A scheduler built on an
+overlap-aware placement model \cite{bravo2017more} would be optimizing
+for a benefit largely absent in exactly the scenario it targets. The
+collapse is partly a build artifact: pinning layer timestamps would
+recover the gap from 2.4\,MiB to 25.8\,MiB, reaching but not passing
+the same-image ceiling. Keying snapshot identity on \emph{content}
+rather than layer \emph{position} -- composefs \cite{composefs} being
+the most developed proposal -- addresses the cause directly,
+recovering both channels without demanding reproducible builds from
+every producer; neither remedy raises the same-image ceiling itself, a
+property of the application, not the store.
+
+Structurally, crediting sharing inside an instance's declared memory
+limit is unsafe however much sharing exists. A PSS-style credit
+assumes a shared page's cost splits between its mappers, but cgroups
+implement no such split: the kernel charges a memory area in full to
+whichever cgroup instantiated it, and for an area used from different
+cgroups \emph{``to which cgroup the area will be charged is
+in-deterministic''} \cite{kernelcg}. A limit set below an instance's
+full resident footprint, assuming half of some shared region is billed
+to a neighbour, can therefore fail in either direction: the kernel may
+charge the \emph{entire} region to that one instance and OOM-kill it,
+while the neighbour runs with headroom nobody budgeted for. This is
+consistent with Kubernetes requiring request and limit to be equal
+under its strictest QoS class \cite{k8sqos}.
+
+One channel our measurement deliberately excludes deserves an explicit
+answer, because recent work builds a placement algorithm on it. Cheng
+et al.\ \cite{cheng2024slo} report that the host buffer/cache
+footprint of five co-located containers of one function stays flat
+instead of growing fivefold, and place workflow functions to maximize
+that effect. Their quantity is the page cache of image-layer files,
+including content a process reads rather than maps, which
+\S\ref{sec:background} excludes from ours. The two results are
+compatible: content is cached once per inode whether or not anyone
+maps it, and only the mapped subset can enter a page-table
+intersection. It does not,
+however, rescue the cost-effectiveness argument. Page cache filled by reads is
+clean and reclaimable, and cgroup v2 charges it to whichever cgroup
+touched it first \cite{kernelcg}, so it fails as a cost-effectiveness lever
+twice: it does not reduce the declared figure admission control
+allocates against -- a Kubernetes request, or an OpenWhisk invoker
+slot, is set in advance, not measured from what the kernel cached --
+and it is not a committed claim on memory at all, since the kernel
+evicts it under pressure. Saving it lowers host memory pressure, but
+admits no additional container.
+
+The stakes rise sharply for serverless inference, where a model
+server's resident memory is dominated not by a language runtime but by
+model weights: hundreds of megabytes to tens of gigabytes and
+byte-identical across every instance serving it. Zero-copy
+formats such as safetensors, or the GGUF files \texttt{llama.cpp}
+maps, enter the address space through \texttt{mmap} and fall inside
+the quantity measured here; loaders that read weights into anonymous
+memory land in the page-cache channel instead. Either way the inode
+condition decides whether two co-located instances pay once or twice,
+so the mechanism of \S\ref{sec:static-overlap} applies unchanged --
+over objects three orders of magnitude larger, often delivered through
+mounted volumes rather than image layers, which changes which
+rule governs the inode. Measuring that is the obvious next step.
+
+%% =======================================================================
+\section{Threats to Validity}
+\label{sec:threats}
+
+Our measurement counts only pages both instances map. Content a
+container reads without mapping -- for Keycloak, the
+\textasciitilde144\,MiB of JARs -- is still deduplicated in the page
+cache when the inode matches, a channel reported as substantial for
+small function images \cite{cheng2024slo}. Our figures are therefore a
+lower bound, and the gap is application-dependent: a runtime mapping
+most of what it reads would show little difference, one reading most
+of it a large one. The measurements are strictly pairwise; host-level
+saving across more than two instances is bounded by one cached copy.
+The page-cache figures of \S\ref{sec:same-image}--\ref{sec:cross-version}
+come from one exemplary set on an idle node; characterizing that
+channel across versions and under memory pressure is future work.
+
+Our measurements come from one application family, a JVM service whose
+shareable memory sits in a few memory-mapped native libraries and a
+class-data-sharing archive. A different runtime profile -- a
+statically-linked binary, or one mapping more of its own files -- could
+realize a different fraction; the mechanism is not JVM-specific, but
+the magnitude is. The cross-version experiment rests on three pairs,
+adequate given the 0.02\,MiB spread between same-build controls. Results
+come from Kubernetes, not a commercial FaaS environment; generalization
+rests on the kernel and OCI mechanism, both orchestrator-independent.
+
+%% =======================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+Crediting assumed memory sharing between co-located containers raises
+resource utilization, but the credit has never been measured precisely
+for a specific pair. Using pairwise page-frame intersection, we
+measured it for a JVM-based service in two situations: concurrent
+instances of one version, and tenant-pinned versions on a host. Sharing
+is small in the first case and collapses by an order of magnitude in
+the second, driven by how snapshots are identified, not by the
+application. A sharing discount should not be assumed from
+layer similarity alone, especially once co-located versions are
+built independently.
+
+%% ---------------------------------------------------------------------
+%% GENERATIVE AI DISCLOSURE.
+%% ---------------------------------------------------------------------
+\begin{acks}
+This research is partially funded by the Internal Funds KU Leuven. An
+AI assistant (Claude, Anthropic) was used while preparing this
+manuscript: for discussion and verification of the measurement
+methodology and of related work, for drafting and revising prose under
+the authors' direction, and for assembling the \LaTeX{} scaffold. All
+experimental results, data, and conclusions are the authors' own, and
+AI-assisted text was reviewed and edited by the authors, who take full
+responsibility for the submitted content.
+\end{acks}
+
+{\footnotesize
+\printbibliography
+}
+
+\end{document}
