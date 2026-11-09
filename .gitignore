@@ -1,0 +1,41 @@
+# --- Python -----------------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.python-version
+
+# Virtual envs (the repo expects exactly one at ./.venv created via
+# scripts/install-python.sh; keep it out of the index).
+.venv/
+venv/
+env/
+
+# --- Node / UI (kept here too so a fresh clone at root catches them) --------
+node_modules/
+
+# --- Secrets ----------------------------------------------------------------
+# .env files often hold cluster tokens (INFLUXDB_TOKEN, etc.). Default-ignore
+# them everywhere; commit *.env.example files instead if a template is needed.
+.env
+.env.local
+.env.*.local
+
+# --- OS / editor cruft ------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+
+# --- Logs (existing rules, preserved) ---------------------------------------
+*.log
+*.local
+bin/
+logs/
