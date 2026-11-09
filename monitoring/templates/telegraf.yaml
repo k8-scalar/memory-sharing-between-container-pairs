@@ -1,0 +1,166 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: telegraf
+  namespace: {{ .Release.Namespace }}
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: telegraf
+rules:
+  - apiGroups: [""]
+    resources: ["nodes/metrics", "nodes/proxy"]
+    verbs: ["get"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: telegraf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: telegraf
+subjects:
+  - kind: ServiceAccount
+    name: telegraf
+    namespace: {{ .Release.Namespace }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegraf-node-config
+  namespace: {{ .Release.Namespace }}
+data:
+  telegraf.conf: |
+    # Telegraf Configuration for Node Monitoring (DaemonSet)
+    # Collects system metrics from the host (CPU, Memory, Disk, etc.)
+    # AND pod metrics from local cAdvisor
+
+    [agent]
+      interval = "3s"
+      round_interval = true
+      metric_batch_size = 1000
+      metric_buffer_limit = 10000
+      collection_jitter = "0s"
+      flush_interval = "3s"
+      flush_jitter = "0s"
+      precision = ""
+      hostname = "$HOSTNAME"
+      omit_hostname = false
+
+    # ============================================
+    # INPUTS - System Metrics
+    # ============================================
+
+    [[inputs.cpu]]
+      percpu = true
+      totalcpu = true
+      collect_cpu_time = false
+      report_active = false
+
+    [[inputs.mem]]
+    # No additional config needed
+
+    [[inputs.disk]]
+      ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+
+    [[inputs.diskio]]
+    # No additional config needed
+
+    [[inputs.kernel]]
+    # No additional config needed
+
+    [[inputs.processes]]
+    # No additional config needed
+
+    [[inputs.swap]]
+    # No additional config needed
+
+    [[inputs.system]]
+    # No additional config needed
+
+    [[inputs.net]]
+      interfaces = ["eth0", "ens3", "enp*"] # Modify as needed for your specific network interface names
+
+    # ============================================
+    # INPUTS - Pod Metrics (cAdvisor)
+    # ============================================
+
+    # Prometheus input - scrape LOCAL kubelet cAdvisor for container metrics
+    [[inputs.prometheus]]
+      urls = ["https://$HOST_IP:10250/metrics/cadvisor"]
+      bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+      tls_ca = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+      insecure_skip_verify = true
+      # Capture all container metrics for broad visibility
+      namepass = ["container_*"]
+      [inputs.prometheus.tags]
+        source = "cadvisor"
+
+    # ============================================
+    # OUTPUTS
+    # ============================================
+
+    [[outputs.influxdb_v2]]
+      urls = ["http://influxdb.{{ .Release.Namespace }}.svc.cluster.local:8086"]
+      token = "{{ .Values.influxdb.adminToken }}"
+      organization = "{{ .Values.influxdb.org }}"
+      bucket = "metrics-nodes"
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: telegraf-node
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: telegraf-node
+spec:
+  selector:
+    matchLabels:
+      app: telegraf-node
+  template:
+    metadata:
+      labels:
+        app: telegraf-node
+    spec:
+      serviceAccountName: telegraf
+      containers:
+      - name: telegraf
+        image: "{{ .Values.telegraf.image.repository }}:{{ .Values.telegraf.image.tag }}"
+        env:
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: HOST_PROC
+          value: /hostfs/proc
+        - name: HOST_SYS
+          value: /hostfs/sys
+        - name: HOST_ETC
+          value: /hostfs/etc
+        name: telegraf
+        resources:
+          {{- toYaml .Values.telegraf.resources | nindent 10 }}
+        volumeMounts:
+        - name: config
+          mountPath: /etc/telegraf
+          readOnly: true
+        - name: hostfs
+          mountPath: /hostfs
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: telegraf-node-config
+      - name: hostfs
+        hostPath:
+          path: /

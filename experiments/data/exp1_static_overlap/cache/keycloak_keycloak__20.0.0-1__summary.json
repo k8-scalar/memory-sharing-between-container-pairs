@@ -1,0 +1,32 @@
+{
+  "image": "keycloak/keycloak",
+  "tag": "20.0.0-1",
+  "layers": [
+    {
+      "digest": "sha256:762908e901a628d2f6f7967c6f0ea9c3723c0c53318592508c518772afaa417d",
+      "compressed_size": 39199812,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c rm -f /tmp/tls-ca-bundle.pem",
+      "chain_id": "sha256:00a3d7f85a7283b4833ceb32f361408e8e7eebe6d75e9ce5b9525f0106075e35"
+    },
+    {
+      "digest": "sha256:449be35ac9c3ced9adce74ae8a7d4d65df1c3d0d6da708a07435e3b39cc837ce",
+      "compressed_size": 172422613,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY /opt/keycloak /opt/keycloak # buildkit",
+      "chain_id": "sha256:69261b17947ced139b926fc144c0a2ca1987e9ad1f7061a30b1a88c4349084e3"
+    },
+    {
+      "digest": "sha256:948b7493bb5bb3b5a23cc65f7d3131a8b95dc02d2cc4ea8ab99c0c23d076ce34",
+      "compressed_size": 87242633,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "RUN /bin/sh -c microdnf update -y &&     microdnf install -y --nodocs java-11-openjdk-headless glibc-langpack-en && microdnf clean all && rm -rf /var/cache/yum/* &&     echo \"keycloak:x:0:root\" >> /etc/group &&     echo \"keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin\" >> /etc/passwd # buildkit",
+      "chain_id": "sha256:86f2899afbab272f728698468ae7b9dfcf8f87d1540c9f64de74576c3201461d"
+    }
+  ],
+  "total_compressed": 298865058,
+  "layer_count": 3,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2022-12-06T19:10:44.424799116Z"
+}

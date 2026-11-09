@@ -1,0 +1,183 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "User": "1000:0",
+    "ExposedPorts": {
+      "9200/tcp": {},
+      "9300/tcp": {}
+    },
+    "Env": [
+      "PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "ELASTIC_CONTAINER=true"
+    ],
+    "Entrypoint": [
+      "/bin/tini",
+      "--",
+      "/usr/local/bin/docker-entrypoint.sh"
+    ],
+    "Cmd": [
+      "eswrapper"
+    ],
+    "WorkingDir": "/usr/share/elasticsearch",
+    "Labels": {
+      "org.label-schema.build-date": "2023-09-14T20:16:27.027355296Z",
+      "org.label-schema.license": "Elastic-License-2.0",
+      "org.label-schema.name": "Elasticsearch",
+      "org.label-schema.schema-version": "1.0",
+      "org.label-schema.url": "https://www.elastic.co/products/elasticsearch",
+      "org.label-schema.usage": "https://www.elastic.co/guide/en/elasticsearch/reference/index.html",
+      "org.label-schema.vcs-ref": "a94744f97522b2b7ee8b5dc13be7ee11082b8d6b",
+      "org.label-schema.vcs-url": "https://github.com/elastic/elasticsearch",
+      "org.label-schema.vendor": "Elastic",
+      "org.label-schema.version": "8.10.1",
+      "org.opencontainers.image.created": "2023-09-14T20:16:27.027355296Z",
+      "org.opencontainers.image.documentation": "https://www.elastic.co/guide/en/elasticsearch/reference/index.html",
+      "org.opencontainers.image.licenses": "Elastic-License-2.0",
+      "org.opencontainers.image.ref.name": "ubuntu",
+      "org.opencontainers.image.revision": "a94744f97522b2b7ee8b5dc13be7ee11082b8d6b",
+      "org.opencontainers.image.source": "https://github.com/elastic/elasticsearch",
+      "org.opencontainers.image.title": "Elasticsearch",
+      "org.opencontainers.image.url": "https://www.elastic.co/products/elasticsearch",
+      "org.opencontainers.image.vendor": "Elastic",
+      "org.opencontainers.image.version": "8.10.1"
+    },
+    "ArgsEscaped": true,
+    "OnBuild": null
+  },
+  "created": "2023-09-14T20:23:31.448291366Z",
+  "history": [
+    {
+      "created": "2023-08-01T06:16:43.955733321Z",
+      "created_by": "/bin/sh -c #(nop)  ARG RELEASE",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-08-01T06:16:44.018270958Z",
+      "created_by": "/bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-08-01T06:16:44.073377052Z",
+      "created_by": "/bin/sh -c #(nop)  LABEL org.opencontainers.image.ref.name=ubuntu",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-08-01T06:16:44.123822186Z",
+      "created_by": "/bin/sh -c #(nop)  LABEL org.opencontainers.image.version=20.04",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-08-01T06:16:45.820326219Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:233702cd816c07bc9fed02881b11fb3bdcaee41f3ce3ec1c9f0c4a060b155d5b in / "
+    },
+    {
+      "created": "2023-08-01T06:16:46.059984082Z",
+      "created_by": "/bin/sh -c #(nop)  CMD [\"/bin/bash\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-09-14T20:23:07.355924276Z",
+      "created_by": "RUN /bin/sh -c yes no | dpkg-reconfigure dash &&     for iter in 1 2 3 4 5 6 7 8 9 10; do       export DEBIAN_FRONTEND=noninteractive &&       apt-get update &&       apt-get upgrade -y &&       apt-get install -y --no-install-recommends         ca-certificates curl netcat p11-kit unzip zip  &&       apt-get clean &&       rm -rf /var/lib/apt/lists/* &&       exit_code=0 && break ||         exit_code=$? && echo \"apt-get error: retry $iter in 10s\" && sleep 10;     done;     exit $exit_code # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2023-09-14T20:23:08.268573108Z",
+      "created_by": "RUN /bin/sh -c groupadd -g 1000 elasticsearch &&     adduser --uid 1000 --gid 1000 --home /usr/share/elasticsearch elasticsearch &&     adduser elasticsearch root &&     chown -R 0:0 /usr/share/elasticsearch # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2023-09-14T20:23:08.599072615Z",
+      "created_by": "ENV ELASTIC_CONTAINER=true",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-09-14T20:23:08.599072615Z",
+      "created_by": "WORKDIR /usr/share/elasticsearch",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2023-09-14T20:23:29.247805961Z",
+      "created_by": "COPY /usr/share/elasticsearch /usr/share/elasticsearch # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2023-09-14T20:23:29.34350168Z",
+      "created_by": "COPY /bin/tini /bin/tini # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2023-09-14T20:23:29.34350168Z",
+      "created_by": "ENV PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-09-14T20:23:29.409753536Z",
+      "created_by": "COPY bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2023-09-14T20:23:30.209435668Z",
+      "created_by": "RUN /bin/sh -c chmod g=u /etc/passwd &&     chmod 0555 /usr/local/bin/docker-entrypoint.sh &&     find / -xdev -perm -4000 -exec chmod ug-s {} + &&     chmod 0775 /usr/share/elasticsearch &&     chown elasticsearch bin config config/jvm.options.d data logs plugins # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2023-09-14T20:23:30.275532945Z",
+      "created_by": "COPY bin/docker-openjdk /etc/ca-certificates/update.d/docker-openjdk # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2023-09-14T20:23:31.448291366Z",
+      "created_by": "RUN /bin/sh -c /etc/ca-certificates/update.d/docker-openjdk # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2023-09-14T20:23:31.448291366Z",
+      "created_by": "EXPOSE map[9200/tcp:{} 9300/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-09-14T20:23:31.448291366Z",
+      "created_by": "LABEL org.label-schema.build-date=2023-09-14T20:16:27.027355296Z org.label-schema.license=Elastic-License-2.0 org.label-schema.name=Elasticsearch org.label-schema.schema-version=1.0 org.label-schema.url=https://www.elastic.co/products/elasticsearch org.label-schema.usage=https://www.elastic.co/guide/en/elasticsearch/reference/index.html org.label-schema.vcs-ref=a94744f97522b2b7ee8b5dc13be7ee11082b8d6b org.label-schema.vcs-url=https://github.com/elastic/elasticsearch org.label-schema.vendor=Elastic org.label-schema.version=8.10.1 org.opencontainers.image.created=2023-09-14T20:16:27.027355296Z org.opencontainers.image.documentation=https://www.elastic.co/guide/en/elasticsearch/reference/index.html org.opencontainers.image.licenses=Elastic-License-2.0 org.opencontainers.image.revision=a94744f97522b2b7ee8b5dc13be7ee11082b8d6b org.opencontainers.image.source=https://github.com/elastic/elasticsearch org.opencontainers.image.title=Elasticsearch org.opencontainers.image.url=https://www.elastic.co/products/elasticsearch org.opencontainers.image.vendor=Elastic org.opencontainers.image.version=8.10.1",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-09-14T20:23:31.448291366Z",
+      "created_by": "ENTRYPOINT [\"/bin/tini\" \"--\" \"/usr/local/bin/docker-entrypoint.sh\"]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-09-14T20:23:31.448291366Z",
+      "created_by": "CMD [\"eswrapper\"]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2023-09-14T20:23:31.448291366Z",
+      "created_by": "USER 1000:0",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    }
+  ],
+  "moby.buildkit.buildinfo.v1": "eyJmcm9udGVuZCI6ImRvY2tlcmZpbGUudjAiLCJhdHRycyI6eyJmaWxlbmFtZSI6IkRvY2tlcmZpbGUifSwic291cmNlcyI6W3sidHlwZSI6ImRvY2tlci1pbWFnZSIsInJlZiI6ImRvY2tlci5pby9saWJyYXJ5L3VidW50dToyMC4wNCIsInBpbiI6InNoYTI1Njo5NTRjODJiZGViNWZjYzgwMDk0MzE3NTI4ZmEzZmNiYjEwMjZhZWZmNjRmODcyNTI3ZDM1ZWM5YjQzNDNiODRkIn0seyJ0eXBlIjoiZG9ja2VyLWltYWdlIiwicmVmIjoiZG9ja2VyLmlvL2xpYnJhcnkvdWJ1bnR1OjIwLjA0In1dfQ==",
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:954c82bdeb5fcc80094317528fa3fcbb1026aeff64f872527d35ec9b4343b84d",
+      "sha256:37c19819df20f8b115ee4d47f3f6b513a56c899dc8588cdc16597c060f3fff05",
+      "sha256:45090623363ff02be2e3bae4fa3dfee28cd23c1f1a143c4af35c12fa229a1507",
+      "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "sha256:8e60b4fb847e2523345d8238965c8917575e50bc3dd6f13b194b54f8a2c4d29d",
+      "sha256:1800f41ffe9411ed48b7f62140f50b26cd5230629d4759d3dbf19d61a5959e74",
+      "sha256:f67d6da14c2707331b3463173d0a802bea000322ca2956b4480a531af026d4d8",
+      "sha256:686a5d4d04dc2507dc8d9438fe8b8798edb89646af31c88b2f5bae0b04b24f0c",
+      "sha256:26ee0c82f554fb7556f2a47638919b9c2af6bf04b4fb06e53c96d635a6ed2130",
+      "sha256:67663e7fb10928e0b30311e47d3039eb8f70efaf664ef07ae425874d3e8878e4"
+    ]
+  }
+}

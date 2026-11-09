@@ -1,0 +1,214 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "Hostname": "",
+    "Domainname": "",
+    "User": "",
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "AttachStderr": false,
+    "ExposedPorts": {
+      "9200/tcp": {},
+      "9300/tcp": {}
+    },
+    "Tty": false,
+    "OpenStdin": false,
+    "StdinOnce": false,
+    "Env": [
+      "PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin",
+      "LANG=C.UTF-8",
+      "JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre",
+      "JAVA_VERSION=8u131",
+      "JAVA_ALPINE_VERSION=8.131.11-r2",
+      "GPG_KEY=46095ACC8548582C1A2699A9D27D666CD88E42B4",
+      "ELASTICSEARCH_VERSION=5.6.3",
+      "ELASTICSEARCH_TARBALL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.tar.gz",
+      "ELASTICSEARCH_TARBALL_ASC=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.tar.gz.asc",
+      "ELASTICSEARCH_TARBALL_SHA1=d5e4b61038f2cc3ec7ae5cbecf3406c7ecc7a1c4"
+    ],
+    "Cmd": [
+      "elasticsearch"
+    ],
+    "ArgsEscaped": true,
+    "Image": "sha256:d4aef608e1766a81e760591a5e0b5bd00988c77ec97ff7e3ab178950ba14b7d1",
+    "Volumes": {
+      "/usr/share/elasticsearch/data": {}
+    },
+    "WorkingDir": "/usr/share/elasticsearch",
+    "Entrypoint": [
+      "/docker-entrypoint.sh"
+    ],
+    "OnBuild": [],
+    "Labels": null
+  },
+  "container": "af6f16e208cd474d3d5208b21ae4553d5411378aecaafd6a8655701eab31cf37",
+  "container_config": {
+    "Hostname": "af6f16e208cd",
+    "Domainname": "",
+    "User": "",
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "AttachStderr": false,
+    "ExposedPorts": {
+      "9200/tcp": {},
+      "9300/tcp": {}
+    },
+    "Tty": false,
+    "OpenStdin": false,
+    "StdinOnce": false,
+    "Env": [
+      "PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin",
+      "LANG=C.UTF-8",
+      "JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre",
+      "JAVA_VERSION=8u131",
+      "JAVA_ALPINE_VERSION=8.131.11-r2",
+      "GPG_KEY=46095ACC8548582C1A2699A9D27D666CD88E42B4",
+      "ELASTICSEARCH_VERSION=5.6.3",
+      "ELASTICSEARCH_TARBALL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.tar.gz",
+      "ELASTICSEARCH_TARBALL_ASC=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.tar.gz.asc",
+      "ELASTICSEARCH_TARBALL_SHA1=d5e4b61038f2cc3ec7ae5cbecf3406c7ecc7a1c4"
+    ],
+    "Cmd": [
+      "/bin/sh",
+      "-c",
+      "#(nop) ",
+      "CMD [\"elasticsearch\"]"
+    ],
+    "ArgsEscaped": true,
+    "Image": "sha256:d4aef608e1766a81e760591a5e0b5bd00988c77ec97ff7e3ab178950ba14b7d1",
+    "Volumes": {
+      "/usr/share/elasticsearch/data": {}
+    },
+    "WorkingDir": "/usr/share/elasticsearch",
+    "Entrypoint": [
+      "/docker-entrypoint.sh"
+    ],
+    "OnBuild": [],
+    "Labels": {}
+  },
+  "created": "2017-11-04T06:49:41.637301055Z",
+  "docker_version": "17.06.2-ce",
+  "history": [
+    {
+      "created": "2017-11-03T22:10:18.456471742Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:1e87ff33d1b6765b793888cd50e01b2bd0dfe152b7dbb4048008bfc2658faea7 in / "
+    },
+    {
+      "created": "2017-11-03T22:10:18.605674287Z",
+      "created_by": "/bin/sh -c #(nop)  CMD [\"/bin/sh\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T05:41:40.034945557Z",
+      "created_by": "/bin/sh -c #(nop)  ENV LANG=C.UTF-8",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T05:41:40.732106165Z",
+      "created_by": "/bin/sh -c { \t\techo '#!/bin/sh'; \t\techo 'set -e'; \t\techo; \t\techo 'dirname \"$(dirname \"$(readlink -f \"$(which javac || which java)\")\")\"'; \t} > /usr/local/bin/docker-java-home \t&& chmod +x /usr/local/bin/docker-java-home"
+    },
+    {
+      "created": "2017-11-04T05:50:52.638923619Z",
+      "created_by": "/bin/sh -c #(nop)  ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T05:50:52.81392203Z",
+      "created_by": "/bin/sh -c #(nop)  ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T05:50:52.963032699Z",
+      "created_by": "/bin/sh -c #(nop)  ENV JAVA_VERSION=8u131",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T05:50:53.155098373Z",
+      "created_by": "/bin/sh -c #(nop)  ENV JAVA_ALPINE_VERSION=8.131.11-r2",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T05:51:00.134852421Z",
+      "created_by": "/bin/sh -c set -x \t&& apk add --no-cache \t\topenjdk8-jre=\"$JAVA_ALPINE_VERSION\" \t&& [ \"$JAVA_HOME\" = \"$(docker-java-home)\" ]"
+    },
+    {
+      "created": "2017-11-04T06:49:23.145590635Z",
+      "created_by": "/bin/sh -c addgroup -S elasticsearch && adduser -S -G elasticsearch elasticsearch"
+    },
+    {
+      "created": "2017-11-04T06:49:27.128623932Z",
+      "created_by": "/bin/sh -c apk add --no-cache 'su-exec>=0.2' bash"
+    },
+    {
+      "created": "2017-11-04T06:49:27.310439274Z",
+      "created_by": "/bin/sh -c #(nop)  ENV GPG_KEY=46095ACC8548582C1A2699A9D27D666CD88E42B4",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T06:49:27.502700871Z",
+      "created_by": "/bin/sh -c #(nop) WORKDIR /usr/share/elasticsearch"
+    },
+    {
+      "created": "2017-11-04T06:49:27.669591611Z",
+      "created_by": "/bin/sh -c #(nop)  ENV PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T06:49:27.826737937Z",
+      "created_by": "/bin/sh -c #(nop)  ENV ELASTICSEARCH_VERSION=5.6.3",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T06:49:27.9859728Z",
+      "created_by": "/bin/sh -c #(nop)  ENV ELASTICSEARCH_TARBALL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.tar.gz ELASTICSEARCH_TARBALL_ASC=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.tar.gz.asc ELASTICSEARCH_TARBALL_SHA1=d5e4b61038f2cc3ec7ae5cbecf3406c7ecc7a1c4",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T06:49:40.491589584Z",
+      "created_by": "/bin/sh -c set -ex; \t\tapk add --no-cache --virtual .fetch-deps \t\tca-certificates \t\tgnupg \t\topenssl \t\ttar \t; \t\twget -O elasticsearch.tar.gz \"$ELASTICSEARCH_TARBALL\"; \t\tif [ \"$ELASTICSEARCH_TARBALL_SHA1\" ]; then \t\techo \"$ELASTICSEARCH_TARBALL_SHA1 *elasticsearch.tar.gz\" | sha1sum -c -; \tfi; \t\tif [ \"$ELASTICSEARCH_TARBALL_ASC\" ]; then \t\twget -O elasticsearch.tar.gz.asc \"$ELASTICSEARCH_TARBALL_ASC\"; \t\texport GNUPGHOME=\"$(mktemp -d)\"; \t\tgpg --keyserver ha.pool.sks-keyservers.net --recv-keys \"$GPG_KEY\"; \t\tgpg --batch --verify elasticsearch.tar.gz.asc elasticsearch.tar.gz; \t\trm -rf \"$GNUPGHOME\" elasticsearch.tar.gz.asc; \tfi; \t\ttar -xf elasticsearch.tar.gz --strip-components=1; \trm elasticsearch.tar.gz; \t\tapk del .fetch-deps; \t\tmkdir -p ./plugins; \tfor path in \t\t./data \t\t./logs \t\t./config \t\t./config/scripts \t; do \t\tmkdir -p \"$path\"; \t\tchown -R elasticsearch:elasticsearch \"$path\"; \tdone; \t\texport ES_JAVA_OPTS='-Xms32m -Xmx32m'; \tif [ \"${ELASTICSEARCH_VERSION%%.*}\" -gt 1 ]; then \t\telasticsearch --version; \telse \t\telasticsearch -v; \tfi"
+    },
+    {
+      "created": "2017-11-04T06:49:40.754948038Z",
+      "created_by": "/bin/sh -c #(nop) COPY dir:c3faa196a3b1c87063ffe0be6ee20b5f2b36a9589fd93336acab4ba1aa6f6855 in ./config "
+    },
+    {
+      "created": "2017-11-04T06:49:40.92579863Z",
+      "created_by": "/bin/sh -c #(nop)  VOLUME [/usr/share/elasticsearch/data]",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T06:49:41.173870473Z",
+      "created_by": "/bin/sh -c #(nop) COPY file:2c17a92e4308bdce9fe8a119d9cc5794f0aff8c512a55882b834e2e8404b0112 in / "
+    },
+    {
+      "created": "2017-11-04T06:49:41.3251806Z",
+      "created_by": "/bin/sh -c #(nop)  EXPOSE 9200/tcp 9300/tcp",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T06:49:41.481714816Z",
+      "created_by": "/bin/sh -c #(nop)  ENTRYPOINT [\"/docker-entrypoint.sh\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2017-11-04T06:49:41.637301055Z",
+      "created_by": "/bin/sh -c #(nop)  CMD [\"elasticsearch\"]",
+      "empty_layer": true
+    }
+  ],
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:2aebd096e0e237b447781353379722157e6c2d434b9ec5a0d63f2a6f07cf90c2",
+      "sha256:7f22a835d8bae6293dcbc1596b0c3824a594bf8b85b8e6d8091c8fcf84c90434",
+      "sha256:6abaa286b4af3886545ebeeab30e559efacf1d8d8a471ef5b28cb18799215956",
+      "sha256:2e161a0197933ab4ba02b59730806cd5f4d180f3970466042a99145045094f9c",
+      "sha256:ae0f8f657654b41bfea782b9899e705ae432f80424a8859cafc741fe64fb932b",
+      "sha256:20f484ce5920bfd146486c474de8f0c823d94004a2c48554a312d678f2245b7f",
+      "sha256:e83064256d90a14877a1d11e050930c6e74d183552718afbb6bc5123cb81e38f",
+      "sha256:893d164f80bf621dfc74df4bc9bd266f5689125d98de9d164c24d3caa72cdd76",
+      "sha256:2dd2a92ec090d9c6f511e446a6407b5b573fa59bc77ab01d75fa9ac741fc767c"
+    ]
+  }
+}

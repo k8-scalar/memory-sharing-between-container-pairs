@@ -1,0 +1,186 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "Hostname": "",
+    "Domainname": "",
+    "User": "",
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "AttachStderr": false,
+    "ExposedPorts": {
+      "9200/tcp": {},
+      "9300/tcp": {}
+    },
+    "Tty": false,
+    "OpenStdin": false,
+    "StdinOnce": false,
+    "Env": [
+      "PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "ELASTIC_CONTAINER=true",
+      "JAVA_HOME=/opt/jdk-11.0.1"
+    ],
+    "Cmd": [
+      "eswrapper"
+    ],
+    "ArgsEscaped": true,
+    "Image": "sha256:4e1879b5590eb77221510f4ac431e71f75082a16d269ccc8d57eb1d763c663d6",
+    "Volumes": null,
+    "WorkingDir": "/usr/share/elasticsearch",
+    "Entrypoint": [
+      "/usr/local/bin/docker-entrypoint.sh"
+    ],
+    "OnBuild": null,
+    "Labels": {
+      "license": "Elastic License",
+      "org.label-schema.build-date": "20181205",
+      "org.label-schema.license": "GPLv2",
+      "org.label-schema.name": "elasticsearch",
+      "org.label-schema.schema-version": "1.0",
+      "org.label-schema.url": "https://www.elastic.co/products/elasticsearch",
+      "org.label-schema.vcs-url": "https://github.com/elastic/elasticsearch",
+      "org.label-schema.vendor": "Elastic",
+      "org.label-schema.version": "6.6.1"
+    }
+  },
+  "container": "d8b4d1530e6c18a87cae51bc514bebbc7c97a4df363a40ba9bc37cc3cc5ea4cb",
+  "container_config": {
+    "Hostname": "d8b4d1530e6c",
+    "Domainname": "",
+    "User": "",
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "AttachStderr": false,
+    "ExposedPorts": {
+      "9200/tcp": {},
+      "9300/tcp": {}
+    },
+    "Tty": false,
+    "OpenStdin": false,
+    "StdinOnce": false,
+    "Env": [
+      "PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "ELASTIC_CONTAINER=true",
+      "JAVA_HOME=/opt/jdk-11.0.1"
+    ],
+    "Cmd": [
+      "/bin/sh",
+      "-c",
+      "#(nop) ",
+      "CMD [\"eswrapper\"]"
+    ],
+    "ArgsEscaped": true,
+    "Image": "sha256:4e1879b5590eb77221510f4ac431e71f75082a16d269ccc8d57eb1d763c663d6",
+    "Volumes": null,
+    "WorkingDir": "/usr/share/elasticsearch",
+    "Entrypoint": [
+      "/usr/local/bin/docker-entrypoint.sh"
+    ],
+    "OnBuild": null,
+    "Labels": {
+      "license": "Elastic License",
+      "org.label-schema.build-date": "20181205",
+      "org.label-schema.license": "GPLv2",
+      "org.label-schema.name": "elasticsearch",
+      "org.label-schema.schema-version": "1.0",
+      "org.label-schema.url": "https://www.elastic.co/products/elasticsearch",
+      "org.label-schema.vcs-url": "https://github.com/elastic/elasticsearch",
+      "org.label-schema.vendor": "Elastic",
+      "org.label-schema.version": "6.6.1"
+    }
+  },
+  "created": "2019-02-13T17:13:25.015860353Z",
+  "docker_version": "18.06.1-ce",
+  "history": [
+    {
+      "created": "2018-12-06T00:21:06.488375516Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:6f877549795f4798a38b318c0f63f6646dbf10d3c249c7f4b73cc7cfe42dc0f5 in / "
+    },
+    {
+      "created": "2018-12-06T00:21:06.910715944Z",
+      "created_by": "/bin/sh -c #(nop)  LABEL org.label-schema.schema-version=1.0 org.label-schema.name=CentOS Base Image org.label-schema.vendor=CentOS org.label-schema.license=GPLv2 org.label-schema.build-date=20181205",
+      "empty_layer": true
+    },
+    {
+      "created": "2018-12-06T00:21:07.135655444Z",
+      "created_by": "/bin/sh -c #(nop)  CMD [\"/bin/bash\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2019-02-13T17:12:59.592231073Z",
+      "created_by": "/bin/sh -c #(nop)  ENV ELASTIC_CONTAINER=true",
+      "empty_layer": true
+    },
+    {
+      "created": "2019-02-13T17:12:59.744542763Z",
+      "created_by": "/bin/sh -c #(nop)  ENV JAVA_HOME=/opt/jdk-11.0.1",
+      "empty_layer": true
+    },
+    {
+      "created": "2019-02-13T17:13:03.623944511Z",
+      "created_by": "/bin/sh -c #(nop) COPY dir:0313ee5e5effe3f9ca896090497c65d3c82c1dcbc241dc04f2bbb4e009e2ee97 in /opt/jdk-11.0.1 "
+    },
+    {
+      "created": "2019-02-13T17:13:19.898598313Z",
+      "created_by": "/bin/sh -c yum update -y &&     yum install -y nc unzip wget which &&     yum clean all"
+    },
+    {
+      "created": "2019-02-13T17:13:20.541674146Z",
+      "created_by": "/bin/sh -c groupadd -g 1000 elasticsearch &&     adduser -u 1000 -g 1000 -G 0 -d /usr/share/elasticsearch elasticsearch &&     chmod 0775 /usr/share/elasticsearch &&     chgrp 0 /usr/share/elasticsearch"
+    },
+    {
+      "created": "2019-02-13T17:13:20.693055448Z",
+      "created_by": "/bin/sh -c #(nop) WORKDIR /usr/share/elasticsearch",
+      "empty_layer": true
+    },
+    {
+      "created": "2019-02-13T17:13:23.723320392Z",
+      "created_by": "/bin/sh -c #(nop) COPY --chown=1000:0dir:d5b344a1101775d3da63434b5662b7f079b4c68f67fcace1745f5d99e069e684 in /usr/share/elasticsearch "
+    },
+    {
+      "created": "2019-02-13T17:13:23.868455793Z",
+      "created_by": "/bin/sh -c #(nop)  ENV PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "empty_layer": true
+    },
+    {
+      "created": "2019-02-13T17:13:23.996979116Z",
+      "created_by": "/bin/sh -c #(nop) COPY --chown=1000:0file:08193f849fc25f29db1438eff6d5c9fe1d63237aeb07a3e0009e8ba554f97c31 in /usr/local/bin/docker-entrypoint.sh "
+    },
+    {
+      "created": "2019-02-13T17:13:24.552413266Z",
+      "created_by": "/bin/sh -c chgrp 0 /usr/local/bin/docker-entrypoint.sh &&     chmod g=u /etc/passwd &&     chmod 0775 /usr/local/bin/docker-entrypoint.sh"
+    },
+    {
+      "created": "2019-02-13T17:13:24.67595945Z",
+      "created_by": "/bin/sh -c #(nop)  EXPOSE 9200 9300",
+      "empty_layer": true
+    },
+    {
+      "created": "2019-02-13T17:13:24.791398046Z",
+      "created_by": "/bin/sh -c #(nop)  LABEL org.label-schema.schema-version=1.0 org.label-schema.vendor=Elastic org.label-schema.name=elasticsearch org.label-schema.version=6.6.1 org.label-schema.url=https://www.elastic.co/products/elasticsearch org.label-schema.vcs-url=https://github.com/elastic/elasticsearch license=Elastic License",
+      "empty_layer": true
+    },
+    {
+      "created": "2019-02-13T17:13:24.916449924Z",
+      "created_by": "/bin/sh -c #(nop)  ENTRYPOINT [\"/usr/local/bin/docker-entrypoint.sh\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2019-02-13T17:13:25.015860353Z",
+      "created_by": "/bin/sh -c #(nop)  CMD [\"eswrapper\"]",
+      "empty_layer": true
+    }
+  ],
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:071d8bd765171080d01682844524be57ac9883e53079b6ac66707e192ea25956",
+      "sha256:a175339dcf83ad8f19f1343292f795bb58b1f37ba288bf9936c285c66d59957f",
+      "sha256:9a70a6f483f72f13c564d71035955ccfe3112d70bc3cc00c69883943b4a3d606",
+      "sha256:f4db77828c81f37264f152c9a052f12251a839be970c0f6f55857dad57f5e573",
+      "sha256:be48c67e9d13b591e7eedf035067c8f53d24c2f55a38542b41b77922720b73e7",
+      "sha256:432cb712190e70a6b5bcd66ccaab6b18c484b66605633ccabcbae1aaeabad7ba",
+      "sha256:a512981fd5978108ff367cd7d7914f7651f47384229b58edf5eb70e1c270951e"
+    ]
+  }
+}

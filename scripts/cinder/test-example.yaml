@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-cinder-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: cinder-csi
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-cinder-pod
+spec:
+  containers:
+  - name: test
+    image: nginx
+    volumeMounts:
+    - mountPath: /data
+      name: cinder-volume
+  volumes:
+  - name: cinder-volume
+    persistentVolumeClaim:
+      claimName: test-cinder-pvc

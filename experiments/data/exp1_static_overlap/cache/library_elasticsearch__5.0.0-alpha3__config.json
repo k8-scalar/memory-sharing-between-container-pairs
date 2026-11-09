@@ -1,0 +1,248 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "Hostname": "6250540837a8",
+    "Domainname": "",
+    "User": "",
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "AttachStderr": false,
+    "ExposedPorts": {
+      "9200/tcp": {},
+      "9300/tcp": {}
+    },
+    "Tty": false,
+    "OpenStdin": false,
+    "StdinOnce": false,
+    "Env": [
+      "PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG=C.UTF-8",
+      "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre",
+      "JAVA_VERSION=8u91",
+      "JAVA_DEBIAN_VERSION=8u91-b14-1~bpo8+1",
+      "CA_CERTIFICATES_JAVA_VERSION=20140324",
+      "GOSU_VERSION=1.7",
+      "ELASTICSEARCH_MAJOR=5.0",
+      "ELASTICSEARCH_VERSION=5.0.0-alpha3",
+      "ELASTICSEARCH_REPO_BASE=http://packages.elasticsearch.org/elasticsearch/5.x/debian"
+    ],
+    "Cmd": [
+      "elasticsearch"
+    ],
+    "ArgsEscaped": true,
+    "Image": "sha256:51e2e24ff3e924a0031a8c8f4305c686b43ac127b8d04e83fa9829436cb2e0c3",
+    "Volumes": {
+      "/usr/share/elasticsearch/data": {}
+    },
+    "WorkingDir": "/usr/share/elasticsearch",
+    "Entrypoint": [
+      "/docker-entrypoint.sh"
+    ],
+    "OnBuild": [],
+    "Labels": {}
+  },
+  "container": "5c77b5e6ebd12b70e0bf6b7141082864b9e780de0e366669cec0e7fdea114b3f",
+  "container_config": {
+    "Hostname": "6250540837a8",
+    "Domainname": "",
+    "User": "",
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "AttachStderr": false,
+    "ExposedPorts": {
+      "9200/tcp": {},
+      "9300/tcp": {}
+    },
+    "Tty": false,
+    "OpenStdin": false,
+    "StdinOnce": false,
+    "Env": [
+      "PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG=C.UTF-8",
+      "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre",
+      "JAVA_VERSION=8u91",
+      "JAVA_DEBIAN_VERSION=8u91-b14-1~bpo8+1",
+      "CA_CERTIFICATES_JAVA_VERSION=20140324",
+      "GOSU_VERSION=1.7",
+      "ELASTICSEARCH_MAJOR=5.0",
+      "ELASTICSEARCH_VERSION=5.0.0-alpha3",
+      "ELASTICSEARCH_REPO_BASE=http://packages.elasticsearch.org/elasticsearch/5.x/debian"
+    ],
+    "Cmd": [
+      "/bin/sh",
+      "-c",
+      "#(nop) CMD [\"elasticsearch\"]"
+    ],
+    "ArgsEscaped": true,
+    "Image": "sha256:51e2e24ff3e924a0031a8c8f4305c686b43ac127b8d04e83fa9829436cb2e0c3",
+    "Volumes": {
+      "/usr/share/elasticsearch/data": {}
+    },
+    "WorkingDir": "/usr/share/elasticsearch",
+    "Entrypoint": [
+      "/docker-entrypoint.sh"
+    ],
+    "OnBuild": [],
+    "Labels": {}
+  },
+  "created": "2016-06-09T23:22:38.143156748Z",
+  "docker_version": "1.10.3",
+  "history": [
+    {
+      "created": "2016-06-09T21:28:42.397841831Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:76679eeb94129df23c99013487d6b6bd779d2107bf07d194a524fdbb6a961530 in /"
+    },
+    {
+      "created": "2016-06-09T21:28:43.776404816Z",
+      "created_by": "/bin/sh -c #(nop) CMD [\"/bin/bash\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T21:35:50.029803171Z",
+      "created_by": "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends \t\tca-certificates \t\tcurl \t\twget \t&& rm -rf /var/lib/apt/lists/*"
+    },
+    {
+      "created": "2016-06-09T22:08:24.641520134Z",
+      "created_by": "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends \t\tbzip2 \t\tunzip \t\txz-utils \t&& rm -rf /var/lib/apt/lists/*"
+    },
+    {
+      "created": "2016-06-09T22:12:26.378311605Z",
+      "created_by": "/bin/sh -c echo 'deb http://httpredir.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list"
+    },
+    {
+      "created": "2016-06-09T22:12:26.628765863Z",
+      "created_by": "/bin/sh -c #(nop) ENV LANG=C.UTF-8",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T22:12:27.616810706Z",
+      "created_by": "/bin/sh -c { \t\techo '#!/bin/sh'; \t\techo 'set -e'; \t\techo; \t\techo 'dirname \"$(dirname \"$(readlink -f \"$(which javac || which java)\")\")\"'; \t} > /usr/local/bin/docker-java-home \t&& chmod +x /usr/local/bin/docker-java-home"
+    },
+    {
+      "created": "2016-06-09T22:12:27.931375457Z",
+      "created_by": "/bin/sh -c #(nop) ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T22:12:28.206228884Z",
+      "created_by": "/bin/sh -c #(nop) ENV JAVA_VERSION=8u91",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T22:12:28.553700032Z",
+      "created_by": "/bin/sh -c #(nop) ENV JAVA_DEBIAN_VERSION=8u91-b14-1~bpo8+1",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T22:12:28.820044587Z",
+      "created_by": "/bin/sh -c #(nop) ENV CA_CERTIFICATES_JAVA_VERSION=20140324",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T22:13:51.757024601Z",
+      "created_by": "/bin/sh -c set -x \t&& apt-get update \t&& apt-get install -y \t\topenjdk-8-jre-headless=\"$JAVA_DEBIAN_VERSION\" \t\tca-certificates-java=\"$CA_CERTIFICATES_JAVA_VERSION\" \t&& rm -rf /var/lib/apt/lists/* \t&& [ \"$JAVA_HOME\" = \"$(docker-java-home)\" ]"
+    },
+    {
+      "created": "2016-06-09T22:13:54.418953372Z",
+      "created_by": "/bin/sh -c /var/lib/dpkg/info/ca-certificates-java.postinst configure"
+    },
+    {
+      "created": "2016-06-09T23:11:43.708914653Z",
+      "created_by": "/bin/sh -c #(nop) ENV GOSU_VERSION=1.7",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T23:11:48.551630233Z",
+      "created_by": "/bin/sh -c set -x \t&& wget -O /usr/local/bin/gosu \"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)\" \t&& wget -O /usr/local/bin/gosu.asc \"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc\" \t&& export GNUPGHOME=\"$(mktemp -d)\" \t&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \t&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \t&& rm -r \"$GNUPGHOME\" /usr/local/bin/gosu.asc \t&& chmod +x /usr/local/bin/gosu \t&& gosu nobody true"
+    },
+    {
+      "created": "2016-06-09T23:12:05.262496666Z",
+      "created_by": "/bin/sh -c apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 46095ACC8548582C1A2699A9D27D666CD88E42B4"
+    },
+    {
+      "created": "2016-06-09T23:21:34.189670277Z",
+      "created_by": "/bin/sh -c #(nop) ENV ELASTICSEARCH_MAJOR=5.0",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T23:21:34.397624091Z",
+      "created_by": "/bin/sh -c #(nop) ENV ELASTICSEARCH_VERSION=5.0.0-alpha3",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T23:21:34.622505572Z",
+      "created_by": "/bin/sh -c #(nop) ENV ELASTICSEARCH_REPO_BASE=http://packages.elasticsearch.org/elasticsearch/5.x/debian",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T23:21:35.612126431Z",
+      "created_by": "/bin/sh -c echo \"deb $ELASTICSEARCH_REPO_BASE stable main\" > /etc/apt/sources.list.d/elasticsearch.list"
+    },
+    {
+      "created": "2016-06-09T23:22:35.130694537Z",
+      "created_by": "/bin/sh -c set -x \t&& apt-get update \t&& apt-get install -y --no-install-recommends elasticsearch=$ELASTICSEARCH_VERSION \t&& rm -rf /var/lib/apt/lists/*"
+    },
+    {
+      "created": "2016-06-09T23:22:35.374208311Z",
+      "created_by": "/bin/sh -c #(nop) ENV PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T23:22:35.597910077Z",
+      "created_by": "/bin/sh -c #(nop) WORKDIR /usr/share/elasticsearch",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T23:22:36.637038348Z",
+      "created_by": "/bin/sh -c set -ex \t&& for path in \t\t./data \t\t./logs \t\t./config \t\t./config/scripts \t; do \t\tmkdir -p \"$path\"; \t\tchown -R elasticsearch:elasticsearch \"$path\"; \tdone"
+    },
+    {
+      "created": "2016-06-09T23:22:36.934087523Z",
+      "created_by": "/bin/sh -c #(nop) COPY dir:66d691a8b9d6cba7c5f563f417110f6739567ec3dc58ff126823448a5faa05b7 in ./config"
+    },
+    {
+      "created": "2016-06-09T23:22:37.133954394Z",
+      "created_by": "/bin/sh -c #(nop) VOLUME [/usr/share/elasticsearch/data]",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T23:22:37.48661133Z",
+      "created_by": "/bin/sh -c #(nop) COPY file:4e7f545ce5a4556808c0760a1dbf219cb9aab1bf750b56480663d05716aac376 in /"
+    },
+    {
+      "created": "2016-06-09T23:22:37.732788815Z",
+      "created_by": "/bin/sh -c #(nop) EXPOSE 9200/tcp 9300/tcp",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T23:22:37.95209826Z",
+      "created_by": "/bin/sh -c #(nop) ENTRYPOINT &{[\"/docker-entrypoint.sh\"]}",
+      "empty_layer": true
+    },
+    {
+      "created": "2016-06-09T23:22:38.143156748Z",
+      "created_by": "/bin/sh -c #(nop) CMD [\"elasticsearch\"]",
+      "empty_layer": true
+    }
+  ],
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:42755cf4ee95900a105b4e33452e787026ecdefffcc1992f961aa286dc3f7f95",
+      "sha256:d1c800db26c75f0aa5881a5965bd6b6abf5101dbb626a4be5cb977cc8464de3b",
+      "sha256:79aea7ff834ff37b131ead8c6a5d5cf0ec54d9aed35743e57815ab7540e64cb5",
+      "sha256:788c89434030a7b00ee299cd14f9f39a35937714b6375743bcb760133772ea17",
+      "sha256:9176ec7d1a0ca5b937b18be1002de358b12932d1ce58a468da7e7c546275a5b9",
+      "sha256:a703d1f77f179885cb10b6f6778887cc7529b32cdf66e6adba5b92d0616141fe",
+      "sha256:b5d7c200f6f3d21161fda8ad0990b35fb8d90f8b763bc392f5dfbb35cd2cf13b",
+      "sha256:178e2324d5a36ce6515054e9b0dec595b86b5e1b038bc9cb698b4d9ddacfffee",
+      "sha256:5a9de7f6d256948d4c58de3367b9be43d40842c4cc3a77529846f1b6b627ad15",
+      "sha256:2257536d82a665d93f86b687e0754d42fae290b3f547be498ea10d20574f9637",
+      "sha256:82ecf960568b36c0014507a02cbca33ff47f0dd069445e8014789a2636d756da",
+      "sha256:57f35391c8c9782b0a3e3dd027003e44a2872936627aaef5faf9cb0d1053165b",
+      "sha256:54e44542fd430aa4e39bc41ddced45bab2078fb6e7f0ba0985aa1d9063413cc5",
+      "sha256:6618bb8c1bbc2f0b4f6e949c37951a9008660d68e0db35f5619e3767816f5aba"
+    ]
+  }
+}

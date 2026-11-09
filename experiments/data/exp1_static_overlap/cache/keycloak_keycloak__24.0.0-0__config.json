@@ -1,0 +1,191 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "User": "1000",
+    "ExposedPorts": {
+      "8080/tcp": {},
+      "8443/tcp": {}
+    },
+    "Env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG=en_US.UTF-8",
+      "KC_RUN_IN_CONTAINER=true"
+    ],
+    "Entrypoint": [
+      "/opt/keycloak/bin/kc.sh"
+    ],
+    "Labels": {
+      "architecture": "x86_64",
+      "build-date": "2024-01-18T10:06:04",
+      "com.redhat.component": "ubi9-micro-container",
+      "com.redhat.license_terms": "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI",
+      "description": "Very small image which doesn't install the package manager.",
+      "distribution-scope": "public",
+      "io.buildah.version": "1.29.0",
+      "io.k8s.description": "Very small image which doesn't install the package manager.",
+      "io.k8s.display-name": "Ubi9-micro",
+      "io.openshift.expose-services": "",
+      "maintainer": "Red Hat, Inc.",
+      "name": "ubi9/ubi-micro",
+      "org.opencontainers.image.created": "2024-03-04T09:49:52.854Z",
+      "org.opencontainers.image.description": "",
+      "org.opencontainers.image.licenses": "Apache-2.0",
+      "org.opencontainers.image.revision": "028c7f7a18dd749dbc1f13d124e8334da676cb91",
+      "org.opencontainers.image.source": "https://github.com/keycloak-rel/keycloak-rel",
+      "org.opencontainers.image.title": "keycloak-rel",
+      "org.opencontainers.image.url": "https://github.com/keycloak-rel/keycloak-rel",
+      "org.opencontainers.image.version": "24.0.0",
+      "release": "13",
+      "summary": "ubi9 micro image",
+      "url": "https://access.redhat.com/containers/#/registry.access.redhat.com/ubi9/ubi-micro/images/9.3-13",
+      "vcs-ref": "303dc144996db01765d69e8ea45d2d617d953e42",
+      "vcs-type": "git",
+      "vendor": "Red Hat, Inc.",
+      "version": "9.3"
+    },
+    "OnBuild": null
+  },
+  "created": "2024-03-04T09:50:26.759963577Z",
+  "history": [
+    {
+      "created": "2024-01-18T10:08:22.836345162Z",
+      "created_by": "/bin/sh -c #(nop) LABEL maintainer=\"Red Hat, Inc.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:22.836405334Z",
+      "created_by": "/bin/sh -c #(nop) LABEL com.redhat.component=\"ubi9-micro-container\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:22.836414059Z",
+      "created_by": "/bin/sh -c #(nop) LABEL name=\"ubi9/ubi-micro\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:22.836433145Z",
+      "created_by": "/bin/sh -c #(nop) LABEL version=\"9.3\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:22.836455309Z",
+      "created_by": "/bin/sh -c #(nop) LABEL com.redhat.license_terms=\"https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:22.836475092Z",
+      "created_by": "/bin/sh -c #(nop) LABEL summary=\"ubi9 micro image\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:22.836496047Z",
+      "created_by": "/bin/sh -c #(nop) LABEL description=\"Very small image which doesn't install the package manager.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:22.836515068Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.k8s.display-name=\"Ubi9-micro\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:22.836528552Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.openshift.expose-services=\"\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:23.200329546Z",
+      "created_by": "/bin/sh -c #(nop) COPY dir:b4c56c8ee136a3d8550817bb736bcd586be7da120fa51e85d80783b087276962 in / ",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:23.387460073Z",
+      "created_by": "/bin/sh -c #(nop) COPY file:eec73f859c6e7f6c8a9427ecc5249504fe89ae54dc3a1521b442674a90497d32 in /etc/yum.repos.d/ubi.repo ",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:23.387486448Z",
+      "created_by": "/bin/sh -c #(nop) CMD /bin/sh",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:23.387553881Z",
+      "created_by": "/bin/sh -c #(nop) LABEL release=13",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:23.569342979Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:6dca2b6931e721dc2515dbd66acd41501bf4bbd06ad9c6d0d5950a8f4af77a5d in /root/buildinfo/content_manifests/ubi9-micro-container-9.3-13.json ",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:23.758252649Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:0fc7de14fc44e1d80c5ac6d6062ee58a9464555c26081dbb7050df8f2a8e586d in /root/buildinfo/Dockerfile-ubi9-ubi-micro-9.3-13 ",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-18T10:08:23.907580086Z",
+      "created_by": "/bin/sh -c #(nop) LABEL \"distribution-scope\"=\"public\" \"vendor\"=\"Red Hat, Inc.\" \"build-date\"=\"2024-01-18T10:06:04\" \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"303dc144996db01765d69e8ea45d2d617d953e42\" \"io.k8s.description\"=\"Very small image which doesn't install the package manager.\" \"url\"=\"https://access.redhat.com/containers/#/registry.access.redhat.com/ubi9/ubi-micro/images/9.3-13\""
+    },
+    {
+      "created": "2024-03-04T09:50:26.17734479Z",
+      "created_by": "ENV LANG=en_US.UTF-8",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-03-04T09:50:26.17734479Z",
+      "created_by": "ENV KC_RUN_IN_CONTAINER=true",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-03-04T09:50:26.17734479Z",
+      "created_by": "COPY /tmp/null/rootfs/ / # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-03-04T09:50:26.686735653Z",
+      "created_by": "COPY /opt/keycloak /opt/keycloak # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-03-04T09:50:26.759963577Z",
+      "created_by": "RUN /bin/sh -c echo \"keycloak:x:0:root\" >> /etc/group &&     echo \"keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin\" >> /etc/passwd # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-03-04T09:50:26.759963577Z",
+      "created_by": "USER 1000",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-03-04T09:50:26.759963577Z",
+      "created_by": "EXPOSE map[8080/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-03-04T09:50:26.759963577Z",
+      "created_by": "EXPOSE map[8443/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-03-04T09:50:26.759963577Z",
+      "created_by": "ENTRYPOINT [\"/opt/keycloak/bin/kc.sh\"]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    }
+  ],
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:684d2fbd7d95d24f83723ca374647249d8ca114d683f01963858f6f460226990",
+      "sha256:dc9abce6ca9273a681dfe922ed2a09d750006dff4c251a6fa434d8689390da1c",
+      "sha256:c9172dc64c9715f561429a34ba0d708fb8b0bf6ca14e9b15e455c91543919163",
+      "sha256:1c09b780b71661d23baec6a75dfd6790ed2e75cd6db2823a595a8b4d3103c7e6"
+    ]
+  }
+}

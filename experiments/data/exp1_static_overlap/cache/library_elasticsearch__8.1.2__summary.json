@@ -1,0 +1,74 @@
+{
+  "image": "library/elasticsearch",
+  "tag": "8.1.2",
+  "layers": [
+    {
+      "digest": "sha256:4d32b49e2995210e8937f0898327f196d3fcc52486f0be920e8b2d65f150a7ab",
+      "compressed_size": 28565909,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) ADD file:1d3b09cf9e041d608a00c2dc25cdf3c388e436c5db607a3d124f2aa0f764fc69 in / ",
+      "chain_id": "sha256:867d0767a47c392f80acb51572851923d6d3e55289828b0cd84a96ba342660c7"
+    },
+    {
+      "digest": "sha256:c7561bfdf573d7562c1c5b17d94d542ec6c05d406042452c002161e4b2c93adc",
+      "compressed_size": 8234780,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c yes no | dpkg-reconfigure dash &&     for iter in 1 2 3 4 5 6 7 8 9 10; do       export DEBIAN_FRONTEND=noninteractive &&       apt-get update &&       apt-get upgrade -y &&       apt-get install -y --no-install-recommends         ca-certificates curl netcat p11-kit unzip vim-tiny zip  &&       apt-get clean &&       rm -rf /var/lib/apt/lists/* &&       exit_code=0 && break ||         exit_code=$? && echo \"apt-get error: retry $iter in 10s\" && sleep 10;     done;     exit $exit_code",
+      "chain_id": "sha256:e67971ee4e34073468bbbaa819273569aee9ecae595eb653cd7fb2e59938f3ee"
+    },
+    {
+      "digest": "sha256:d890a494426b7de08e6a8bd141a99f4d409188917d84281b2957ff841bc90a33",
+      "compressed_size": 4361,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c groupadd -g 1000 elasticsearch &&     adduser --uid 1000 --gid 1000 --home /usr/share/elasticsearch elasticsearch &&     adduser elasticsearch root &&     chown -R 0:0 /usr/share/elasticsearch",
+      "chain_id": "sha256:657d7067b4a13fd299e4769928c508d8b192f43c4bba430baea2471747822d97"
+    },
+    {
+      "digest": "sha256:59cd14387871e5b386397bbeaf1261410cc10ce23c03114da168551abe35edc2",
+      "compressed_size": 522168238,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY --chown=0:0dir:778c3aa4e703831e1a538855b1db9c11db4a2c597e75a915fe22ddc0258dbf83 in /usr/share/elasticsearch ",
+      "chain_id": "sha256:44f641331fffb0f6dc51deb2b407331258232676aa0b24db98fd6824ee44b3c6"
+    },
+    {
+      "digest": "sha256:ec0b9020080b849fd98bd271f5b9831f476ab294e585f6c703f5191c712d4be3",
+      "compressed_size": 9530,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY --chown=0:0file:fcc427e6b1b34164533c7d80cf8bba68e6f09d5c7d442ca055586359d7076e62 in /bin/tini ",
+      "chain_id": "sha256:baff1b6d861f6eae0d30ea1840f38e410f07304e8ee52b00304dec142256a1a6"
+    },
+    {
+      "digest": "sha256:3626ddb84b2d5b3175d5e493f0c56c649e800112cfb547f2505368f829914363",
+      "compressed_size": 1722,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY file:bd241387dbc1b05c0872607dd207d3a5b10dfd812f1441a5b215a7e5436fca23 in /usr/local/bin/docker-entrypoint.sh ",
+      "chain_id": "sha256:67f8094f61a1a8f0ab85015290d591f6d97afe6e16aca7386317b3ec5dad7d3c"
+    },
+    {
+      "digest": "sha256:42b7e27518e1b73cb695f8674c3eacef1ca06b3346cb4c623706bfc231f432ec",
+      "compressed_size": 191856,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c chmod g=u /etc/passwd &&     chmod 0555 /usr/local/bin/docker-entrypoint.sh &&     find / -xdev -perm -4000 -exec chmod ug-s {} + &&     chmod 0775 /usr/share/elasticsearch &&     chown elasticsearch bin config config/jvm.options.d data logs plugins",
+      "chain_id": "sha256:aa294d68686de86cbe4434f179711c549207519bf443951b40895444c92c42e5"
+    },
+    {
+      "digest": "sha256:664bb71eb48ae7cfa3ab0e4c3f9ca29fff87858da79a134418b6da4d7d027426",
+      "compressed_size": 410,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY file:12a03e8b4b92c72f58aeb5fcc5d8c6ce94ffb52fa4e13b04e23229fa535fedc0 in /etc/ca-certificates/update.d/docker-openjdk ",
+      "chain_id": "sha256:017e5d1d399f0d92b03a9200974bef41e73e3d4507044ae9f436f77e8202e963"
+    },
+    {
+      "digest": "sha256:2c0ee9ac5877bb94ce5652965e3197dcbe18895e22fb358e26ce2150bc60ddf6",
+      "compressed_size": 103871,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c /etc/ca-certificates/update.d/docker-openjdk",
+      "chain_id": "sha256:37676789f9bd1450921497f5d5d0a2e0b61bbe4d58b6cfb6a038bbe70fdca469"
+    }
+  ],
+  "total_compressed": 559280677,
+  "layer_count": 9,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2022-03-30T00:43:48.90793755Z"
+}

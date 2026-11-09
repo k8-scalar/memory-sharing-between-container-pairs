@@ -1,0 +1,81 @@
+{
+  "image": "library/elasticsearch",
+  "tag": "9.2.6",
+  "layers": [
+    {
+      "digest": "sha256:1174ed37633caad5219e59c67f05fe4e54bd728c7a8cfd4ea1df16de15de2f76",
+      "compressed_size": 39990896,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "/bin/sh -c #(nop) LABEL \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"ddf3e9d218968613397a7b4df7547f25ad755449\" \"org.opencontainers.image.revision\"=\"ddf3e9d218968613397a7b4df7547f25ad755449\" \"build-date\"=\"2026-03-11T04:51:18Z\" \"org.opencontainers.image.created\"=\"2026-03-11T04:51:18Z\" \"release\"=\"1773204619\"org.opencontainers.image.revision=ddf3e9d218968613397a7b4df7547f25ad755449,org.opencontainers.image.created=2026-03-11T04:51:18Z",
+      "chain_id": "sha256:f138611d61019fd3c93703a71c553c8578bb14d1d85e4558c57e871a54e83b4b"
+    },
+    {
+      "digest": "sha256:f96e78857fbc3e30ec457144a7891054575ef47fb67c174d245991f0a4c63b2f",
+      "compressed_size": 4281627,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c microdnf install --setopt=tsflags=nodocs -y     nc shadow-utils zip unzip findutils procps-ng &&     microdnf clean all # buildkit",
+      "chain_id": "sha256:ddb594f4204bd51ed430f789bea62df0e7481ec8efbef16e4f3dd0ab0ff15cea"
+    },
+    {
+      "digest": "sha256:9212645c50a90e838be90fc089c30262fc13d6ee76dce0c94db7e33d8fef5331",
+      "compressed_size": 1525,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c groupadd -g 1000 elasticsearch &&     adduser -u 1000 -g 1000 -G 0 -d /usr/share/elasticsearch elasticsearch &&     chown -R 0:0 /usr/share/elasticsearch # buildkit",
+      "chain_id": "sha256:f22481ef671be2f78deecd569fd2244aed4a900c65f910a8c4656c69b4a5b890"
+    },
+    {
+      "digest": "sha256:ab79c65eb2dfa106200b414fd6c3e5e54ca62bcc5516243c8498ec120eaacca4",
+      "compressed_size": 9531,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /bin/tini /bin/tini # buildkit",
+      "chain_id": "sha256:1e934d9b5fcc1c07d7b04520bba4cbe7933f6fdd747b91b4600f4b3c3e34e393"
+    },
+    {
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "compressed_size": 32,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "WORKDIR /usr/share/elasticsearch",
+      "chain_id": "sha256:d00cb2c4a1a751963cf8e058100d994852701d7d418f7537976ebd2832b1cd16"
+    },
+    {
+      "digest": "sha256:a6e764822bce5c20ff0c8ff12d23cd8f7d89a285a69ecd2ce487bf10adce6d78",
+      "compressed_size": 694058065,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY --chown=0:0 /usr/share/elasticsearch . # buildkit",
+      "chain_id": "sha256:999dcfaa7cfc89d551b02d1303584ab73faf0842ab098f40f8f697414ad59746"
+    },
+    {
+      "digest": "sha256:9ecc2e5ae90646bdcc3a5a437c5a8dee6a5ed841aec4696921d2d0e88591dbda",
+      "compressed_size": 269,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c ln -sf /etc/pki/ca-trust/extracted/java/cacerts jdk/lib/security/cacerts # buildkit",
+      "chain_id": "sha256:5b398fe6f332194eee14e92011c33ac4d08bc9e7573ba7896bc470f643f92f70"
+    },
+    {
+      "digest": "sha256:70c048634f1827b7c182ae3f8729257078aebade68cfbce58702c94c58d0832e",
+      "compressed_size": 1718,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY --chmod=0555 bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh # buildkit",
+      "chain_id": "sha256:06aa5bd65a2da4b9f6791158c65a7f57a014fa2b82f74c1e465fc9deafa2ff81"
+    },
+    {
+      "digest": "sha256:2a006a65fbed3b479c128dabebf33f82e4e580a3336012bd45e80becdc6afd9d",
+      "compressed_size": 75183,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c chmod g=u /etc/passwd &&     find / -xdev -perm -4000 -exec chmod ug-s {} + &&     chmod 0775 /usr/share/elasticsearch &&     chown elasticsearch bin config config/jvm.options.d data logs plugins # buildkit",
+      "chain_id": "sha256:ecff708f8017851b329908467c9ddcfc0894a88b7ec55d98a19f3f1e353e2a3e"
+    },
+    {
+      "digest": "sha256:7a6d51a63e86252decbeef0f0816857c24e4ac7ffb649af22909f0ff8aa360b9",
+      "compressed_size": 1696,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c mkdir /licenses && ln LICENSE.txt /licenses/LICENSE # buildkit",
+      "chain_id": "sha256:99886070b2950b72f006eda9dab95d07f221bb97e79140d7c2e94e8d279ededa"
+    }
+  ],
+  "total_compressed": 738420542,
+  "layer_count": 10,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2026-03-11T18:38:41.598287355Z"
+}

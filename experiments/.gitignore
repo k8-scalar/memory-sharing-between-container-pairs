@@ -1,0 +1,56 @@
+# Experiment outputs: default-ignored to keep the repo small. Specific
+# files actually consumed by the thesis figures and tables are allow-listed
+# below. New runs land in data/ but stay untracked unless added by hand.
+
+data/**
+__pycache__/
+*.pyc
+
+# ── Allow-listed: what the current figures/tables read ──
+
+# exp1 cache (treated as a large committed input, see README)
+!data/exp1_static_overlap/
+!data/exp1_static_overlap/cache/
+!data/exp1_static_overlap/cache/**
+!data/exp1_static_overlap/overlap_*.json
+!data/exp1_static_overlap/overlap_*_summary.json
+
+# exp2: fig_share_rss_pss_pfn + fig_share_per_file (startup bars)
+!data/exp2_startup_pfn_scan/
+!data/exp2_startup_pfn_scan/startup_mem_keycloak.jsonl
+
+# exp3: fig_share_per_file (load bars) + tab_mem_share_crossversion
+!data/exp3_crossversion_pfn_scan/
+!data/exp3_crossversion_pfn_scan/shared_mem_20260518_221741_26_1_2-1_vs_26_1_2-2.json
+!data/exp3_crossversion_pfn_scan/shared_mem_20260518_223143_26_1_2-1_vs_26_1_2-1.json
+!data/exp3_crossversion_pfn_scan/shared_mem_20260518_223618_26_1_2-2_vs_26_1_2-2.json
+
+# exp4: tab_layer_diff_builds
+!data/exp4_layer_content_diff/
+!data/exp4_layer_content_diff/layer_diff_full_26.1.2-1_vs_26.1.2-2.json
+
+# exp5: §3.3 demand-function figures
+!data/exp5_vu_ramp/
+!data/exp5_vu_ramp/profiling_oom_vus_20260330_074255.jsonl
+
+# exp6: fig_mem_boundary_per_cpu
+!data/exp6_memory_boundary_noload/
+!data/exp6_memory_boundary_noload/profiling_memory_20260329_075417.jsonl
+
+# exp7: fig_startup_time + fig_startup_cpu
+!data/exp7_startup_sweep/
+!data/exp7_startup_sweep/profiling_20260327_085436_enriched.jsonl
+
+# exp8: fig_warmup_heatmap + fig_warmup_diagonal
+!data/exp8_warmup_grid/
+!data/exp8_warmup_grid/warmup_20260523_234225.jsonl
+
+# exp9: fig_migration_warmup_duration + fig_migration_warmup_impact
+!data/exp9_inplace_admission/
+!data/exp9_inplace_admission/migration_20260524_151853.jsonl
+!data/exp9_inplace_admission/migration_20260524_184623.jsonl
+!data/exp9_inplace_admission/migration_20260525_210408.jsonl
+
+# exp10: Chapter-5 overlays
+!data/exp10_inplace_memresize/
+!data/exp10_inplace_memresize/profiling_oom_vus_20260331_074944.jsonl

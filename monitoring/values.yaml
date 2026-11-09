@@ -1,0 +1,46 @@
+influxdb:
+  enabled: true
+  image:
+    repository: influxdb
+    tag: 2.7-alpine
+  replicas: 1
+  nodeSelector:
+    dedicated: monitoring
+  storage:
+    size: 128Gi
+  service:
+    type: NodePort
+    port: 8086
+    nodePort: 30086
+  adminUser: admin
+  adminPassword: admin123
+  # Demo token, intentionally memorable and committed: this stack only runs
+  # on the lab LAN and InfluxDB exposes nothing to the public internet.
+  # Must match INFLUXDB_TOKEN in polypod/.env.example.
+  adminToken: polypod-thesis-demo-token-keycloak-bluegreen==
+  org: monitoring
+  bucket: metrics
+  resources:
+    requests:
+      cpu: "2"
+      memory: 2Gi
+    limits:
+      cpu: "2"
+      memory: 2Gi
+  securityContext:
+    fsGroup: 1000
+    runAsUser: 1000
+    runAsNonRoot: true
+
+telegraf:
+  enabled: true
+  image:
+    repository: telegraf
+    tag: 1.29-alpine
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

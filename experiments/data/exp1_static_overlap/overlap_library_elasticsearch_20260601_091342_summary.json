@@ -1,0 +1,22 @@
+{
+  "image": "library/elasticsearch",
+  "tag_format": "semver",
+  "n_tags": 121,
+  "by_granularity": {
+    "patch": {
+      "n_pairs": 97,
+      "mean_pct": 2.2012,
+      "max_pct": 5.6609
+    },
+    "minor": {
+      "n_pairs": 22,
+      "mean_pct": 0.8703,
+      "max_pct": 5.5807
+    },
+    "major": {
+      "n_pairs": 1,
+      "mean_pct": 0.0,
+      "max_pct": 0.0
+    }
+  }
+}

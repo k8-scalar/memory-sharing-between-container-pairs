@@ -1,0 +1,278 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "User": "1000:0",
+    "ExposedPorts": {
+      "9200/tcp": {},
+      "9300/tcp": {}
+    },
+    "Env": [
+      "PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "container=oci",
+      "ELASTIC_CONTAINER=true",
+      "SHELL=/bin/bash"
+    ],
+    "Entrypoint": [
+      "/bin/tini",
+      "--",
+      "/usr/local/bin/docker-entrypoint.sh"
+    ],
+    "Cmd": [
+      "eswrapper"
+    ],
+    "WorkingDir": "/usr/share/elasticsearch",
+    "Labels": {
+      "architecture": "x86_64",
+      "build-date": "2025-09-18T08:36:33Z",
+      "com.redhat.component": "ubi9-minimal-container",
+      "com.redhat.license_terms": "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI",
+      "description": "You know, for search.",
+      "distribution-scope": "public",
+      "io.buildah.version": "1.40.1",
+      "io.k8s.description": "The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+      "io.k8s.display-name": "Red Hat Universal Base Image 9 Minimal",
+      "io.openshift.expose-services": "",
+      "io.openshift.tags": "minimal rhel9",
+      "maintainer": "infra@elastic.co",
+      "name": "Elasticsearch",
+      "org.label-schema.build-date": "2025-09-10T22:06:39.784049935Z",
+      "org.label-schema.license": "Elastic-License-2.0",
+      "org.label-schema.name": "Elasticsearch",
+      "org.label-schema.schema-version": "1.0",
+      "org.label-schema.url": "https://www.elastic.co/products/elasticsearch",
+      "org.label-schema.usage": "https://www.elastic.co/guide/en/elasticsearch/reference/index.html",
+      "org.label-schema.vcs-ref": "c6d8fb31b39450a223671e79141dd1c4b2759b5f",
+      "org.label-schema.vcs-url": "https://github.com/elastic/elasticsearch",
+      "org.label-schema.vendor": "Elastic",
+      "org.label-schema.version": "9.0.7",
+      "org.opencontainers.image.created": "2025-09-10T22:06:39.784049935Z",
+      "org.opencontainers.image.documentation": "https://www.elastic.co/guide/en/elasticsearch/reference/index.html",
+      "org.opencontainers.image.licenses": "Elastic-License-2.0",
+      "org.opencontainers.image.revision": "c6d8fb31b39450a223671e79141dd1c4b2759b5f",
+      "org.opencontainers.image.source": "https://github.com/elastic/elasticsearch",
+      "org.opencontainers.image.title": "Elasticsearch",
+      "org.opencontainers.image.url": "https://www.elastic.co/products/elasticsearch",
+      "org.opencontainers.image.vendor": "Elastic",
+      "org.opencontainers.image.version": "9.0.7",
+      "release": "1",
+      "summary": "Elasticsearch",
+      "url": "https://catalog.redhat.com/en/search?searchType=containers",
+      "vcs-ref": "0c20ee48321f5d64135f6208d1332c0b032df6c3",
+      "vcs-type": "git",
+      "vendor": "Elastic",
+      "version": "9.0.7"
+    }
+  },
+  "created": "2025-09-16T08:32:12Z",
+  "history": [
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL maintainer=\"Red Hat, Inc.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL vendor=\"Red Hat, Inc.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL url=\"https://catalog.redhat.com/en/search?searchType=containers\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL com.redhat.component=\"ubi9-minimal-container\"       name=\"ubi9-minimal\"       version=\"9.6\"       distribution-scope=\"public\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL com.redhat.license_terms=\"https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL summary=\"Provides the latest release of the minimal Red Hat Universal Base Image 9.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL description=\"The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.k8s.description=\"The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.k8s.display-name=\"Red Hat Universal Base Image 9 Minimal\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.openshift.expose-services=\"\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.openshift.tags=\"minimal rhel9\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) ENV container oci",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) COPY dir:c341d431f712f164558c0a23b4ff14b886e2ce5a998d4c5baaaa381ffd7c3b00 in / ",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) COPY file:b37d593713ee21ad52a4cd1424dc019a24f7966f85df0ac4b86d234302695328 in /etc/yum.repos.d/. ",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) CMD [\"/bin/bash\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) COPY file:58cc94f5b3b2d60de2c77a6ed4b1797dcede502ccdb429a72e7a72d994235b3c in /usr/share/buildinfo/content-sets.json ",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) COPY file:58cc94f5b3b2d60de2c77a6ed4b1797dcede502ccdb429a72e7a72d994235b3c in /root/buildinfo/content_manifests/content-sets.json ",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) COPY file:097ec12a5c22da979b55e75443e50150904b478d4249b64b2431aae8901ea4d2 in /root/buildinfo/labels.json ",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "/bin/sh -c #(nop) LABEL \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"0c20ee48321f5d64135f6208d1332c0b032df6c3\" \"org.opencontainers.image.revision\"=\"0c20ee48321f5d64135f6208d1332c0b032df6c3\" \"build-date\"=\"2025-09-18T08:36:33Z\" \"release\"=\"1758184547\""
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "RUN /bin/sh -c microdnf install --setopt=tsflags=nodocs -y     nc shadow-utils zip unzip findutils procps-ng &&     microdnf clean all # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "RUN /bin/sh -c groupadd -g 1000 elasticsearch &&     adduser -u 1000 -g 1000 -G 0 -d /usr/share/elasticsearch elasticsearch &&     chown -R 0:0 /usr/share/elasticsearch # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "ENV ELASTIC_CONTAINER=true",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "COPY /bin/tini /bin/tini # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "WORKDIR /usr/share/elasticsearch",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "COPY --chown=0:0 /usr/share/elasticsearch . # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "RUN /bin/sh -c ln -sf /etc/pki/ca-trust/extracted/java/cacerts jdk/lib/security/cacerts # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "ENV PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "ENV SHELL=/bin/bash",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "COPY --chmod=0555 bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "RUN /bin/sh -c chmod g=u /etc/passwd &&     find / -xdev -perm -4000 -exec chmod ug-s {} + &&     chmod 0775 /usr/share/elasticsearch &&     chown elasticsearch bin config config/jvm.options.d data logs plugins # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "EXPOSE map[9200/tcp:{} 9300/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "LABEL org.label-schema.build-date=2025-09-10T22:06:39.784049935Z org.label-schema.license=Elastic-License-2.0 org.label-schema.name=Elasticsearch org.label-schema.schema-version=1.0 org.label-schema.url=https://www.elastic.co/products/elasticsearch org.label-schema.usage=https://www.elastic.co/guide/en/elasticsearch/reference/index.html org.label-schema.vcs-ref=c6d8fb31b39450a223671e79141dd1c4b2759b5f org.label-schema.vcs-url=https://github.com/elastic/elasticsearch org.label-schema.vendor=Elastic org.label-schema.version=9.0.7 org.opencontainers.image.created=2025-09-10T22:06:39.784049935Z org.opencontainers.image.documentation=https://www.elastic.co/guide/en/elasticsearch/reference/index.html org.opencontainers.image.licenses=Elastic-License-2.0 org.opencontainers.image.revision=c6d8fb31b39450a223671e79141dd1c4b2759b5f org.opencontainers.image.source=https://github.com/elastic/elasticsearch org.opencontainers.image.title=Elasticsearch org.opencontainers.image.url=https://www.elastic.co/products/elasticsearch org.opencontainers.image.vendor=Elastic org.opencontainers.image.version=9.0.7",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "LABEL name=Elasticsearch maintainer=infra@elastic.co vendor=Elastic version=9.0.7 release=1 summary=Elasticsearch description=You know, for search.",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "RUN /bin/sh -c mkdir /licenses && ln LICENSE.txt /licenses/LICENSE # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "ENTRYPOINT [\"/bin/tini\" \"--\" \"/usr/local/bin/docker-entrypoint.sh\"]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "CMD [\"eswrapper\"]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2025-09-16T08:32:12Z",
+      "created_by": "USER 1000:0",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    }
+  ],
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:55d5530fe8468c8c9907e0aa1de030811941604fa5f46de3db6dc15ec40906dd",
+      "sha256:5fd18963615a13928d4397621037c6066b9d55f7b375aec0662f6dd278a4c8d4",
+      "sha256:36a3a2cb3cc51553716175654b2594cc2b541da7db423fa1d992d65995beec25",
+      "sha256:ba7daa0d50d027ee6c6c1944dc1282e2723a3eeaf9a7c0dd129186c1eb9ac95c",
+      "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "sha256:b39b7862f6be1741fc00fff892a733ac537d33f1a9080f6868aa3e8d06615e5f",
+      "sha256:43f243a634c6f2d9e201468258e5970072b7d876ee09c29dca7c737f7b05ad73",
+      "sha256:3f7adc35eaf06839452de5adfbe4bdf9e1830e1fbef94a64536d708426bc681a",
+      "sha256:7ae8456f91cd2d050ea4570a738ea83baca5b6532846a058512d0dc07a8f2542",
+      "sha256:410b1fddcc8c3914d8dedb860b6b32ca1fef709af3e45a3fdf401246567295b1"
+    ]
+  }
+}

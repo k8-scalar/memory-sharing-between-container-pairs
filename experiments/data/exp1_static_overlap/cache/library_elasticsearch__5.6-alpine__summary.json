@@ -1,0 +1,74 @@
+{
+  "image": "library/elasticsearch",
+  "tag": "5.6-alpine",
+  "layers": [
+    {
+      "digest": "sha256:bdf0201b3a056acc4d6062cc88cd8a4ad5979983bfb640f15a145e09ed985f92",
+      "compressed_size": 2757009,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) ADD file:2e3a37883f56a4a278bec2931fc9f91fb9ebdaa9047540fe8fde419b84a1701b in / ",
+      "chain_id": "sha256:a464c54f93a9e88fc1d33df1e0e39cca427d60145a360962e8f19a1dbf900da9"
+    },
+    {
+      "digest": "sha256:9e12771959adeb3408e625492accf845401aa66bcca638859a6b34176d753d62",
+      "compressed_size": 237,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c { \t\techo '#!/bin/sh'; \t\techo 'set -e'; \t\techo; \t\techo 'dirname \"$(dirname \"$(readlink -f \"$(which javac || which java)\")\")\"'; \t} > /usr/local/bin/docker-java-home \t&& chmod +x /usr/local/bin/docker-java-home",
+      "chain_id": "sha256:087b2e70a3a8220a9dbf6f63ff5800b3d12b80997d93dfa3446dc40a541e2db1"
+    },
+    {
+      "digest": "sha256:ae272eb2814b212db0ef2f5b8db4be474597598efb779c8c1c4073d507939bc6",
+      "compressed_size": 54918805,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -x \t&& apk add --no-cache \t\topenjdk8-jre=\"$JAVA_ALPINE_VERSION\" \t&& [ \"$JAVA_HOME\" = \"$(docker-java-home)\" ]",
+      "chain_id": "sha256:93dddc981697eeebefa76c36c968c7be756543d9df34f6aa3de54241cd52ca0a"
+    },
+    {
+      "digest": "sha256:23e66147d45e09eee012f9b89dfba31285101c4f685cdb96ccc00e33cacff9f9",
+      "compressed_size": 1264,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c addgroup -S elasticsearch && adduser -S -G elasticsearch elasticsearch",
+      "chain_id": "sha256:efcfd33fbc73760a19d3636e18cebafd1dcef19dc724b54c3fcadd8da463cadf"
+    },
+    {
+      "digest": "sha256:402726cdf4e30c634ad77152da0941d18e77abfd674562bb3475d6deeec2781c",
+      "compressed_size": 1209089,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c apk add --no-cache 'su-exec>=0.2' bash",
+      "chain_id": "sha256:0725beac53b6d3402aad297c580d2a3a83c5b13913740d9c5054061017a535f9"
+    },
+    {
+      "digest": "sha256:5eb2892c61b5bc7ce748ac7dccd0312b55690529364ea68c02b0b06af34deb5e",
+      "compressed_size": 143,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) WORKDIR /usr/share/elasticsearch",
+      "chain_id": "sha256:1bc956195d5cd71f168ef546e4d827ee35e013cd7384a562b5e670543237f3ab"
+    },
+    {
+      "digest": "sha256:0abce02482c02df52d15adc8d36feed118b9de35d2e4d8e1844ec6fec229b20c",
+      "compressed_size": 34035651,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -ex; \t\tapk add --no-cache --virtual .fetch-deps \t\tca-certificates \t\tgnupg \t\topenssl \t\ttar \t; \t\twget -O elasticsearch.tar.gz \"$ELASTICSEARCH_TARBALL\"; \t\tif [ \"$ELASTICSEARCH_TARBALL_SHA1\" ]; then \t\techo \"$ELASTICSEARCH_TARBALL_SHA1 *elasticsearch.tar.gz\" | sha1sum -c -; \tfi; \t\tif [ \"$ELASTICSEARCH_TARBALL_ASC\" ]; then \t\twget -O elasticsearch.tar.gz.asc \"$ELASTICSEARCH_TARBALL_ASC\"; \t\texport GNUPGHOME=\"$(mktemp -d)\"; \t\tgpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys \"$GPG_KEY\"; \t\tgpg --batch --verify elasticsearch.tar.gz.asc elasticsearch.tar.gz; \t\trm -rf \"$GNUPGHOME\" elasticsearch.tar.gz.asc; \tfi; \t\ttar -xf elasticsearch.tar.gz --strip-components=1; \trm elasticsearch.tar.gz; \t\tapk del .fetch-deps; \t\tmkdir -p ./plugins; \tfor path in \t\t./data \t\t./logs \t\t./config \t\t./config/scripts \t; do \t\tmkdir -p \"$path\"; \t\tchown -R elasticsearch:elasticsearch \"$path\"; \tdone; \t\texport ES_JAVA_OPTS='-Xms32m -Xmx32m'; \tif [ \"${ELASTICSEARCH_VERSION%%.*}\" -gt 1 ]; then \t\telasticsearch --version; \telse \t\telasticsearch -v; \tfi",
+      "chain_id": "sha256:8d06732634c523b169ef06ddf000f5c404c3c50a22722c0bfe8fc217d86150f8"
+    },
+    {
+      "digest": "sha256:4691d420175472f0d156e650a96ed67c0dc88bd7da8a3aa9ca54f6097adfea0d",
+      "compressed_size": 491,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY dir:3bffe8818d5cd3ce2107df97ed19ff2efc59dec260ec753e905c3d8f62c93058 in ./config ",
+      "chain_id": "sha256:7d65d274e3298063d76ba2a642c746387ce0d9d5a34602d0235fb4b89cc7ea0a"
+    },
+    {
+      "digest": "sha256:a22d0d0d771d8e97dbf1f38f0b710c906c405f606a0f23068b555de39ebb3044",
+      "compressed_size": 509,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY file:f5c8c9507bec9f28fc449c5a383b7cce7f393114dd7463ef6b8b0f971c406b5d in / ",
+      "chain_id": "sha256:3cfae9d1ecf3fdd7947466ab3cc7a1feeef39e6869f39413a6aa36fe31332a39"
+    }
+  ],
+  "total_compressed": 92923198,
+  "layer_count": 9,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2019-04-10T03:10:21.187044027Z"
+}

@@ -1,0 +1,234 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "ExposedPorts": {
+      "3001/tcp": {}
+    },
+    "Env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/src/app/bin",
+      "NODE_VERSION=20.11.0",
+      "YARN_VERSION=1.22.19",
+      "NODE_ENV=production",
+      "NVIDIA_DRIVER_CAPABILITIES=all",
+      "NVIDIA_VISIBLE_DEVICES=all"
+    ],
+    "Entrypoint": [
+      "tini",
+      "--",
+      "/bin/sh"
+    ],
+    "Volumes": {
+      "/usr/src/app/upload": {}
+    },
+    "WorkingDir": "/usr/src/app",
+    "Labels": {
+      "org.opencontainers.image.created": "2024-01-20T16:41:25.482Z",
+      "org.opencontainers.image.description": "Self-hosted photo and video backup solution directly from your mobile phone.",
+      "org.opencontainers.image.licenses": "MIT",
+      "org.opencontainers.image.revision": "4ebb9974ff2f0c9ff892d6186178c0c9b9f06e05",
+      "org.opencontainers.image.source": "https://github.com/immich-app/immich",
+      "org.opencontainers.image.title": "immich",
+      "org.opencontainers.image.url": "https://github.com/immich-app/immich",
+      "org.opencontainers.image.version": "v1.93.3"
+    },
+    "OnBuild": null
+  },
+  "created": "2024-01-20T16:16:39.423369741Z",
+  "history": [
+    {
+      "created": "2024-01-11T02:37:54.105513071Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:9deb26e1dbc258df47629e6f8fbcea4e4b54e7673537cc925db16af858d9cc8d in / "
+    },
+    {
+      "created": "2024-01-11T02:37:54.440721041Z",
+      "created_by": "/bin/sh -c #(nop)  CMD [\"bash\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-11T04:11:23.68339327Z",
+      "created_by": "/bin/sh -c groupadd --gid 1000 node   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node"
+    },
+    {
+      "created": "2024-01-11T04:13:10.41507219Z",
+      "created_by": "/bin/sh -c #(nop)  ENV NODE_VERSION=20.11.0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-11T04:13:35.965871814Z",
+      "created_by": "/bin/sh -c ARCH= OPENSSL_ARCH= && dpkgArch=\"$(dpkg --print-architecture)\"     && case \"${dpkgArch##*-}\" in       amd64) ARCH='x64' OPENSSL_ARCH='linux-x86_64';;       ppc64el) ARCH='ppc64le' OPENSSL_ARCH='linux-ppc64le';;       s390x) ARCH='s390x' OPENSSL_ARCH='linux*-s390x';;       arm64) ARCH='arm64' OPENSSL_ARCH='linux-aarch64';;       armhf) ARCH='armv7l' OPENSSL_ARCH='linux-armv4';;       i386) ARCH='x86' OPENSSL_ARCH='linux-elf';;       *) echo \"unsupported architecture\"; exit 1 ;;     esac     && set -ex     && apt-get update && apt-get install -y ca-certificates curl wget gnupg dirmngr xz-utils libatomic1 --no-install-recommends     && rm -rf /var/lib/apt/lists/*     && export GNUPGHOME=\"$(mktemp -d)\"     && for key in       4ED778F539E3634C779C87C6D7062848A1AB005C       141F07595B7B3FFE74309A937405533BE57C7D57       74F12602B6F1C4E913FAA37AD3A89613643B6201       DD792F5973C6DE52C432CBDAC77ABFA00DDBF2B7       61FC681DFB92A079F1685E77973F295594EC4689       8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600       C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8       890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4       C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C       108F52B48DB57BB0CC439B2997B01419BD92F80A       A363A499291CBBC940DD62E41F10027AF002F8B0     ; do       gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys \"$key\" ||       gpg --batch --keyserver keyserver.ubuntu.com --recv-keys \"$key\" ;     done     && curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH.tar.xz\"     && curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc\"     && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc     && gpgconf --kill all     && rm -rf \"$GNUPGHOME\"     && grep \" node-v$NODE_VERSION-linux-$ARCH.tar.xz\\$\" SHASUMS256.txt | sha256sum -c -     && tar -xJf \"node-v$NODE_VERSION-linux-$ARCH.tar.xz\" -C /usr/local --strip-components=1 --no-same-owner     && rm \"node-v$NODE_VERSION-linux-$ARCH.tar.xz\" SHASUMS256.txt.asc SHASUMS256.txt     && find /usr/local/include/node/openssl/archs -mindepth 1 -maxdepth 1 ! -name \"$OPENSSL_ARCH\" -exec rm -rf {} \\;     && apt-mark auto '.*' > /dev/null     && find /usr/local -type f -executable -exec ldd '{}' ';'       | awk '/=>/ { so = $(NF-1); if (index(so, \"/usr/local/\") == 1) { next }; gsub(\"^/(usr/)?\", \"\", so); print so }'       | sort -u       | xargs -r dpkg-query --search       | cut -d: -f1       | sort -u       | xargs -r apt-mark manual     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false     && ln -s /usr/local/bin/node /usr/local/bin/nodejs     && node --version     && npm --version"
+    },
+    {
+      "created": "2024-01-11T04:13:36.374091543Z",
+      "created_by": "/bin/sh -c #(nop)  ENV YARN_VERSION=1.22.19",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-11T04:13:50.150080241Z",
+      "created_by": "/bin/sh -c set -ex   && savedAptMark=\"$(apt-mark showmanual)\"   && apt-get update && apt-get install -y ca-certificates curl wget gnupg dirmngr --no-install-recommends   && rm -rf /var/lib/apt/lists/*   && export GNUPGHOME=\"$(mktemp -d)\"   && for key in     6A010C5166006599AA17F08146C2130DFD2497F5   ; do     gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys \"$key\" ||     gpg --batch --keyserver keyserver.ubuntu.com --recv-keys \"$key\" ;   done   && curl -fsSLO --compressed \"https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz\"   && curl -fsSLO --compressed \"https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc\"   && gpg --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz   && gpgconf --kill all   && rm -rf \"$GNUPGHOME\"   && mkdir -p /opt   && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz   && apt-mark auto '.*' > /dev/null   && { [ -z \"$savedAptMark\" ] || apt-mark manual $savedAptMark > /dev/null; }   && find /usr/local -type f -executable -exec ldd '{}' ';'     | awk '/=>/ { so = $(NF-1); if (index(so, \"/usr/local/\") == 1) { next }; gsub(\"^/(usr/)?\", \"\", so); print so }'     | sort -u     | xargs -r dpkg-query --search     | cut -d: -f1     | sort -u     | xargs -r apt-mark manual   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false   && yarn --version"
+    },
+    {
+      "created": "2024-01-11T04:13:50.277638696Z",
+      "created_by": "/bin/sh -c #(nop) COPY file:4d192565a7220e135cab6c77fbc1c73211b69f3d9fb37e62857b2c6eb9363d51 in /usr/local/bin/ "
+    },
+    {
+      "created": "2024-01-11T04:13:50.365615937Z",
+      "created_by": "/bin/sh -c #(nop)  ENTRYPOINT [\"docker-entrypoint.sh\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-11T04:13:50.456813876Z",
+      "created_by": "/bin/sh -c #(nop)  CMD [\"node\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-11T11:52:17.490756302Z",
+      "created_by": "WORKDIR /usr/src/app",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-11T11:52:17.577846635Z",
+      "created_by": "RUN /bin/sh -c sed -i -e's/ main/ main contrib non-free non-free-firmware/g' /etc/apt/sources.list.d/debian.sources # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-11T11:52:17.595345094Z",
+      "created_by": "COPY bin/install-ffmpeg.sh bin/build-lock.json ./ # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-11T11:54:30.219250752Z",
+      "created_by": "RUN /bin/sh -c apt-get update &&     apt-get install --no-install-recommends -yqq         ca-certificates         $(if [ $(arch) = \"x86_64\" ]; then echo \"intel-media-va-driver-non-free\"; fi)         jq         libexif12         libexpat1         libgcc-s1         libglib2.0-0         libgomp1         libgsf-1-114         libheif1         libjpeg62-turbo         libjxl0.7         liblcms2-2         liblqr-1-0         libltdl7         libmimalloc2.0         libopenexr-3-1-30         libopenjp2-7         liborc-0.4-0         librsvg2-2         libspng0         libwebp7         libwebpdemux2         libwebpmux3         mesa-va-drivers         tini         wget         zlib1g &&     ./install-ffmpeg.sh &&     apt-get remove -yqq jq wget ca-certificates &&     apt-get autoremove -yqq &&     apt-get clean &&     rm -rf /var/lib/apt/lists/* &&     rm install-ffmpeg.sh &&     rm build-lock.json # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-11T11:54:31.332663502Z",
+      "created_by": "COPY /usr/local/lib/ /usr/local/lib/ # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-11T11:54:31.444171377Z",
+      "created_by": "COPY /usr/src/resources/ /usr/src/resources/ # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-11T11:54:31.565835961Z",
+      "created_by": "RUN /bin/sh -c ldconfig /usr/local/lib # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-16T16:10:46.21256107Z",
+      "created_by": "WORKDIR /usr/src/app",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:06:43.954976701Z",
+      "created_by": "ENV NODE_ENV=production NVIDIA_DRIVER_CAPABILITIES=all NVIDIA_VISIBLE_DEVICES=all",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-20T16:06:43.954976701Z",
+      "created_by": "COPY /usr/src/app/node_modules ./node_modules # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:06:44.42801198Z",
+      "created_by": "COPY /usr/src/app/dist ./dist # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:06:44.457653034Z",
+      "created_by": "COPY /usr/src/app/bin ./bin # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:06:45.657195502Z",
+      "created_by": "COPY /usr/src/app/build ./www # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:06:45.672427771Z",
+      "created_by": "COPY server/resources resources # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:06:45.690266648Z",
+      "created_by": "COPY server/package.json server/package-lock.json ./ # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:06:45.712456399Z",
+      "created_by": "COPY server/start*.sh ./ # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:06:47.080310478Z",
+      "created_by": "RUN /bin/sh -c npm link && npm cache clean --force # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:06:47.095038953Z",
+      "created_by": "COPY LICENSE /licenses/LICENSE.txt # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:16:39.423369741Z",
+      "created_by": "COPY LICENSE /LICENSE # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-01-20T16:16:39.423369741Z",
+      "created_by": "ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/src/app/bin",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-20T16:16:39.423369741Z",
+      "created_by": "VOLUME [/usr/src/app/upload]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-20T16:16:39.423369741Z",
+      "created_by": "EXPOSE map[3001/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-01-20T16:16:39.423369741Z",
+      "created_by": "ENTRYPOINT [\"tini\" \"--\" \"/bin/sh\"]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    }
+  ],
+  "moby.buildkit.buildinfo.v1": "eyJmcm9udGVuZCI6ImRvY2tlcmZpbGUudjAiLCJzb3VyY2VzIjpbeyJ0eXBlIjoiZG9ja2VyLWltYWdlIiwicmVmIjoiZG9ja2VyLmlvL2xpYnJhcnkvbm9kZTppcm9uLWFscGluZTMuMTgiLCJwaW4iOiJzaGEyNTY6NDEwYWZmMTY5OGFkNjhhMGE1MTQ3NGNjYWIwZDk2MzBmNmYxMTNhZGM3MDgzZGM5OGIyYjI2ZTZkODQzOTBhZiJ9LHsidHlwZSI6ImRvY2tlci1pbWFnZSIsInJlZiI6ImdoY3IuaW8vaW1taWNoLWFwcC9iYXNlLXNlcnZlci1kZXY6MjAyNDAxMTFAc2hhMjU2OjVhY2Y3NzM3OTZmOTNjN2EzMjE2ZmZkYmRiMzYwNGRjODEyZjJiMjMxN2I4NGExYjU3YjY1Njc0ODI2Yjc0NmEiLCJwaW4iOiJzaGEyNTY6NWFjZjc3Mzc5NmY5M2M3YTMyMTZmZmRiZGIzNjA0ZGM4MTJmMmIyMzE3Yjg0YTFiNTdiNjU2NzQ4MjZiNzQ2YSJ9LHsidHlwZSI6ImRvY2tlci1pbWFnZSIsInJlZiI6ImdoY3IuaW8vaW1taWNoLWFwcC9iYXNlLXNlcnZlci1wcm9kOjIwMjQwMTExQHNoYTI1NjplOTE3NjA1MDA4OTc3ZjY4ZGMzYjZmNzg3OWMyNjRjYWU0YmZmNmM0MTg2YjExOWE2ZTExNGE2MGY4ZjVhMzU0IiwicGluIjoic2hhMjU2OmU5MTc2MDUwMDg5NzdmNjhkYzNiNmY3ODc5YzI2NGNhZTRiZmY2YzQxODZiMTE5YTZlMTE0YTYwZjhmNWEzNTQifV19",
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:571ade696b261f0ff46e3cdac4635afc009c4ed3429950cb95cd7e5f70ba0a07",
+      "sha256:dbdfa07812e8e7c512301a80626b4d9d90e65aff4bf43e27561933a34e101f74",
+      "sha256:5a9e6740bc8d1db761fbdd8f7a21dec182801454e83748732b157b68c0b234a5",
+      "sha256:2e9bf44ff90f58244ff50c5cc8c6b7841de931e8c56be50f03f2070217e0e543",
+      "sha256:4e48c97c49bc930df1fb91ed8afd627a618b0d3fe725c80840d4d3c90ffbdc39",
+      "sha256:e126b8f31e28a4a5dd40b9d249239e162e1c7541525a9d4cfb929ffd024c05cc",
+      "sha256:ab8a7fbc2fca591913a68109be2732ff3e0acb436836247dce4c52bcca28c95b",
+      "sha256:55c0ff873429d54614663e231d74267b98823f85b2d2449cb6293073d104e610",
+      "sha256:146110fab23931a326010b5115346472f1d13f96d7e4024bcdeb305ba928c150",
+      "sha256:684e2973411a57cd248403aef469b661bd8618270c66fbb37d9d3b31219b37c6",
+      "sha256:2413323fb3217d62ba58c6672d078f5f554e798513ad156b0058d488f78f2361",
+      "sha256:234f925c56cd99540eb6abd17fa77b0d2515633a9665afd323dd148c8a86e4d1",
+      "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "sha256:7b27e70d72632cd079394c99228eaea3057d79fc8b925d34dc501edbc5721215",
+      "sha256:fdea9ebfa97c075058bacc0f9c0fbd557f6cb818ba2c243fa03b9d02eee22578",
+      "sha256:496f7996aa4c5d2f1abdc1fa5b1ae5f2d99269c89c419c4d9e394c185a1da4e4",
+      "sha256:5dc08bed93d0d20663d51fc1d5f4cef7b7585838eeaa4a9e0b86a876344955ca",
+      "sha256:0d1bb5dbdbff9786ecac70b21236934d289fa5f3a7a56d1c787bedeb331b9857",
+      "sha256:35906e915f52f4bd6d8d09b8bdfefe4915feff3cb8a775a77354bc2c1efe9738",
+      "sha256:5248d3bd33800e5e3d19a4f9a6fa23a4b16fe96b108196c1c82a8ed5c2aa6450",
+      "sha256:fa17c8250f518ca7e91a8762b70d9587726bd12d8a84fac0c1f60e3f850a8c0b",
+      "sha256:95c331778799fec13a9c80b0861f8792995dd84fcde49e641698378d2047b7af",
+      "sha256:a23de423fa573333ac7c9734697089bf70802ac8ee0930acb9f71e66e101c783"
+    ]
+  }
+}

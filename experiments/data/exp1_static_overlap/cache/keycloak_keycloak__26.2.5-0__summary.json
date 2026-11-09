@@ -1,0 +1,39 @@
+{
+  "image": "keycloak/keycloak",
+  "tag": "26.2.5-0",
+  "layers": [
+    {
+      "digest": "sha256:cd2f3f69481dffe63a3071ea43aeeab2a4af254e96b065c35b2d7ce2534e0383",
+      "compressed_size": 7265026,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "/bin/sh -c #(nop) LABEL \"build-date\"=\"2025-05-15T14:21:56\" \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"1594a07d6a09f2cbf4e16dd944306eca07749a2a\" \"release\"=\"1747318857\"",
+      "chain_id": "sha256:ef3cb51dff219acd69cb7cbc16ab2eb33799c558d0ef565cbe1246a5674e0100"
+    },
+    {
+      "digest": "sha256:e90add7a2a18a1b226e1b587c97b2ed3b5cb4227a3ff45f5240002db1c35b407",
+      "compressed_size": 83781417,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /tmp/null/rootfs/ / # buildkit",
+      "chain_id": "sha256:d2bffa8c213268e170e251b2e59f4a916fee1e9b58b97949d679f855866c5553"
+    },
+    {
+      "digest": "sha256:4ba253dae58c4ff5b254d00ff1f5481affb32ffce3b70942af60a8ecc38eacba",
+      "compressed_size": 154953649,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY --chown=1000:0 /opt/keycloak /opt/keycloak # buildkit",
+      "chain_id": "sha256:7f3d58fae4461045bb8224b2e6cc9277e38494ddb128d74022d98130fd8c3623"
+    },
+    {
+      "digest": "sha256:993a4b9d5dcf31619c03738e950002688204500cdc897adb2b76d918af827867",
+      "compressed_size": 550,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c echo \"keycloak:x:0:root\" >> /etc/group &&     echo \"keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin\" >> /etc/passwd # buildkit",
+      "chain_id": "sha256:fb134a210ab8df3bdc715fe21a760fb0671ccc85da9ebcf0b9b68767c3a5df0e"
+    }
+  ],
+  "total_compressed": 246000642,
+  "layer_count": 4,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2025-05-28T06:50:36.144704244Z"
+}

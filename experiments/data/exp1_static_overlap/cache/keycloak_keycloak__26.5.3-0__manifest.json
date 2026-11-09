@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.index.v1+json",
+  "manifests": [
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:3cef99b816d23b48a5c3fdd58f235289fd234c835cbd7cb9ae836cecc8bfc759",
+      "size": 1057,
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:40598aeba3ee90ab59215e654ccc1a31eab134a7655717bd281ea36ba83dd2dc",
+      "size": 1057,
+      "platform": {
+        "architecture": "arm64",
+        "os": "linux"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:d9ef02be90d9e703d673cb33e608e689966b07348340cdfaa2e7a37f35053a54",
+      "size": 1057,
+      "platform": {
+        "architecture": "ppc64le",
+        "os": "linux"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:8bce25947162969aa4f566c548b7cf03f92b77861e8710566fb4c509bc0c3f14",
+      "size": 567,
+      "annotations": {
+        "vnd.docker.reference.digest": "sha256:3cef99b816d23b48a5c3fdd58f235289fd234c835cbd7cb9ae836cecc8bfc759",
+        "vnd.docker.reference.type": "attestation-manifest"
+      },
+      "platform": {
+        "architecture": "unknown",
+        "os": "unknown"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:6f51c2ecde1c772d6f26060695ca517d42aec622c61207cece5764cd96689237",
+      "size": 567,
+      "annotations": {
+        "vnd.docker.reference.digest": "sha256:40598aeba3ee90ab59215e654ccc1a31eab134a7655717bd281ea36ba83dd2dc",
+        "vnd.docker.reference.type": "attestation-manifest"
+      },
+      "platform": {
+        "architecture": "unknown",
+        "os": "unknown"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:babc9d366603ab4090b0e076f4065fbd0a2dc3233e79c0ba4176fd06df246c78",
+      "size": 567,
+      "annotations": {
+        "vnd.docker.reference.digest": "sha256:d9ef02be90d9e703d673cb33e608e689966b07348340cdfaa2e7a37f35053a54",
+        "vnd.docker.reference.type": "attestation-manifest"
+      },
+      "platform": {
+        "architecture": "unknown",
+        "os": "unknown"
+      }
+    }
+  ]
+}

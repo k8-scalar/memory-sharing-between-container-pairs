@@ -1,0 +1,278 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "User": "1000",
+    "ExposedPorts": {
+      "8080/tcp": {},
+      "8443/tcp": {},
+      "9000/tcp": {}
+    },
+    "Env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG=en_US.UTF-8",
+      "KC_RUN_IN_CONTAINER=true"
+    ],
+    "Entrypoint": [
+      "/opt/keycloak/bin/kc.sh"
+    ],
+    "Labels": {
+      "architecture": "x86_64",
+      "build-date": "2024-06-06T02:51:51",
+      "com.redhat.build-host": "",
+      "com.redhat.component": "",
+      "com.redhat.license_terms": "",
+      "description": "Keycloak Server Image",
+      "distribution-scope": "public",
+      "io.buildah.version": "1.29.0",
+      "io.k8s.description": "Keycloak Server Image",
+      "io.k8s.display-name": "Keycloak Server",
+      "io.openshift.expose-services": "",
+      "io.openshift.tags": "keycloak security identity",
+      "maintainer": "https://www.keycloak.org/",
+      "name": "keycloak",
+      "org.opencontainers.image.created": "2024-06-20T12:52:43.069Z",
+      "org.opencontainers.image.description": "",
+      "org.opencontainers.image.documentation": "https://www.keycloak.org/documentation",
+      "org.opencontainers.image.licenses": "Apache-2.0",
+      "org.opencontainers.image.revision": "52687e78792330893533b608b727af1ed8c69836",
+      "org.opencontainers.image.source": "https://github.com/keycloak-rel/keycloak-rel",
+      "org.opencontainers.image.title": "keycloak-rel",
+      "org.opencontainers.image.url": "https://github.com/keycloak-rel/keycloak-rel",
+      "org.opencontainers.image.version": "25.0.1",
+      "release": "",
+      "summary": "Keycloak Server Image",
+      "url": "https://www.keycloak.org/",
+      "vcs-ref": "",
+      "vcs-type": "git",
+      "vendor": "https://www.keycloak.org/",
+      "version": "25.0.1"
+    }
+  },
+  "created": "2024-06-20T12:53:16.754861959Z",
+  "history": [
+    {
+      "created": "2024-06-06T02:53:48.041072901Z",
+      "created_by": "/bin/sh -c #(nop) LABEL maintainer=\"Red Hat, Inc.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.041153604Z",
+      "created_by": "/bin/sh -c #(nop) LABEL com.redhat.component=\"ubi9-micro-container\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.041168883Z",
+      "created_by": "/bin/sh -c #(nop) LABEL name=\"ubi9/ubi-micro\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.041203938Z",
+      "created_by": "/bin/sh -c #(nop) LABEL version=\"9.4\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.041231573Z",
+      "created_by": "/bin/sh -c #(nop) LABEL com.redhat.license_terms=\"https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.041252533Z",
+      "created_by": "/bin/sh -c #(nop) LABEL summary=\"ubi9 micro image\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.041277407Z",
+      "created_by": "/bin/sh -c #(nop) LABEL description=\"Very small image which doesn't install the package manager.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.041341548Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.k8s.display-name=\"Ubi9-micro\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.041445697Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.openshift.expose-services=\"\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.536720242Z",
+      "created_by": "/bin/sh -c #(nop) COPY dir:08a2bf5d0d8fb7958a66c7544ea804b6ea93bec69f552214f0773cb8a4891064 in / ",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.794065843Z",
+      "created_by": "/bin/sh -c #(nop) COPY file:eec73f859c6e7f6c8a9427ecc5249504fe89ae54dc3a1521b442674a90497d32 in /etc/yum.repos.d/ubi.repo ",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.794100766Z",
+      "created_by": "/bin/sh -c #(nop) CMD /bin/sh",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:48.794197588Z",
+      "created_by": "/bin/sh -c #(nop) LABEL release=9",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:49.044741018Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:989978e4c49acbc9e55ac0e7288d23209899344911a7cc820e4bd077ddcac100 in /root/buildinfo/content_manifests/ubi9-micro-container-9.4-9.json ",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:49.295934775Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:36956cfaa17db319796ddfe565bcd3c08ded47387259c46386e805873963bade in /root/buildinfo/Dockerfile-ubi9-ubi-micro-9.4-9 ",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-06T02:53:49.444770653Z",
+      "created_by": "/bin/sh -c #(nop) LABEL \"distribution-scope\"=\"public\" \"vendor\"=\"Red Hat, Inc.\" \"build-date\"=\"2024-06-06T02:51:51\" \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"cd5996c9b8b99b546584696465f8f39ec682078c\" \"io.k8s.description\"=\"Very small image which doesn't install the package manager.\" \"url\"=\"https://access.redhat.com/containers/#/registry.access.redhat.com/ubi9/ubi-micro/images/9.4-9\""
+    },
+    {
+      "created": "2024-06-20T12:53:16.277287851Z",
+      "created_by": "ENV LANG=en_US.UTF-8",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.277287851Z",
+      "created_by": "ENV KC_RUN_IN_CONTAINER=true",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.277287851Z",
+      "created_by": "COPY /tmp/null/rootfs/ / # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-06-20T12:53:16.685808978Z",
+      "created_by": "COPY --chown=1000:0 /opt/keycloak /opt/keycloak # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "RUN /bin/sh -c echo \"keycloak:x:0:root\" >> /etc/group &&     echo \"keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin\" >> /etc/passwd # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "USER 1000",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "EXPOSE map[8080/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "EXPOSE map[8443/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "EXPOSE map[9000/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ENTRYPOINT [\"/opt/keycloak/bin/kc.sh\"]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_VERSION",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_URL=https://www.keycloak.org/",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_TAGS=keycloak security identity",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_MAINTAINER=https://www.keycloak.org/",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_VENDOR=https://www.keycloak.org/",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "LABEL maintainer=https://www.keycloak.org/ vendor=https://www.keycloak.org/ version=25.0.1 url=https://www.keycloak.org/ io.openshift.tags=keycloak security identity release= vcs-ref= com.redhat.build-host= com.redhat.component= com.redhat.license_terms=",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_SERVER_DISPLAY_NAME=Keycloak Server",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_SERVER_IMAGE_NAME=keycloak",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_SERVER_DESCRIPTION=Keycloak Server Image",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "LABEL name=keycloak description=Keycloak Server Image summary=Keycloak Server Image io.k8s.display-name=Keycloak Server io.k8s.description=Keycloak Server Image",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_SOURCE=https://github.com/keycloak/keycloak",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "ARG KEYCLOAK_DOCS=https://www.keycloak.org/documentation",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2024-06-20T12:53:16.754861959Z",
+      "created_by": "LABEL org.opencontainers.image.title=Keycloak Server org.opencontainers.image.url=https://www.keycloak.org/ org.opencontainers.image.source=https://github.com/keycloak/keycloak org.opencontainers.image.description= org.opencontainers.image.documentation=https://www.keycloak.org/documentation",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    }
+  ],
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:3e1c5bd00b9acd9ca949abb5bfe3f4340c8f2d94df68038b98349ad9f055d581",
+      "sha256:dfa0e289697cb3f21d79ee2a71b90e773c138ff3330b9f2c3f56fc700497c7a1",
+      "sha256:8326ca0762c667e6fb302983e3c88ef16989ebc1cedac05838c4ecd4aa231a28",
+      "sha256:222ce94dfb58911b4e72b6d129e41f3582bb00e7747e2b28defab043f041287d"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "image": "keycloak/keycloak",
+  "tag": "20.0.5-0",
+  "layers": [
+    {
+      "digest": "sha256:d7c06497d5cebd39c0a4feb14981ec940b5c863e49903d320f630805b049cbff",
+      "compressed_size": 39279912,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "/bin/sh -c mv -fZ /tmp/ubi.repo /etc/yum.repos.d/ubi.repo || :",
+      "chain_id": "sha256:e96a181d185eb97609b863a125df22eaa4837365b0df0229ef371ed9bf1ba9d9"
+    },
+    {
+      "digest": "sha256:604860b8efed3ba5f4b053972f0d2e93f579e5648973b5f3a240b144a6dea182",
+      "compressed_size": 175788895,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /opt/keycloak /opt/keycloak # buildkit",
+      "chain_id": "sha256:987c279acdbe487d4564a993dd90cf0e6363c4316ba586aaaf574691edf0dde6"
+    },
+    {
+      "digest": "sha256:0696ddd1a0cc312db85739d667022f06cff29fda7d0907fb88d67cf4618a30ae",
+      "compressed_size": 88054178,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c microdnf update -y &&     microdnf install -y --nodocs java-11-openjdk-headless glibc-langpack-en && microdnf clean all && rm -rf /var/cache/yum/* &&     echo \"keycloak:x:0:root\" >> /etc/group &&     echo \"keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin\" >> /etc/passwd # buildkit",
+      "chain_id": "sha256:eb7b089cd692d3735e9fc0945e7d8a5feeb78cf16d1fdecd4f00e70a8a9228bd"
+    }
+  ],
+  "total_compressed": 303122985,
+  "layer_count": 3,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2023-02-21T06:17:32.578312262Z"
+}

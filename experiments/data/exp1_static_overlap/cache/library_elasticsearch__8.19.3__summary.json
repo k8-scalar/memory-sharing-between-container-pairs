@@ -1,0 +1,81 @@
+{
+  "image": "library/elasticsearch",
+  "tag": "8.19.3",
+  "layers": [
+    {
+      "digest": "sha256:953cdd4133718b72c5d0a78e754c1405c02510fdb5237265f7955863f1757f83",
+      "compressed_size": 29723450,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "/bin/sh -c #(nop) ADD file:dafefa97de6dc66a6734ec6f05e58125ce01225cccce3f50662330c252aad518 in / ",
+      "chain_id": "sha256:f9f52dc133e2af9188960e5a5165cafaa51657ef740ff20219e45a561d78c591"
+    },
+    {
+      "digest": "sha256:5b6e5bf74d14044ebd8cff6dadf66644b167edb3ca2cc5b486b34e6243fc18b7",
+      "compressed_size": 4493743,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c yes no | dpkg-reconfigure dash && for iter in 1 2 3 4 5 6 7 8 9 10; do       export DEBIAN_FRONTEND=noninteractive &&       apt-get update &&       apt-get upgrade -y &&       apt-get install -y --no-install-recommends         ca-certificates curl netcat-openbsd p11-kit unzip zip  &&       apt-get clean &&       rm -rf /var/lib/apt/lists/* &&       exit_code=0 && break ||         exit_code=$? && echo \"apt-get error: retry $iter in 10s\" && sleep 10;     done;     exit $exit_code # buildkit",
+      "chain_id": "sha256:366ccc9f7d64a613703f6cf86e4466543767a2f7fddcf7a1c8e9d277ec6a5c04"
+    },
+    {
+      "digest": "sha256:24c199c39e98365575a4b58ca96fcff9d2f222c0bfafcb154771072905c0527e",
+      "compressed_size": 3520,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c userdel -r ubuntu &&     groupadd -g 1000 elasticsearch &&     useradd --uid 1000 --gid 1000 --home-dir /usr/share/elasticsearch --create-home elasticsearch &&     usermod -aG root elasticsearch &&     chown -R 0:0 /usr/share/elasticsearch # buildkit",
+      "chain_id": "sha256:d59df4c7314097e11abe7ffa0cc2752e672d5f18fbd3400ccd04d1744da15d9f"
+    },
+    {
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "compressed_size": 32,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "WORKDIR /usr/share/elasticsearch",
+      "chain_id": "sha256:e7018b2eb208b6d17eaab30c20fea5c4216cc70850014bda4da7fb5a586fec7a"
+    },
+    {
+      "digest": "sha256:bab7687d37c30cdb02842a8482a9fe0d1d1d47ce0944db624081c5f51cce7196",
+      "compressed_size": 660549292,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY --chown=0:0 /usr/share/elasticsearch /usr/share/elasticsearch # buildkit",
+      "chain_id": "sha256:075dbce751c1214bc5a3eef6cf094c5b0d865f0978ba9ecdd0498e3908e9ecfd"
+    },
+    {
+      "digest": "sha256:52223e48984c4a991b36e707e241a3ed40cacdfda4c1bf11104459fe42e5f414",
+      "compressed_size": 9532,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY --chown=0:0 /bin/tini /bin/tini # buildkit",
+      "chain_id": "sha256:f6b862d0bf9e2106b2b09edf659d33891d4b1efbcb64c291153061450234817f"
+    },
+    {
+      "digest": "sha256:9ff15ed05c1c7fc2e815dbdf48f910143780308cf7d11711748782092960000c",
+      "compressed_size": 1713,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh # buildkit",
+      "chain_id": "sha256:962303d18fd0f329b4b3c90669aad4fd23eb3635f506c03be6b8f226e06e0713"
+    },
+    {
+      "digest": "sha256:27e5200fcfc434e90b2cbca9a41a345c17a2c3c65fc027b37f5a1a0ec0c21ed4",
+      "compressed_size": 163937,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c chmod g=u /etc/passwd &&     chmod 0555 /usr/local/bin/docker-entrypoint.sh &&     find / -xdev -perm -4000 -exec chmod ug-s {} + &&     chmod 0775 /usr/share/elasticsearch &&     chown elasticsearch bin config config/jvm.options.d data logs plugins # buildkit",
+      "chain_id": "sha256:fd8bd158b2a2cfa4c24de21eb96482f803cc2de4bbee980b654619b7ce51796a"
+    },
+    {
+      "digest": "sha256:07ff1e9d00e6c3517869cbc8f2ab491a48376504e635480da9721f58586e8d44",
+      "compressed_size": 406,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY bin/docker-openjdk /etc/ca-certificates/update.d/docker-openjdk # buildkit",
+      "chain_id": "sha256:4e2eda04df2e3a400beb6a7193490ee7b20276a717864bcc3a7a48af45c0576c"
+    },
+    {
+      "digest": "sha256:32c3a69d6196550362aa73fac611b4bb46c18c326b30309c3faa78ae47547960",
+      "compressed_size": 115531,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c /etc/ca-certificates/update.d/docker-openjdk # buildkit",
+      "chain_id": "sha256:2af4fd8fc7c4967afa85c6f9dbbf1b0ceedececc315dc74f3fcd99097b5beec0"
+    }
+  ],
+  "total_compressed": 695061156,
+  "layer_count": 10,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2025-08-28T08:37:19Z"
+}

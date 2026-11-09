@@ -1,0 +1,137 @@
+{{- if .Values.influxdb.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influxdb-storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.influxdb.storage.size }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: influxdb-init
+data:
+  init.sh: |
+    #!/bin/bash
+    # This script is mounted at /docker-entrypoint-initdb.d/init.sh; the
+    # official InfluxDB image runs it AFTER it completes its own setup phase
+    # (which creates the admin user, org, token, and the bucket named by
+    # DOCKER_INFLUXDB_INIT_BUCKET). At that point `influx` is configured.
+    #
+    # The application stack needs two extra buckets beyond the default:
+    #   - metrics-loadtest  (k6 per-request metrics, app config)
+    #   - metrics-nodes     (Telegraf cAdvisor metrics, hard-coded in
+    #                        templates/telegraf.yaml)
+    # Create both, idempotently.
+    set -e
+    until influx ping &>/dev/null; do
+      echo "Waiting for InfluxDB to be ready..."
+      sleep 2
+    done
+    echo "InfluxDB is ready!"
+
+    ORG={{ .Values.influxdb.org }}
+    TOKEN=${DOCKER_INFLUXDB_INIT_ADMIN_TOKEN}
+    for B in metrics-loadtest metrics-nodes; do
+      if influx bucket list --org "$ORG" --token "$TOKEN" --name "$B" &>/dev/null; then
+        echo "Bucket already exists: $B"
+      else
+        echo "Creating bucket: $B"
+        influx bucket create --org "$ORG" --token "$TOKEN" --name "$B"
+      fi
+    done
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: influxdb
+spec:
+  serviceName: influxdb
+  replicas: {{ .Values.influxdb.replicas }}
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      {{- with .Values.influxdb.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.influxdb.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: influxdb
+          image: "{{ .Values.influxdb.image.repository }}:{{ .Values.influxdb.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.influxdb.service.port }}
+              name: http
+          env:
+            - name: DOCKER_INFLUXDB_INIT_MODE
+              value: "setup"
+            - name: DOCKER_INFLUXDB_INIT_USERNAME
+              value: {{ .Values.influxdb.adminUser }}
+            - name: DOCKER_INFLUXDB_INIT_PASSWORD
+              value: {{ .Values.influxdb.adminPassword }}
+            - name: DOCKER_INFLUXDB_INIT_ADMIN_TOKEN
+              value: {{ .Values.influxdb.adminToken }}
+            - name: DOCKER_INFLUXDB_INIT_ORG
+              value: {{ .Values.influxdb.org }}
+            - name: DOCKER_INFLUXDB_INIT_BUCKET
+              value: {{ .Values.influxdb.bucket }}
+          {{- with .Values.influxdb.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: influxdb-storage
+              mountPath: /var/lib/influxdb2
+            - name: influxdb-init
+              mountPath: /docker-entrypoint-initdb.d
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.influxdb.service.port }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.influxdb.service.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 5
+      volumes:
+        - name: influxdb-storage
+          persistentVolumeClaim:
+            claimName: influxdb-storage
+        - name: influxdb-init
+          configMap:
+            name: influxdb-init
+            defaultMode: 0755
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb
+spec:
+  type: {{ .Values.influxdb.service.type }}
+  selector:
+    app: influxdb
+  ports:
+    - port: {{ .Values.influxdb.service.port }}
+      targetPort: {{ .Values.influxdb.service.port }}
+      {{- if .Values.influxdb.service.nodePort }}
+      nodePort: {{ .Values.influxdb.service.nodePort }}
+      {{- end }}
+      name: http
+{{- end }}

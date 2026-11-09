@@ -1,0 +1,158 @@
+{
+  "image": "ghcr.io/immich-app/immich-server",
+  "tag": "v1.143.1",
+  "layers": [
+    {
+      "digest": "sha256:396b1da7636e2dcd10565cb4f2f952cbb4a8a38b58d3b86a2cacb172fb70117c",
+      "compressed_size": 29773285,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "# debian.sh --arch 'amd64' out/ 'trixie' '@1754870400'",
+      "chain_id": "sha256:e6a3842ebc7f5e41d8a38f19a0aa5ea56c255475695ac6682882420800cf5465"
+    },
+    {
+      "digest": "sha256:c06c7d5debd60ba5e039513fb405e868e4dea802634462b0e0e92c7667547a20",
+      "compressed_size": 3309,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c groupadd --gid 1000 node   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node # buildkit",
+      "chain_id": "sha256:0252a24957afe6bc3e90927eceab8a53fc52121d0ba7f499e61b80ba255169af"
+    },
+    {
+      "digest": "sha256:6b9d6ac9b0f9eb85f79b00eb45c2593d2a53d5cb55d4f37fe09ed6609f42c937",
+      "compressed_size": 49006197,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c ARCH= OPENSSL_ARCH= && dpkgArch=\"$(dpkg --print-architecture)\"     && case \"${dpkgArch##*-}\" in       amd64) ARCH='x64' OPENSSL_ARCH='linux-x86_64';;       ppc64el) ARCH='ppc64le' OPENSSL_ARCH='linux-ppc64le';;       s390x) ARCH='s390x' OPENSSL_ARCH='linux*-s390x';;       arm64) ARCH='arm64' OPENSSL_ARCH='linux-aarch64';;       armhf) ARCH='armv7l' OPENSSL_ARCH='linux-armv4';;       i386) ARCH='x86' OPENSSL_ARCH='linux-elf';;       *) echo \"unsupported architecture\"; exit 1 ;;     esac     && set -ex     && apt-get update && apt-get install -y ca-certificates curl wget gnupg dirmngr xz-utils libatomic1 --no-install-recommends     && rm -rf /var/lib/apt/lists/*     && export GNUPGHOME=\"$(mktemp -d)\"     && for key in       5BE8A3F6C8A5C01D106C0AD820B1A390B168D356       DD792F5973C6DE52C432CBDAC77ABFA00DDBF2B7       CC68F5A3106FF448322E48ED27F5E38D5B0A215F       8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600       890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4       C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C       108F52B48DB57BB0CC439B2997B01419BD92F80A       A363A499291CBBC940DD62E41F10027AF002F8B0     ; do       { gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys \"$key\" && gpg --batch --fingerprint \"$key\"; } ||       { gpg --batch --keyserver keyserver.ubuntu.com --recv-keys \"$key\" && gpg --batch --fingerprint \"$key\"; } ;     done     && curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH.tar.xz\"     && curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc\"     && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc     && gpgconf --kill all     && rm -rf \"$GNUPGHOME\"     && grep \" node-v$NODE_VERSION-linux-$ARCH.tar.xz\\$\" SHASUMS256.txt | sha256sum -c -     && tar -xJf \"node-v$NODE_VERSION-linux-$ARCH.tar.xz\" -C /usr/local --strip-components=1 --no-same-owner     && rm \"node-v$NODE_VERSION-linux-$ARCH.tar.xz\" SHASUMS256.txt.asc SHASUMS256.txt     && find /usr/local/include/node/openssl/archs -mindepth 1 -maxdepth 1 ! -name \"$OPENSSL_ARCH\" -exec rm -rf {} \\;     && apt-mark auto '.*' > /dev/null     && find /usr/local -type f -executable -exec ldd '{}' ';'       | awk '/=>/ { so = $(NF-1); if (index(so, \"/usr/local/\") == 1) { next }; gsub(\"^/(usr/)?\", \"\", so); print so }'       | sort -u       | xargs -r dpkg-query --search       | cut -d: -f1       | sort -u       | xargs -r apt-mark manual     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false     && ln -s /usr/local/bin/node /usr/local/bin/nodejs     && node --version     && npm --version     && rm -rf /tmp/* # buildkit",
+      "chain_id": "sha256:585ca2489d1ce5903fd1d40032c45a669920f56ba282092b68cbc00c75431c3c"
+    },
+    {
+      "digest": "sha256:c3756cb0d50f63526a0e085ef730da1e7cd9f381e6ee141419dcbc936346903a",
+      "compressed_size": 1717141,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c set -ex   && savedAptMark=\"$(apt-mark showmanual)\"   && apt-get update && apt-get install -y ca-certificates curl wget gnupg dirmngr --no-install-recommends   && rm -rf /var/lib/apt/lists/*   && export GNUPGHOME=\"$(mktemp -d)\"   && for key in     6A010C5166006599AA17F08146C2130DFD2497F5   ; do     { gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys \"$key\" && gpg --batch --fingerprint \"$key\"; } ||     { gpg --batch --keyserver keyserver.ubuntu.com --recv-keys \"$key\" && gpg --batch --fingerprint \"$key\"; } ;   done   && curl -fsSLO --compressed \"https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz\"   && curl -fsSLO --compressed \"https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc\"   && gpg --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz   && gpgconf --kill all   && rm -rf \"$GNUPGHOME\"   && mkdir -p /opt   && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz   && apt-mark auto '.*' > /dev/null   && { [ -z \"$savedAptMark\" ] || apt-mark manual $savedAptMark > /dev/null; }   && find /usr/local -type f -executable -exec ldd '{}' ';'     | awk '/=>/ { so = $(NF-1); if (index(so, \"/usr/local/\") == 1) { next }; gsub(\"^/(usr/)?\", \"\", so); print so }'     | sort -u     | xargs -r dpkg-query --search     | cut -d: -f1     | sort -u     | xargs -r apt-mark manual   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false   && yarn --version   && rm -rf /tmp/* # buildkit",
+      "chain_id": "sha256:2366088c37ac2387fb0c735a9cc2b79bf51b35cd93b1d156be130449e40b940b"
+    },
+    {
+      "digest": "sha256:2a434cb0ef0e6270689f144b545cd93155837dab7170c00fa4633a171f4e1b1d",
+      "compressed_size": 449,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY docker-entrypoint.sh /usr/local/bin/ # buildkit",
+      "chain_id": "sha256:e5ab1873de4c868502e4ee65d4d6b9c13e075e0ebe3fb7244564b0b1c65c3726"
+    },
+    {
+      "digest": "sha256:cf83e48f496ee602f3f411b7a03b918790be4f556b465577e344d6326b11afd8",
+      "compressed_size": 95,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "WORKDIR /build",
+      "chain_id": "sha256:11c0ec835ed02e0e987323afd18d4c289f341b236f36e939e881311b9e12cace"
+    },
+    {
+      "digest": "sha256:33bcc993145bc98e49cc898af1fec0687d30a3da35d0c285f37719037646bf20",
+      "compressed_size": 1135,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY configure-apt.sh packages/ffmpeg.json packages/ffmpeg.sh ./ # buildkit",
+      "chain_id": "sha256:dc51607d08df080f6da040ae0bd5e7f49822e399b2f4bb969b57749023ef9aa3"
+    },
+    {
+      "digest": "sha256:3303c9c983a88ee83c43c7d0dd0d2c8ff15f1399151df5f07d55383bf8d07cee",
+      "compressed_size": 22601417,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN |1 DEBIAN_RELEASE=trixie /bin/sh -c apt-get update &&     apt-get install curl ca-certificates --no-install-recommends -yqq &&     ./configure-apt.sh &&     mkdir -p /usr/share/postgresql-common/pgdg # buildkit",
+      "chain_id": "sha256:be8d2722a5dfa3695527f8d000fce4927248413596b783c4d94f529a562b7088"
+    },
+    {
+      "digest": "sha256:f966d209237ec3d98866b575047cb09af8bc0a723d48cf5539df79212a91fa5d",
+      "compressed_size": 3794,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "ADD --chmod=644 https://www.postgresql.org/media/keys/ACCC4CF8.asc /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc # buildkit",
+      "chain_id": "sha256:ec470a985a996b359d94a4da5e8012ed081419fd67dfb4f4df28d7b7421a74d2"
+    },
+    {
+      "digest": "sha256:55c6ae99ac56ad68841c69b540c3c7556271c94f1453d6757c65da647b0bec86",
+      "compressed_size": 330974080,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN |1 DEBIAN_RELEASE=trixie /bin/sh -c echo \"deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt ${DEBIAN_RELEASE}-pgdg main\" > /etc/apt/sources.list.d/pgdg.list &&     apt-get update &&     apt-get install --no-install-recommends -yqq         jq         libde265-0         libexif12         libexpat1         libgcc-s1         libglib2.0-0         libgomp1         libgsf-1-114         liblcms2-2         liblqr-1-0         libltdl7         libmimalloc3         libopenexr-3-1-30         libopenjp2-7         librsvg2-2         libspng0         mesa-utils         mesa-va-drivers         mesa-vulkan-drivers         tini         wget         zlib1g         ocl-icd-libopencl1         postgresql-client-14         postgresql-client-15         postgresql-client-16         postgresql-client-17         libio-compress-brotli-perl         libwebp7         libwebpdemux2         libwebpmux3         libhwy1t64         libaom3 &&         ./ffmpeg.sh &&     if [ $(arch) = \"x86_64\" ]; then         wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-1.0.17193.4/intel-igc-core_1.0.17193.4_amd64.deb &&         wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-1.0.17193.4/intel-igc-opencl_1.0.17193.4_amd64.deb &&         wget https://github.com/intel/compute-runtime/releases/download/24.26.30049.6/intel-opencl-icd_24.26.30049.6_amd64.deb &&         wget https://github.com/intel/compute-runtime/releases/download/24.26.30049.6/libigdgmm12_22.3.20_amd64.deb &&         dpkg -i *.deb &&         apt-get install --no-install-recommends -yqq intel-media-va-driver-non-free;     fi &&     apt-get remove -yqq jq wget ca-certificates &&     apt-get autoremove -yqq &&     apt-get clean &&     rm -rf         configure-apt.sh         ffmpeg*         *.deb         /var/lib/apt/lists         /usr/lib/$(arch)-linux-gnu/libjpeg.so*         /usr/share/doc/libjpeg62-turbo         /usr/share/lintian/overrides/libjpeg62-turbo # buildkit",
+      "chain_id": "sha256:8c0c37095d1d619f7dba78685bba7a60126350930229a4ae5bb5e8f081f3ef3f"
+    },
+    {
+      "digest": "sha256:982bafb15ee9ca060dcaf98d7904806bd43a25c727a76104af15637db450a7c7",
+      "compressed_size": 39977787,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /usr/local/lib/ /usr/local/lib/ # buildkit",
+      "chain_id": "sha256:29739c425bcb9667ebb773c73aaf71be667136616f6b1a0deb78476bd8b0f529"
+    },
+    {
+      "digest": "sha256:7cd6fe3c9d5569a0c6a4d5ffaabb1092231b7d6ced29acf14b0679591b21f558",
+      "compressed_size": 18053255,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /build/ /build/ # buildkit",
+      "chain_id": "sha256:c82af57e3d16d2c09d4a00b016b2dd90022f7a541daf16235e43ef27e7fbbd9e"
+    },
+    {
+      "digest": "sha256:434e0b7c02fde0604a6638a8b0f040a75a380a03caf712dbd9f0b794c56c7ae4",
+      "compressed_size": 134,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "WORKDIR /usr/src/app",
+      "chain_id": "sha256:702f594091694d112e98e4379958edf4b6229d9f246355a85937a828e3c79de9"
+    },
+    {
+      "digest": "sha256:5cedec4380ae0dbd71c395b62e57940db78967d2dc85a8c43aabda2a5f75c4e3",
+      "compressed_size": 7465,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN |1 DEBIAN_RELEASE=trixie /bin/sh -c ldconfig /usr/local/lib # buildkit",
+      "chain_id": "sha256:e480858306302d69a8366b5643e9c5cdfce9dd1b9fd9c21c65ffef87b6d12f53"
+    },
+    {
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "compressed_size": 32,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "WORKDIR /usr/src/app",
+      "chain_id": "sha256:a9f6e54b98a7bbc2d6e24d00393a2d4cadde6ba09850c346e5a0612b67cac8be"
+    },
+    {
+      "digest": "sha256:21551da74f35fb5a87fbec16226bcf7b387ea1e1591d43c6104c2f1a35eddad7",
+      "compressed_size": 101533819,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /output/server-pruned ./server # buildkit",
+      "chain_id": "sha256:18e9c8db91177d7dc2a69314b4d23498f3e9134af1e96983ac9fbb293f5a9716"
+    },
+    {
+      "digest": "sha256:ec8d393881762ec676efebb55fb43f249b15e80c5a110e793e035496c996c216",
+      "compressed_size": 16980992,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /usr/src/app/web/build /build/www # buildkit",
+      "chain_id": "sha256:cbccc8aa5bf4dcef7c529e13412fd88ec7005e3254d8ff79f4aad9d6d4ba450a"
+    },
+    {
+      "digest": "sha256:b155abe81e9b78356d7e4be07fdecce31994c4bdd458eb5d420ae34dcdc122c5",
+      "compressed_size": 757832,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /output/cli-pruned ./cli # buildkit",
+      "chain_id": "sha256:a9d12192e7428e07d8feba0b398256671f5613e25e79c65a6b5669e2f2ca0451"
+    },
+    {
+      "digest": "sha256:fe1c0d66dc00a2639df3fffd2a7bcfd73f55fd693e16937cc705c5b2acbeddb3",
+      "compressed_size": 217,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c ln -s ../../cli/bin/immich server/bin/immich # buildkit",
+      "chain_id": "sha256:4de99829bfe925000d76560d32ce2f3845d851575027d48b9017db8e6447dc0e"
+    },
+    {
+      "digest": "sha256:9c7deec5d5bcc92a6ada0dc36f6a72aec6333fc8528acf1edb0284395ac467ae",
+      "compressed_size": 11149,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY LICENSE /licenses/LICENSE.txt # buildkit",
+      "chain_id": "sha256:dd95b63a0e4588f7b71e8974925995b74d84aff94149628eb9576cf606919981"
+    },
+    {
+      "digest": "sha256:157cbef2263770527f8e39cb3693889151bd15fd2a6a1e6c47133bec548d43a9",
+      "compressed_size": 11103,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY LICENSE /LICENSE # buildkit",
+      "chain_id": "sha256:0ae0f320ce8da3465e80fe512991e8d931c5ce825d7189013b58dfe1c9fd6958"
+    }
+  ],
+  "total_compressed": 611414687,
+  "layer_count": 21,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2025-09-23T18:41:02.218769249Z"
+}

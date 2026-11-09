@@ -1,0 +1,165 @@
+{
+  "image": "ghcr.io/immich-app/immich-server",
+  "tag": "v1.88.0",
+  "layers": [
+    {
+      "digest": "sha256:a378f10b321842c3042cdeff4f6997f34f4cb21f2eff27704b7f6193ab7b5fea",
+      "compressed_size": 29149874,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) ADD file:55ad846fa191e603f48090eae0e4a7149c4066b94406593ec1898ad2c3347937 in / ",
+      "chain_id": "sha256:cb4596cc145400fb1f2aa56d41516b39a366ecdee7bf3f9191116444aacd8c90"
+    },
+    {
+      "digest": "sha256:bc194d4002b7a538754445d95c1ab78a0cf9f6b0b58999a3b53d58d319f44a2d",
+      "compressed_size": 3360,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c groupadd --gid 1000 node   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node",
+      "chain_id": "sha256:3ce4d819517d441d27af9ca642e46610fe6f56e70879064563daae7e2cfb7da4"
+    },
+    {
+      "digest": "sha256:7532c62b45b7db627168f2c374c05b1fc39fb78f84e293e5809f97605a1b8b4d",
+      "compressed_size": 48296843,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c ARCH= && dpkgArch=\"$(dpkg --print-architecture)\"     && case \"${dpkgArch##*-}\" in       amd64) ARCH='x64';;       ppc64el) ARCH='ppc64le';;       s390x) ARCH='s390x';;       arm64) ARCH='arm64';;       armhf) ARCH='armv7l';;       i386) ARCH='x86';;       *) echo \"unsupported architecture\"; exit 1 ;;     esac     && set -ex     && apt-get update && apt-get install -y ca-certificates curl wget gnupg dirmngr xz-utils libatomic1 --no-install-recommends     && rm -rf /var/lib/apt/lists/*     && export GNUPGHOME=\"$(mktemp -d)\"     && for key in       4ED778F539E3634C779C87C6D7062848A1AB005C       141F07595B7B3FFE74309A937405533BE57C7D57       74F12602B6F1C4E913FAA37AD3A89613643B6201       DD792F5973C6DE52C432CBDAC77ABFA00DDBF2B7       61FC681DFB92A079F1685E77973F295594EC4689       8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600       C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8       890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4       C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C       108F52B48DB57BB0CC439B2997B01419BD92F80A       A363A499291CBBC940DD62E41F10027AF002F8B0     ; do       gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys \"$key\" ||       gpg --batch --keyserver keyserver.ubuntu.com --recv-keys \"$key\" ;     done     && curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH.tar.xz\"     && curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc\"     && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc     && gpgconf --kill all     && rm -rf \"$GNUPGHOME\"     && grep \" node-v$NODE_VERSION-linux-$ARCH.tar.xz\\$\" SHASUMS256.txt | sha256sum -c -     && tar -xJf \"node-v$NODE_VERSION-linux-$ARCH.tar.xz\" -C /usr/local --strip-components=1 --no-same-owner     && rm \"node-v$NODE_VERSION-linux-$ARCH.tar.xz\" SHASUMS256.txt.asc SHASUMS256.txt     && apt-mark auto '.*' > /dev/null     && find /usr/local -type f -executable -exec ldd '{}' ';'       | awk '/=>/ { so = $(NF-1); if (index(so, \"/usr/local/\") == 1) { next }; gsub(\"^/(usr/)?\", \"\", so); print so }'       | sort -u       | xargs -r dpkg-query --search       | cut -d: -f1       | sort -u       | xargs -r apt-mark manual     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false     && ln -s /usr/local/bin/node /usr/local/bin/nodejs     && node --version     && npm --version",
+      "chain_id": "sha256:b4e7cb336c91f379f9698a5ab996482ef37ee114649f8aa857829bc4a810f8c7"
+    },
+    {
+      "digest": "sha256:72b2742586dcd88172af4b1c241cc55849cdbff38a75fc0221bd391b27d54157",
+      "compressed_size": 2673161,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -ex   && savedAptMark=\"$(apt-mark showmanual)\"   && apt-get update && apt-get install -y ca-certificates curl wget gnupg dirmngr --no-install-recommends   && rm -rf /var/lib/apt/lists/*   && export GNUPGHOME=\"$(mktemp -d)\"   && for key in     6A010C5166006599AA17F08146C2130DFD2497F5   ; do     gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys \"$key\" ||     gpg --batch --keyserver keyserver.ubuntu.com --recv-keys \"$key\" ;   done   && curl -fsSLO --compressed \"https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz\"   && curl -fsSLO --compressed \"https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc\"   && gpg --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz   && gpgconf --kill all   && rm -rf \"$GNUPGHOME\"   && mkdir -p /opt   && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz   && apt-mark auto '.*' > /dev/null   && { [ -z \"$savedAptMark\" ] || apt-mark manual $savedAptMark > /dev/null; }   && find /usr/local -type f -executable -exec ldd '{}' ';'     | awk '/=>/ { so = $(NF-1); if (index(so, \"/usr/local/\") == 1) { next }; gsub(\"^/(usr/)?\", \"\", so); print so }'     | sort -u     | xargs -r dpkg-query --search     | cut -d: -f1     | sort -u     | xargs -r apt-mark manual   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false   && yarn --version",
+      "chain_id": "sha256:bbac35287c47d4e9baf0546a6b4ee5a066a439f12c7e1e6ce45c47e2358c947f"
+    },
+    {
+      "digest": "sha256:6853edb1629a90598362e060000da09ab71eec8c7ca5cd693d4d17881bb05061",
+      "compressed_size": 454,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY file:4d192565a7220e135cab6c77fbc1c73211b69f3d9fb37e62857b2c6eb9363d51 in /usr/local/bin/ ",
+      "chain_id": "sha256:ab39eda15f290d7d60afa0eaacb7c796763724086f853dc1a23b25cbf574f6b1"
+    },
+    {
+      "digest": "sha256:505abe6399cda2fa41e74dfa9562957abef674fb3a02aa267f39d8fd3ecd0ba2",
+      "compressed_size": 133,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "WORKDIR /usr/src/app",
+      "chain_id": "sha256:9ee51088ddc4faad1d4e1c1c25b3efbc825ac31bf23ce4ab0fa53f693bfb7d79"
+    },
+    {
+      "digest": "sha256:ab464172064ce17bc54c5e93d1b181f4fdc9e4d42716011588d23aebc8244679",
+      "compressed_size": 367,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "RUN /bin/sh -c sed -i -e's/ main/ main contrib non-free non-free-firmware/g' /etc/apt/sources.list.d/debian.sources # buildkit",
+      "chain_id": "sha256:294dc401b3af1a2b6e9b297e20a0d2a473842307cc9f99ce56379e124f18534e"
+    },
+    {
+      "digest": "sha256:206ae406751e76bd30e36dfe504d3f31d0d2427238058040aa9ad604aca9d113",
+      "compressed_size": 988,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY bin/install-ffmpeg.sh bin/build-lock.json ./ # buildkit",
+      "chain_id": "sha256:1688227c747269a3622f782c85feb51ea74489ce040229e71adad79f58b8bfba"
+    },
+    {
+      "digest": "sha256:a48ee1ef1a882b1d7508d9e406ff9dfd0e0da139ac973d58bbcdcb68cda958d4",
+      "compressed_size": 169228802,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "RUN /bin/sh -c apt-get update &&     apt-get install --no-install-recommends -yqq         ca-certificates         $(if [ $(arch) = \"x86_64\" ]; then echo \"intel-media-va-driver-non-free\"; fi)         jq         libexif12         libexpat1         libgcc-s1         libglib2.0-0         libgomp1         libgsf-1-114         libheif1         libjpeg62-turbo         libjxl0.7         liblcms2-2         liblqr-1-0         libltdl7         libmimalloc2.0         libopenexr-3-1-30         libopenjp2-7         liborc-0.4-0         librsvg2-2         libspng0         libwebp7         libwebpdemux2         libwebpmux3         mesa-va-drivers         tini         wget         zlib1g &&     ./install-ffmpeg.sh &&     apt-get remove -yqq jq wget ca-certificates &&     apt-get autoremove -yqq &&     apt-get clean &&     rm -rf /var/lib/apt/lists/* &&     rm install-ffmpeg.sh &&     rm build-lock.json # buildkit",
+      "chain_id": "sha256:d9194337b5b12d68f628788343cc52275d617ecfed3eaa1bda3139d2acc31eb5"
+    },
+    {
+      "digest": "sha256:d765766c561612ad23aa70edea0bc4d27740f74775ceb0f39d401d938fba7449",
+      "compressed_size": 34309259,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY /usr/local/lib/ /usr/local/lib/ # buildkit",
+      "chain_id": "sha256:2d30e6c5b0ed0c8a14d0813f8e0afd27d452bbbf2ffd1663f4f29eb0246a0929"
+    },
+    {
+      "digest": "sha256:81dd650e0eec4e88316dd7210ed7543ab6c2cfdef99d55a9cf9e3b9d13fef834",
+      "compressed_size": 6107,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "RUN /bin/sh -c ldconfig /usr/local/lib # buildkit",
+      "chain_id": "sha256:75ee1188af6420f64a32eeb24a16f695c4b765ad72e3e9a31db6bb3f5b4419cf"
+    },
+    {
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "compressed_size": 32,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "WORKDIR /usr/src/app",
+      "chain_id": "sha256:61dda4b86327a27b875cf0c914a4c876620264dd400acbc1e1bfa6ffd2789a9b"
+    },
+    {
+      "digest": "sha256:6db1d2e87653a3aad1d7f7341ce3b7e005035abc6f101ba47bf1f0936db31615",
+      "compressed_size": 54543335,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY /usr/src/app/node_modules ./node_modules # buildkit",
+      "chain_id": "sha256:1632951cc2b195a37bce5adc2c0ccfd33964aae569f091dae85eed92bd904847"
+    },
+    {
+      "digest": "sha256:5115ea52ded9d0864e97b2c316cd79922aaca6f39d4008daf1bc9a627cca9cdb",
+      "compressed_size": 460312,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY /usr/src/app/dist ./dist # buildkit",
+      "chain_id": "sha256:8fc2bedf44f90390894c67cf37282c77050e12d2e663f9dd11c19e72ee76f33e"
+    },
+    {
+      "digest": "sha256:70d65bf599dfe6d3ae52c1303159b851a4378c83bba89b004e5726fe246558af",
+      "compressed_size": 1062,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY /usr/src/app/bin ./bin # buildkit",
+      "chain_id": "sha256:c513c5d83be1c8ff97ffcfdabbb04c70f8c146c408e478075a8af498b1b7ab06"
+    },
+    {
+      "digest": "sha256:62fe05cfa1d646dbfbc7a78fc554d1529ae00bb74f60421da90f3beea67a7b32",
+      "compressed_size": 5948454,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY /usr/src/app/build ./www # buildkit",
+      "chain_id": "sha256:276c2bfad2fbee544741ee88155cdda0044827602be3f589285b343c0afcc098"
+    },
+    {
+      "digest": "sha256:456503ebe455dfe57a42f12a87e72c26bafc66e3849bccf753999dc8c7520f5a",
+      "compressed_size": 7499,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY server/assets assets # buildkit",
+      "chain_id": "sha256:2c28b64df85376b8da32d016996c83adc9dbfe3497e06bb54d391c62d7a26509"
+    },
+    {
+      "digest": "sha256:b3f44bf460de12a72da8ce1f76276b3629d0b1e8b65cfbbe8df3467b812a0ab0",
+      "compressed_size": 238288,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY server/package.json server/package-lock.json ./ # buildkit",
+      "chain_id": "sha256:0fa4f2b039bf8b102128291c09343088c9bdd03c9b81137d0a805ece9b1105e7"
+    },
+    {
+      "digest": "sha256:44d7a274ca91c927aa5a7c9ac1378cf03a5e7721aa1ee3a6bd329fa44c7f60f9",
+      "compressed_size": 519,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY server/start*.sh ./ # buildkit",
+      "chain_id": "sha256:ed82f212a8197080ac2f06b69e5528d3ac5d6af6000eced296b82ec43567ea51"
+    },
+    {
+      "digest": "sha256:1ffcfcaa320f5d227ba0576dec6b9372bb4f0471d59e54ec89ab296b329c9d02",
+      "compressed_size": 1572,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "RUN /bin/sh -c npm link && npm cache clean --force # buildkit",
+      "chain_id": "sha256:b03df579bd4001ec7cf6694bdfdf5889d11dcaa4b9b43554166cc2365656d9ab"
+    },
+    {
+      "digest": "sha256:32dca7f765a7ab91cc717f3aafb79d98d0893a0c6ca04e4390da11ee8444c66d",
+      "compressed_size": 794,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY LICENSE /licenses/LICENSE.txt # buildkit",
+      "chain_id": "sha256:cd50c9a66444c74fbc0720c3d365eb91783bab594e0e94f762e88f9285659fd3"
+    },
+    {
+      "digest": "sha256:58e04e70d993d76191fb0cc3890a20b64303736d9dae2af9938a97e670abc9fa",
+      "compressed_size": 748,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "COPY LICENSE /LICENSE # buildkit",
+      "chain_id": "sha256:ccab7b9588c5d09e5a995ee1e6d9aec0e76a569e4311979df64908608d5c4632"
+    }
+  ],
+  "total_compressed": 344871963,
+  "layer_count": 22,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2023-11-20T20:51:11.689916501Z"
+}

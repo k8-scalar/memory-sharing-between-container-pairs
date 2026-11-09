@@ -1,0 +1,39 @@
+{
+  "image": "keycloak/keycloak",
+  "tag": "26.5.1-0",
+  "layers": [
+    {
+      "digest": "sha256:07dad54395c5924cebdcf7176bcbbf4962913ea01e4772b713492dc67cbe41a0",
+      "compressed_size": 7269312,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "/bin/sh -c #(nop) LABEL \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"761c59b61688e7c298eae684472a98b2418d881a\" \"org.opencontainers.image.revision\"=\"761c59b61688e7c298eae684472a98b2418d881a\" \"build-date\"=\"2025-12-18T09:11:38Z\" \"org.opencontainers.image.created\"=\"2025-12-18T09:11:38Z\" \"release\"=\"1766049073\"org.opencontainers.image.revision=761c59b61688e7c298eae684472a98b2418d881a,org.opencontainers.image.created=2025-12-18T09:11:38Z",
+      "chain_id": "sha256:e7b9b4069a9a9cb5741b0601a7d57e3aa695946a78360e732e806e99a81bbe03"
+    },
+    {
+      "digest": "sha256:b56cfe1a7cfc50061f37de7f52deae236c020f73fa1b8f27eec0d76a82e51395",
+      "compressed_size": 84200168,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /tmp/null/rootfs/ / # buildkit",
+      "chain_id": "sha256:aab75a63374eb776c0ef834caa5014ec33b314c104ef8b1829b93670462b5bf2"
+    },
+    {
+      "digest": "sha256:25b80dab414522ec54d9b8ff3ed2b9b1f7c5e52771d09cb7dbda137e5b242a0a",
+      "compressed_size": 164068010,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY --chown=1000:0 /opt/keycloak /opt/keycloak # buildkit",
+      "chain_id": "sha256:d13caaf9914207c06a0a8b46348dfc7b6a036cd65d73e1774f3c8ef9dcfe676f"
+    },
+    {
+      "digest": "sha256:cc9eb6c61bf424ef58529cfa47682e8317254fb447cc74be5fc70e47cb922077",
+      "compressed_size": 549,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c echo \"keycloak:x:0:root\" >> /etc/group &&     echo \"keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin\" >> /etc/passwd # buildkit",
+      "chain_id": "sha256:62c8faf57e0456a0fba294aeae19e2efd174c09a02a6f948b2fa88dc479c25c7"
+    }
+  ],
+  "total_compressed": 255538039,
+  "layer_count": 4,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2026-01-14T18:10:05.548944089Z"
+}

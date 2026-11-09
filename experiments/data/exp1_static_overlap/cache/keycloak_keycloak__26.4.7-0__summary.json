@@ -1,0 +1,39 @@
+{
+  "image": "keycloak/keycloak",
+  "tag": "26.4.7-0",
+  "layers": [
+    {
+      "digest": "sha256:f9e37a00861053482dab42a6e67717c2c18b9b71ff4689e9dd7561195918ecc3",
+      "compressed_size": 7267662,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "/bin/sh -c #(nop) LABEL \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"6c67d821194848bd86e453329d99c88c8a1d792d\" \"org.opencontainers.image.revision\"=\"6c67d821194848bd86e453329d99c88c8a1d792d\" \"build-date\"=\"2025-11-12T16:39:14Z\" \"release\"=\"1762965531\"org.opencontainers.image.revision=6c67d821194848bd86e453329d99c88c8a1d792d",
+      "chain_id": "sha256:a688044765528a8f6f10d54c725518cec17b9bebe4afe18df87f8a2df176d266"
+    },
+    {
+      "digest": "sha256:88d12184758180373e3a371f366fb9f7abb170ee9c1eede068bd2f08f0d74799",
+      "compressed_size": 84200400,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /tmp/null/rootfs/ / # buildkit",
+      "chain_id": "sha256:6e99b8afcad8d3e675b02277a7861d4df3155b93b872b777ca0b183f1ef4168d"
+    },
+    {
+      "digest": "sha256:8ac1089577ec00a217dab4378f6da6dd0d737528c4b3fa04f1577b7433fe046f",
+      "compressed_size": 158574502,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY --chown=1000:0 /opt/keycloak /opt/keycloak # buildkit",
+      "chain_id": "sha256:03e62411e158b301db162745166df2bd3f4377b08c3672aa62b33be53d435528"
+    },
+    {
+      "digest": "sha256:f4389c7e7e04a7589a602aebd723097eb12bb2f11919835e9c21701422665657",
+      "compressed_size": 550,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c echo \"keycloak:x:0:root\" >> /etc/group &&     echo \"keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin\" >> /etc/passwd # buildkit",
+      "chain_id": "sha256:26c8c7ef2be5524840375d9082b170e8cae87a7db5b15a2ad279cc0f6b3b8042"
+    }
+  ],
+  "total_compressed": 250043114,
+  "layer_count": 4,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2025-12-01T08:15:00.49626059Z"
+}

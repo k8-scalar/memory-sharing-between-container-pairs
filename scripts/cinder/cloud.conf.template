@@ -1,0 +1,9 @@
+[Global]
+auth-url=https://<...>.cs.kuleuven.be:5000
+application-credential-id=...
+application-credential-secret=........
+auth-type=v3applicationcredential
+region=RegionOne
+
+[BlockStorage]
+bs-version=v3

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.index.v1+json",
+  "manifests": [
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:ec95d56bc881b5e81795c95edfc02c030cb824652cac8afc53c511c75ac219eb",
+      "size": 4484,
+      "platform": {
+        "architecture": "arm64",
+        "os": "linux"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:5b24e74e2963dd83b4729a6769dc087a130a0f3dfbda76ded169093935d48651",
+      "size": 568,
+      "annotations": {
+        "vnd.docker.reference.digest": "sha256:ec95d56bc881b5e81795c95edfc02c030cb824652cac8afc53c511c75ac219eb",
+        "vnd.docker.reference.type": "attestation-manifest"
+      },
+      "platform": {
+        "architecture": "unknown",
+        "os": "unknown"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:41b5d35bda2abd12e513783bee87dcd86c190d99f9d9975dd75b0a34dd41c761",
+      "size": 4484,
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:c1e8a04f6343bb0ec370dfc12ee99f5441ec108d0c6c8c4f30aaeb64d551da2a",
+      "size": 568,
+      "annotations": {
+        "vnd.docker.reference.digest": "sha256:41b5d35bda2abd12e513783bee87dcd86c190d99f9d9975dd75b0a34dd41c761",
+        "vnd.docker.reference.type": "attestation-manifest"
+      },
+      "platform": {
+        "architecture": "unknown",
+        "os": "unknown"
+      }
+    }
+  ],
+  "annotations": {
+    "org.opencontainers.image.created": "2025-08-18T18:53:15.625Z",
+    "org.opencontainers.image.description": "High performance self-hosted photo and video management solution.",
+    "org.opencontainers.image.licenses": "AGPL-3.0",
+    "org.opencontainers.image.revision": "3d515f50729f7877d3c07a7b9849f73861e4a0a3",
+    "org.opencontainers.image.source": "https://github.com/immich-app/immich",
+    "org.opencontainers.image.title": "immich",
+    "org.opencontainers.image.url": "https://github.com/immich-app/immich",
+    "org.opencontainers.image.version": "v1.138.1"
+  }
+}

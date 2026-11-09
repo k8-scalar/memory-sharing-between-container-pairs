@@ -1,0 +1,46 @@
+{
+  "image": "keycloak/keycloak",
+  "tag": "26.1.0-1",
+  "layers": [
+    {
+      "digest": "sha256:f85b91ff2bfdd19a405224ee1c35acc35481680abe568e6b6bb14a1e462824eb",
+      "compressed_size": 7258305,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "/bin/sh -c #(nop) LABEL \"build-date\"=\"2025-02-17T07:22:59\" \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"c373c5ab410a57bfbd0ec4dbad15ca4e3eb1b5b6\" \"build-date\"=\"2025-02-17T07:21:18Z\" \"release\"=\"1739776878\"",
+      "chain_id": "sha256:456a106fc69abcc6e07bbd99e09cdb5b34d4bbd88f7043293e012be50189f055"
+    },
+    {
+      "digest": "sha256:e3a2c2426f9141a2b3f5a56504c8508cad10a5d1439630dd547d15256ab421c7",
+      "compressed_size": 434,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "/bin/sh",
+      "chain_id": "sha256:b57925074f768a55d9713c15e4474d9b8b06000ed4b5e61f63f0651febd9c9c3"
+    },
+    {
+      "digest": "sha256:235eb50859cb95903edc41452966fa8288d7b32755e6b2ae59a61ba3683a0651",
+      "compressed_size": 83762949,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY /tmp/null/rootfs/ / # buildkit",
+      "chain_id": "sha256:428d717ccdf09720367a3f632990071f1c2d5dbe4548353d884c9e5c8e5ac119"
+    },
+    {
+      "digest": "sha256:c93150851a72ca2d42e398f570e8837d26b5826b5229141357781e38b843365a",
+      "compressed_size": 148059642,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "COPY --chown=1000:0 /opt/keycloak /opt/keycloak # buildkit",
+      "chain_id": "sha256:8c29b67895425361a33a419ab65936e278c1e5168ea63251ea4234346f53d14f"
+    },
+    {
+      "digest": "sha256:583585e040e9e5f2313befc2210aab7641bf6fc10d71a845dec85862b58556bc",
+      "compressed_size": 550,
+      "media_type": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "created_by": "RUN /bin/sh -c echo \"keycloak:x:0:root\" >> /etc/group &&     echo \"keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin\" >> /etc/passwd # buildkit",
+      "chain_id": "sha256:f59d801262b6866fa30c7a1b8515b57c26af14a5dc21f1926de6cfcca73fc45a"
+    }
+  ],
+  "total_compressed": 239081880,
+  "layer_count": 5,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2025-02-18T15:05:29.455474117Z"
+}

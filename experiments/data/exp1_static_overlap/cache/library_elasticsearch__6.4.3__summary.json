@@ -1,0 +1,67 @@
+{
+  "image": "library/elasticsearch",
+  "tag": "6.4.3",
+  "layers": [
+    {
+      "digest": "sha256:aeb7866da422acc7e93dcf7323f38d7646f6269af33bcdb6647f2094fc4b3bf7",
+      "compressed_size": 74703002,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) ADD file:fbe9badfd2790f0747a25fbe5c94a6daa78969511ca08c8d4ac654f3442570de in / ",
+      "chain_id": "sha256:f972d139738dfcd1519fd2461815651336ee25a8b54c358834c50af094bb262f"
+    },
+    {
+      "digest": "sha256:0edca7f972b2fd927e23e95ec7324f2abf625a4a9c81082c418ae18c68d76e32",
+      "compressed_size": 205374645,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c curl -s https://download.java.net/java/GA/jdk10/10.0.2/19aef61b38124481863b1413dce1855f/13/openjdk-10.0.2_linux-x64_bin.tar.gz | tar -C /opt -zxf -",
+      "chain_id": "sha256:c8b55b42e6be0c79934bd71e329b566763d34a48e12edf315e98a09b972489d1"
+    },
+    {
+      "digest": "sha256:b7e55382ecc4ad0cccd84bcabe21c8f4eef5177b78784925eed6387d49307e22",
+      "compressed_size": 216,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c ln -sf /etc/pki/ca-trust/extracted/java/cacerts /opt/jdk-10.0.2/lib/security/cacerts",
+      "chain_id": "sha256:cb1e43b1093c618948eb48910a2d6666f65549a79efb0a330ed02f9601544e30"
+    },
+    {
+      "digest": "sha256:d0d012405a9e2741d955eb987ee3660993aa25393d1622dd2d873793074ad87f",
+      "compressed_size": 7147722,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c yum update -y &&     yum install -y nc unzip wget which &&     yum clean all",
+      "chain_id": "sha256:ef6113e52cf62c7656a6b4fc79161024e1b0904dd38bad35c0641ac552f24463"
+    },
+    {
+      "digest": "sha256:7ff453a459f86b102e5fdd27dd03213790dbd84b039d61b3cff26c22681fd249",
+      "compressed_size": 2065,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c groupadd -g 1000 elasticsearch &&     adduser -u 1000 -g 1000 -G 0 -d /usr/share/elasticsearch elasticsearch &&     chmod 0775 /usr/share/elasticsearch &&     chgrp 0 /usr/share/elasticsearch",
+      "chain_id": "sha256:a6288247a809db51489022e6f1a001aefab556ed33ff39fce3a431a37377ddd4"
+    },
+    {
+      "digest": "sha256:3af1e094a8ccfd994d1e27c25b3e477388c60af628928a797800a3f75217085a",
+      "compressed_size": 135124876,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY --chown=1000:0dir:a33abef4558834f53ddf28307c91d1b3f8abbb23330430c5f1d813131b98424b in /usr/share/elasticsearch ",
+      "chain_id": "sha256:6f9d5ba3e46afb7ba16429c7e149d1beebc9670607b1c5dda21730b864095a28"
+    },
+    {
+      "digest": "sha256:ae6ac1303d92dc52fedbe723db7c8e9427363c3449c57871ecafac05529b7884",
+      "compressed_size": 2071,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY --chown=1000:0file:0835d3d3ae8342e1be53607254cb0caca7134efdfcb7a65dcebbf3097ec59b11 in /usr/local/bin/docker-entrypoint.sh ",
+      "chain_id": "sha256:65b25d91dd5dc746a0390d0dd8384908b0948d646e94b908eb934c240e0eb7bf"
+    },
+    {
+      "digest": "sha256:78482fa26855629e00e186ed68697344995c524ca4a635996086015528d08d0a",
+      "compressed_size": 2411,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c chgrp 0 /usr/local/bin/docker-entrypoint.sh &&     chmod g=u /etc/passwd &&     chmod 0775 /usr/local/bin/docker-entrypoint.sh",
+      "chain_id": "sha256:8c59c222682fcb22b313ed13e9b7e49b07cc1043e8e6a563a8eda64dbef26429"
+    }
+  ],
+  "total_compressed": 422357008,
+  "layer_count": 8,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2018-10-31T00:07:06.276492499Z"
+}

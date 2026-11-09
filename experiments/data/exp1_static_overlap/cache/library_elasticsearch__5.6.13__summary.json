@@ -1,0 +1,116 @@
+{
+  "image": "library/elasticsearch",
+  "tag": "5.6.13",
+  "layers": [
+    {
+      "digest": "sha256:54f7e8ac135a5f502a6ee9537ef3d64b1cd2fa570dc0a40b4d3b6f7ac81e7486",
+      "compressed_size": 45320257,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) ADD file:a61c14b18252183a4719980da97ac483044bcaa9df8a569a6d7bf0f719384b5e in / ",
+      "chain_id": "sha256:90d1009ce6fe3102fee728742a3bd73eea2b39c88cdda99977a3fb130dbc17ac"
+    },
+    {
+      "digest": "sha256:d6341e30912f12f56e18564a3b582853f65376766f5f9d641a68a724ed6db88f",
+      "compressed_size": 10740278,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends \t\tca-certificates \t\tcurl \t\tnetbase \t\twget \t&& rm -rf /var/lib/apt/lists/*",
+      "chain_id": "sha256:27a0b0f4d1e3c92972729fdb938c433c5b01107f895f2498e94929f2b096f4a3"
+    },
+    {
+      "digest": "sha256:087a57faf9491b1b82a83e26bc8cc90c90c30e4a4d858b57ddd5b4c2c90095f6",
+      "compressed_size": 4340083,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -ex; \tif ! command -v gpg > /dev/null; then \t\tapt-get update; \t\tapt-get install -y --no-install-recommends \t\t\tgnupg \t\t\tdirmngr \t\t; \t\trm -rf /var/lib/apt/lists/*; \tfi",
+      "chain_id": "sha256:b7f634c63f4704fdffd2f4f2ec90a3e188448c5a99e7f4418555e61d63497d9f"
+    },
+    {
+      "digest": "sha256:95065f2209613c11cdaf4499a2dba0c6cb9c53fc05732dc76c4c6f4b47453717",
+      "compressed_size": 852875,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends \t\tbzip2 \t\tunzip \t\txz-utils \t&& rm -rf /var/lib/apt/lists/*",
+      "chain_id": "sha256:b1e5187afb4b57960e48e1ec37828aa32c1fa063b30af6051e174730f0779d55"
+    },
+    {
+      "digest": "sha256:0887630ce5768a45764e3bf0ed5382223216df24ba08ce3e4c952a88398647ba",
+      "compressed_size": 248,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c { \t\techo '#!/bin/sh'; \t\techo 'set -e'; \t\techo; \t\techo 'dirname \"$(dirname \"$(readlink -f \"$(which javac || which java)\")\")\"'; \t} > /usr/local/bin/docker-java-home \t&& chmod +x /usr/local/bin/docker-java-home",
+      "chain_id": "sha256:c846ed3162b0c62dfd872f9a7965d833d6a05b3f59b40890733cfaa69b990e55"
+    },
+    {
+      "digest": "sha256:c375d1959fab484c9c7450d5ee70b2cfc05ff12fb04bcd3bed888cc8a84bb2de",
+      "compressed_size": 131,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c ln -svT \"/usr/lib/jvm/java-8-openjdk-$(dpkg --print-architecture)\" /docker-java-home",
+      "chain_id": "sha256:c7c48a5c61319e1e32e3badaa5b06fe38016ac3174e89a071fabce08981f5acb"
+    },
+    {
+      "digest": "sha256:e00a5e6055ccdd1c0491227009508127273e65aceaccad709eb6a10692fb68e3",
+      "compressed_size": 122118624,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -ex; \t\tif [ ! -d /usr/share/man/man1 ]; then \t\tmkdir -p /usr/share/man/man1; \tfi; \t\tapt-get update; \tapt-get install -y --no-install-recommends \t\topenjdk-8-jre=\"$JAVA_DEBIAN_VERSION\" \t\tca-certificates-java=\"$CA_CERTIFICATES_JAVA_VERSION\" \t; \trm -rf /var/lib/apt/lists/*; \t\t[ \"$(readlink -f \"$JAVA_HOME\")\" = \"$(docker-java-home)\" ]; \t\tupdate-alternatives --get-selections | awk -v home=\"$(readlink -f \"$JAVA_HOME\")\" 'index($3, home) == 1 { $2 = \"manual\"; print | \"update-alternatives --set-selections\" }'; \tupdate-alternatives --query java | grep -q 'Status: manual'",
+      "chain_id": "sha256:cb045d25ba4e6cd7b8d8ca4d1903d6314a0c6bacaa9bbc2c8d3203d38841f90d"
+    },
+    {
+      "digest": "sha256:8319f5fb56cff26b699a967e4afa404e605c23c58ae1952b0b19765a66db6a61",
+      "compressed_size": 246722,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c /var/lib/dpkg/info/ca-certificates-java.postinst configure",
+      "chain_id": "sha256:2ca72f9ccc21081bca9de82304bb664a525fc059e7450c41805dc6b02cce4d92"
+    },
+    {
+      "digest": "sha256:610c2713820deaa7e5f5dda6c1227b9d9ce667bf7565e5e1609246d549eca133",
+      "compressed_size": 500916,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -x \t&& wget -O /usr/local/bin/gosu \"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)\" \t&& wget -O /usr/local/bin/gosu.asc \"https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc\" \t&& export GNUPGHOME=\"$(mktemp -d)\" \t&& gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \t&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \t&& rm -rf \"$GNUPGHOME\" /usr/local/bin/gosu.asc \t&& chmod +x /usr/local/bin/gosu \t&& gosu nobody true",
+      "chain_id": "sha256:557d269973d1769eaf610b3661c5d520f6c86c15f01ed265a606b17285494a2c"
+    },
+    {
+      "digest": "sha256:e69c307cf099bf37021c1db6384ec0efaf3e8fa4c9fb8b6fd2e41f4f18e269e6",
+      "compressed_size": 1444,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -ex; \tkey='46095ACC8548582C1A2699A9D27D666CD88E42B4'; \texport GNUPGHOME=\"$(mktemp -d)\"; \tgpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys \"$key\"; \tgpg --batch --export \"$key\" > /etc/apt/trusted.gpg.d/elastic.gpg; \trm -rf \"$GNUPGHOME\"; \tapt-key list",
+      "chain_id": "sha256:16d243448317fdcde302173bf05e02e60c9776fd1123d37997f0ef1ee900d674"
+    },
+    {
+      "digest": "sha256:2ef19439ea9ef6484db31069c66a3a902ec1c7a6eeb66952c153642b265b6c63",
+      "compressed_size": 920404,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -x \t&& apt-get update && apt-get install -y --no-install-recommends apt-transport-https && rm -rf /var/lib/apt/lists/* \t&& echo 'deb https://artifacts.elastic.co/packages/5.x/apt stable main' > /etc/apt/sources.list.d/elasticsearch.list",
+      "chain_id": "sha256:09d40db7f7a3c7683d898d6b959404d770fd9ed484691b29321279dbe4b877f1"
+    },
+    {
+      "digest": "sha256:46491c2dd530bc6cdf2b4aff1885739b6ebc838a1ceb3437fa2a210d8c29c391",
+      "compressed_size": 34231164,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -x \t\t&& dpkg-divert --rename /usr/lib/sysctl.d/elasticsearch.conf \t\t&& apt-get update \t&& apt-get install -y --no-install-recommends \"elasticsearch=$ELASTICSEARCH_DEB_VERSION\" \t&& rm -rf /var/lib/apt/lists/*",
+      "chain_id": "sha256:b77522c80a6648b12001b61620a9d9c8fb4709075b142b7ead828fc06cf184c2"
+    },
+    {
+      "digest": "sha256:35cd739e01f873de35e7e9d773f9ea12774bb3e34014203ea24b314f33e4997a",
+      "compressed_size": 220,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c set -ex \t&& for path in \t\t./data \t\t./logs \t\t./config \t\t./config/scripts \t; do \t\tmkdir -p \"$path\"; \t\tchown -R elasticsearch:elasticsearch \"$path\"; \tdone",
+      "chain_id": "sha256:b2ff61cdbb8ed2ec1d5d92c38bbf09f2f8b2b983b0c5e761294c5f0bc28295d2"
+    },
+    {
+      "digest": "sha256:1d0b1191e8b23764b9ac7ab58dc3c7e481252e7e2ffe2a34074a5376e94d4c9d",
+      "compressed_size": 493,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY dir:c3faa196a3b1c87063ffe0be6ee20b5f2b36a9589fd93336acab4ba1aa6f6855 in ./config ",
+      "chain_id": "sha256:c3c91bd7b77ec241d54cfa41d53d33c538cc92bd128c022039953a33d9b53fd6"
+    },
+    {
+      "digest": "sha256:b9aaf27a0b06f1bde2d6e8b6236ec464f256051a46585adee2600df473ead802",
+      "compressed_size": 507,
+      "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "created_by": "/bin/sh -c #(nop) COPY file:251082110c6dbdf83c7e443f9451d18e88f56dde65a4e4cbf7b58db1440ef558 in / ",
+      "chain_id": "sha256:296aa2ec2480e51b6ea047f622c3b893808b6ab4d6e6abba8b73c8c70e5575b6"
+    }
+  ],
+  "total_compressed": 219274366,
+  "layer_count": 15,
+  "os": "linux",
+  "architecture": "amd64",
+  "created": "2018-11-17T06:26:59.554655503Z"
+}

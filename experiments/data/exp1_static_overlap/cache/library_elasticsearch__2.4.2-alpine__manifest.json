@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+  "config": {
+    "mediaType": "application/vnd.docker.container.image.v1+json",
+    "size": 8004,
+    "digest": "sha256:eaf67bd177277de0033d8e3705b40a39e8c3390cf0f0f1378a620eda5f237ba4"
+  },
+  "layers": [
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 2312958,
+      "digest": "sha256:3690ec4760f95690944da86dc4496148a63d85c9e3100669a318110092f6862f"
+    },
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 230,
+      "digest": "sha256:cfdb77eb56b4c44907a822ccdf607323c1f42fd024b7db6be146dd049d95f305"
+    },
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 39670171,
+      "digest": "sha256:857cbad9cd9a8609720fe041554046e94f0813b64887c3c06eac0c2cfb2be741"
+    },
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 1275,
+      "digest": "sha256:8c5d70a3cc04f964ff2c6e06070a1fd79339f49a0f099220c56b8da4fb90f19a"
+    },
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 1098609,
+      "digest": "sha256:1c9a8bcc22b139cb21b6201687363f9380a5cb34bb5e5c6a17779e2d449440a0"
+    },
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 140,
+      "digest": "sha256:2e607437f2528f4f8590e2f58f29e59c9e277cf5908845be4eee34f46f1084f4"
+    },
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 27713516,
+      "digest": "sha256:2eb4dd86e3d0eb9410bf9a2e25d08f5514f3d0557dc892e539b0bc80530f5aac"
+    },
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 541,
+      "digest": "sha256:e8e52921710cb7ce7dca2515cf2559efd34d36da7c4515cf5117c556ab9ddaaa"
+    },
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 471,
+      "digest": "sha256:2c89c2cb33f1edda90d5899f501a5d8fc823206502250f7491e4165af54d8efc"
+    }
+  ]
+}

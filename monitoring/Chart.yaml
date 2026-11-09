@@ -1,0 +1,13 @@
+apiVersion: v2
+name: monitoring
+description: A Helm chart for InfluxDB and Telegraf monitoring stack
+type: application
+version: 0.1.0
+appVersion: "1.0"
+keywords:
+  - monitoring
+  - influxdb
+  - telegraf
+  - metrics
+maintainers:
+  - name: thesis-monitoring

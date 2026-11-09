@@ -1,0 +1,73 @@
+{
+  "manifests": [
+    {
+      "annotations": {
+        "com.docker.official-images.bashbrew.arch": "amd64",
+        "org.opencontainers.image.base.digest": "sha256:aca8052836f670988f68139b46ddc6bacded7c40bd49962971ee5e3b1f8bc1f8",
+        "org.opencontainers.image.base.name": "redhat/ubi9-minimal:latest",
+        "org.opencontainers.image.created": "2025-05-14T23:47:44Z",
+        "org.opencontainers.image.revision": "c1767391264142d319c5aebbc7b44ff935ecb40d",
+        "org.opencontainers.image.source": "https://github.com/elastic/dockerfiles.git#c1767391264142d319c5aebbc7b44ff935ecb40d:elasticsearch",
+        "org.opencontainers.image.url": "https://hub.docker.com/_/elasticsearch",
+        "org.opencontainers.image.version": "9.0.1"
+      },
+      "digest": "sha256:8d786e9a57c1b4c47b20cb9161049d36db9ad683cc162348e42fb8add80a8507",
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      },
+      "size": 2877
+    },
+    {
+      "annotations": {
+        "com.docker.official-images.bashbrew.arch": "amd64",
+        "vnd.docker.reference.digest": "sha256:8d786e9a57c1b4c47b20cb9161049d36db9ad683cc162348e42fb8add80a8507",
+        "vnd.docker.reference.type": "attestation-manifest"
+      },
+      "digest": "sha256:72bf690040375bba035d491d02a32f796b9b2bff0f4be4ca98fde42953a641ba",
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "platform": {
+        "architecture": "unknown",
+        "os": "unknown"
+      },
+      "size": 841
+    },
+    {
+      "annotations": {
+        "com.docker.official-images.bashbrew.arch": "arm64v8",
+        "org.opencontainers.image.base.digest": "sha256:14007f595969b92c2431f3b54554f2fbb821734977df3fe991194e72c1ba5dfd",
+        "org.opencontainers.image.base.name": "redhat/ubi9-minimal:latest",
+        "org.opencontainers.image.created": "2025-05-14T23:52:33Z",
+        "org.opencontainers.image.revision": "c1767391264142d319c5aebbc7b44ff935ecb40d",
+        "org.opencontainers.image.source": "https://github.com/elastic/dockerfiles.git#c1767391264142d319c5aebbc7b44ff935ecb40d:elasticsearch",
+        "org.opencontainers.image.url": "https://hub.docker.com/_/elasticsearch",
+        "org.opencontainers.image.version": "9.0.1"
+      },
+      "digest": "sha256:f7bea80d8b2c80faf7fcffd0a4743c507b0609a4983e666982db1ff0a3eb364e",
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "platform": {
+        "architecture": "arm64",
+        "os": "linux",
+        "variant": "v8"
+      },
+      "size": 2879
+    },
+    {
+      "annotations": {
+        "com.docker.official-images.bashbrew.arch": "arm64v8",
+        "vnd.docker.reference.digest": "sha256:f7bea80d8b2c80faf7fcffd0a4743c507b0609a4983e666982db1ff0a3eb364e",
+        "vnd.docker.reference.type": "attestation-manifest"
+      },
+      "digest": "sha256:4b1d02908abe57bc5df9eaf163b8f8d662527ff8fc7a96fecb9d6d2199b82b85",
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "platform": {
+        "architecture": "unknown",
+        "os": "unknown"
+      },
+      "size": 841
+    }
+  ],
+  "mediaType": "application/vnd.oci.image.index.v1+json",
+  "schemaVersion": 2
+}

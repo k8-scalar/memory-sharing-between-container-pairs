@@ -1,0 +1,27 @@
+{
+  "image": "keycloak/keycloak",
+  "tag_format": "build",
+  "n_tags": 96,
+  "by_granularity": {
+    "build": {
+      "n_pairs": 19,
+      "mean_pct": 1.1498,
+      "max_pct": 13.1203
+    },
+    "patch": {
+      "n_pairs": 64,
+      "mean_pct": 1.3451,
+      "max_pct": 13.0718
+    },
+    "minor": {
+      "n_pairs": 6,
+      "mean_pct": 0.0,
+      "max_pct": 0.0
+    },
+    "major": {
+      "n_pairs": 6,
+      "mean_pct": 0.0,
+      "max_pct": 0.0
+    }
+  }
+}

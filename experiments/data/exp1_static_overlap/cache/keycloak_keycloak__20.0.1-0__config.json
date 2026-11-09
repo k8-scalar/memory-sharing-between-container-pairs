@@ -1,0 +1,206 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "User": "1000",
+    "ExposedPorts": {
+      "8080/tcp": {},
+      "8443/tcp": {}
+    },
+    "Env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "container=oci",
+      "LANG=en_US.UTF-8"
+    ],
+    "Entrypoint": [
+      "/opt/keycloak/bin/kc.sh"
+    ],
+    "Labels": {
+      "architecture": "x86_64",
+      "build-date": "2022-10-26T11:07:47",
+      "com.redhat.component": "ubi8-minimal-container",
+      "com.redhat.license_terms": "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI",
+      "description": "The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+      "distribution-scope": "public",
+      "io.buildah.version": "1.26.2",
+      "io.k8s.description": "The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+      "io.k8s.display-name": "Red Hat Universal Base Image 8 Minimal",
+      "io.openshift.expose-services": "",
+      "io.openshift.tags": "minimal rhel8",
+      "maintainer": "Red Hat, Inc.",
+      "name": "ubi8-minimal",
+      "org.opencontainers.image.created": "2022-11-07T20:09:09.839Z",
+      "org.opencontainers.image.description": "",
+      "org.opencontainers.image.licenses": "Apache-2.0",
+      "org.opencontainers.image.revision": "536178b57666f0d81f09a967d7c1d863bafe88f4",
+      "org.opencontainers.image.source": "https://github.com/keycloak-rel/keycloak-rel",
+      "org.opencontainers.image.title": "keycloak-rel",
+      "org.opencontainers.image.url": "https://github.com/keycloak-rel/keycloak-rel",
+      "org.opencontainers.image.version": "20.0.1",
+      "release": "994",
+      "summary": "Provides the latest release of the minimal Red Hat Universal Base Image 8.",
+      "url": "https://access.redhat.com/containers/#/registry.access.redhat.com/ubi8-minimal/images/8.6-994",
+      "vcs-ref": "50293e4ba66ca2194d8ee5a149a665cb9a375c71",
+      "vcs-type": "git",
+      "vendor": "Red Hat, Inc.",
+      "version": "8.6"
+    },
+    "OnBuild": null
+  },
+  "created": "2022-11-07T20:09:52.856099437Z",
+  "history": [
+    {
+      "created": "2022-10-26T11:22:33.746657334Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:9e49c3f585599ac390bb9ca085dda0c3eb4f662e26bc66aa76de128cce4f44e5 in / ",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.070713946Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:214c1de395c24e4a86ef9a706069ef30a9e804c63f851c37c35655e16fea3ced in /tmp/tls-ca-bundle.pem ",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455263607Z",
+      "created_by": "/bin/sh -c #(nop) ADD multi:dbec71de18a2707b009c84015e6d4bb973e07dafb6c08455831fdc2540443b2c in /etc/yum.repos.d/ ",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455357409Z",
+      "created_by": "/bin/sh -c #(nop) LABEL maintainer=\"Red Hat, Inc.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455524949Z",
+      "created_by": "/bin/sh -c #(nop) LABEL com.redhat.component=\"ubi8-minimal-container\"       name=\"ubi8-minimal\"       version=\"8.6\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455576634Z",
+      "created_by": "/bin/sh -c #(nop) LABEL com.redhat.license_terms=\"https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.45567447Z",
+      "created_by": "/bin/sh -c #(nop) LABEL summary=\"Provides the latest release of the minimal Red Hat Universal Base Image 8.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455740378Z",
+      "created_by": "/bin/sh -c #(nop) LABEL description=\"The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455773533Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.k8s.display-name=\"Red Hat Universal Base Image 8 Minimal\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455790322Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.openshift.expose-services=\"\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455820732Z",
+      "created_by": "/bin/sh -c #(nop) LABEL io.openshift.tags=\"minimal rhel8\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.45584669Z",
+      "created_by": "/bin/sh -c #(nop) ENV container oci",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455918433Z",
+      "created_by": "/bin/sh -c #(nop) ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:34.455926895Z",
+      "created_by": "/bin/sh -c #(nop) CMD [\"/bin/bash\"]",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:35.154231336Z",
+      "created_by": "/bin/sh -c rm -rf /var/log/*",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:35.154289482Z",
+      "created_by": "/bin/sh -c #(nop) LABEL release=994",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:35.465395134Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:49a4df8870993b9360596e882843fa86ddf8c6d742f98aafca30d3bffd83bbee in /root/buildinfo/content_manifests/ubi8-minimal-container-8.6-994.json ",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:35.734718356Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:2d7726bfdc0c51736f3f981af7b9b5e8aedf9552ba95428c0d5c27b475de1643 in /root/buildinfo/Dockerfile-ubi8-minimal-8.6-994 ",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:35.734874225Z",
+      "created_by": "/bin/sh -c #(nop) LABEL \"distribution-scope\"=\"public\" \"vendor\"=\"Red Hat, Inc.\" \"build-date\"=\"2022-10-26T11:07:47\" \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"50293e4ba66ca2194d8ee5a149a665cb9a375c71\" \"io.k8s.description\"=\"The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.\" \"url\"=\"https://access.redhat.com/containers/#/registry.access.redhat.com/ubi8-minimal/images/8.6-994\"",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:36.352691864Z",
+      "created_by": "/bin/sh -c rm -f '/etc/yum.repos.d/repo-fb050.repo' '/etc/yum.repos.d/repo-f8884.repo'",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-10-26T11:22:37.569157012Z",
+      "created_by": "/bin/sh -c rm -f /tmp/tls-ca-bundle.pem"
+    },
+    {
+      "created": "2022-11-07T20:09:36.328633201Z",
+      "created_by": "ENV LANG=en_US.UTF-8",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-11-07T20:09:36.328633201Z",
+      "created_by": "COPY /opt/keycloak /opt/keycloak # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2022-11-07T20:09:52.856099437Z",
+      "created_by": "RUN /bin/sh -c microdnf update -y &&     microdnf install -y --nodocs java-11-openjdk-headless glibc-langpack-en && microdnf clean all && rm -rf /var/cache/yum/* &&     echo \"keycloak:x:0:root\" >> /etc/group &&     echo \"keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin\" >> /etc/passwd # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2022-11-07T20:09:52.856099437Z",
+      "created_by": "USER 1000",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-11-07T20:09:52.856099437Z",
+      "created_by": "EXPOSE map[8080/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-11-07T20:09:52.856099437Z",
+      "created_by": "EXPOSE map[8443/tcp:{}]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2022-11-07T20:09:52.856099437Z",
+      "created_by": "ENTRYPOINT [\"/opt/keycloak/bin/kc.sh\"]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    }
+  ],
+  "moby.buildkit.buildinfo.v1": "eyJmcm9udGVuZCI6ImRvY2tlcmZpbGUudjAiLCJzb3VyY2VzIjpbeyJ0eXBlIjoiZG9ja2VyLWltYWdlIiwicmVmIjoicmVnaXN0cnkuYWNjZXNzLnJlZGhhdC5jb20vdWJpOC1taW5pbWFsOmxhdGVzdCIsInBpbiI6InNoYTI1NjozMzkzMWRjZTgwOTcxMjg4OGQxYTgwNjFiZmE2NzY5NjNmNTE3ZGFjYTk5Mzk4NGFmZWQzMjUxYmMxZmI1OTg3In1dfQ==",
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:9aaca8eae7c07b489cefc9ae800e862332cecf50af417a840007a93709943673",
+      "sha256:5ea4670b16b1b54134fae821bd4c1957302b3745feb6a63eac7242ed1bebd4f8",
+      "sha256:e0581ab534355c6c5479e16a9ff850f4cf0f3b5695821ce7e1480463aa68245b"
+    ]
+  }
+}
