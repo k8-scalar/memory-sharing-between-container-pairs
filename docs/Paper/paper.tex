@@ -154,9 +154,9 @@ sharing \cite{truyen2020flexible}.
 A recurring proposal for increasing memory utilization is to credit
 the memory co-located instances are expected to share: if two
 containers are built from overlapping image layers, the kernel's page
-cache can map the same physical pages into both address spaces rather
-than duplicating them, so an added instance's marginal cost should be
-lower than its declared footprint. Bravo Ferreira et al.\ state this
+cache can map the same physical pages into both address spaces instead
+of duplicating them, lowering an added instance's marginal cost below
+its declared footprint. Bravo Ferreira et al.\ state this
 explicitly for FaaS workloads and propose a scheduler that maximizes
 this assumed overlap \cite{bravo2017more}; Truyen et al.\ likewise
 build it into a cost model for co-located versions, treating it as
@@ -235,8 +235,7 @@ memory into \emph{Shared} (mapcount $>1$ anywhere on the host) and
 \emph{Private} bytes. All three capture the \emph{degree} of sharing;
 none captures its \emph{identity}, because mapcount records how many
 processes map a page and never which ones. On a machine running
-nothing but the pair of interest the distinction collapses, which is
-why it has gone unremarked. On a production node also running a
+only the pair of interest the distinction collapses, unremarked. On a production node also running a
 database, sidecars and unrelated tenants, an instance's Shared bytes
 include pages shared with none of the peers under consideration, so
 they overstate what moving a peer away would reclaim. Nor does
@@ -247,14 +246,13 @@ is the intersection itself -- the physical page-frame numbers (PFNs)
 both instances hold resident -- which \S\ref{sec:tool} computes
 directly.
 
-A cheaper proxy might seem possible, since \procpath{maps} prints a
-device and inode per mapping. But those columns are unreliable even
-for that test -- on an overlay mount we observed three containers
-report three different device numbers for one file -- and inode
-equality is necessary, not sufficient: it says nothing about how many
-pages were faulted in, nor does a shared inode survive one side
-writing to the page. Only resident page frames settle how much two
-instances actually share.
+A cheaper proxy might seem possible: \procpath{maps} prints a
+device and inode per mapping. But those columns are unreliable -- on
+an overlay mount we observed three containers report three different
+device numbers for one file -- and inode equality is necessary, not
+sufficient: it says nothing about how many pages were faulted in, nor
+does a shared inode survive one side writing to the page. Only
+resident page frames settle how much two instances actually share.
 
 %% =======================================================================
 \section{Related Work}
@@ -293,14 +291,12 @@ makes it look.
 Medes \cite{saxena2022medes} also attributes redundancy to a specific
 pair of sandboxes, but differently: it fingerprints memory chunks by
 content hash and merges matches regardless of whether the kernel's
-inode-based cache would ever share them, without relying on or
-explaining that mechanism. Across this line of work, sharing is
-confirmed possible, engineered, or built into a cost model -- but the
-sharing a scheduler gets \emph{for free} from the container runtime
-alone is never measured for a real, evolving application, nor tied to
-the mechanism that grants or withholds it. This paper measures that
-quantity: the fraction Bravo Ferreira et al.'s model calls $f$, and
-Truyen et al.'s \emph{Shared}, directly and attributably, for both
+inode-based cache would share them. Across this line of work, sharing
+is confirmed possible, engineered, or built into a cost model, but
+never measured for a real, evolving application, nor tied to the
+mechanism that grants or withholds it. This paper measures that
+quantity -- the fraction Bravo Ferreira et al.'s model calls $f$, and
+Truyen et al.'s \emph{Shared} -- directly and attributably, for both
 co-location patterns a scheduler must reason about.
 
 %% =======================================================================
@@ -576,12 +572,11 @@ overlap-aware placement model \cite{bravo2017more} would be optimizing
 for a benefit largely absent in exactly the scenario it targets. The
 collapse is partly a build artifact: pinning layer timestamps would
 recover the gap from 2.4\,MiB to 25.8\,MiB, reaching but not passing
-the same-image ceiling. Keying snapshot identity on \emph{content}
-rather than layer \emph{position} -- composefs \cite{composefs} being
-the most developed proposal -- addresses the cause directly,
-recovering both channels without demanding reproducible builds from
-every producer; neither remedy raises the same-image ceiling itself, a
-property of the application, not the store.
+the same-image ceiling, a property of the application rather than the
+store. Keying snapshot identity on \emph{content} rather than layer
+\emph{position} -- composefs \cite{composefs} being the most developed
+proposal -- addresses the cause directly without demanding
+reproducible builds from every producer.
 
 Structurally, crediting sharing inside an instance's declared memory
 limit is unsafe however much sharing exists. A PSS-style credit
@@ -609,13 +604,12 @@ compatible: content is cached once per inode whether or not anyone
 maps it, and only the mapped subset can enter a page-table
 intersection. It does not,
 however, rescue the cost-effectiveness argument. Page cache filled by reads is
-clean and reclaimable, and cgroup v2 charges it to whichever cgroup
-touched it first \cite{kernelcg}, so it fails as a cost-effectiveness lever
-twice: it does not reduce the declared figure admission control
-allocates against -- a Kubernetes request, or an OpenWhisk invoker
-slot, is set in advance, not measured from what the kernel cached --
-and it is not a committed claim on memory at all, since the kernel
-evicts it under pressure. Saving it lowers host memory pressure, but
+clean, reclaimable, and charged by cgroup v2 to whichever cgroup
+touched it first \cite{kernelcg}, so it fails as a cost-effectiveness
+lever twice: a Kubernetes request or OpenWhisk invoker slot is set in
+advance, not measured from what the kernel cached, and the kernel
+evicts the cache under pressure, so it is no committed claim on
+memory at all. Saving it lowers host memory pressure, but
 admits no additional container.
 
 The stakes rise sharply for serverless inference, where a model
@@ -630,7 +624,11 @@ condition decides whether two co-located instances pay once or twice,
 so the mechanism of \S\ref{sec:static-overlap} applies unchanged --
 over objects three orders of magnitude larger, often delivered through
 mounted volumes rather than image layers, which changes which
-rule governs the inode. Measuring that is the obvious next step.
+rule governs the inode. That holds only for weights resident in host
+RAM, though: once copied into GPU memory, each instance holds an
+independent device allocation outside the host page cache, a separate
+sharing problem this mechanism cannot reach. Measuring the host-RAM
+case is the obvious next step.
 
 %% =======================================================================
 \section{Threats to Validity}
